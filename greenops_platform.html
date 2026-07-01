@@ -1610,6 +1610,32 @@ def schedule_blackwell_workload(job_specs):
             return num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
+        function updateSaaSChart(freeCoolingPct, mechanicalPct) {
+            const ctx = document.getElementById('saas-chart').getContext('2d');
+            if (saasDoughnutChart) {
+                saasDoughnutChart.destroy();
+            }
+            saasDoughnutChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Free Cooling', 'Chiller Assist'],
+                    datasets: [{
+                        data: [freeCoolingPct, mechanicalPct],
+                        backgroundColor: ['#00e676', '#ff9100'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    cutout: '75%'
+                }
+            });
+        }
+
         // --- NODES SELECTION STRATEGY ---
         function selectStrategicNode(nodeName) {
             const locSelect = document.getElementById('saas-location');
@@ -1932,20 +1958,20 @@ def schedule_blackwell_workload(job_specs):
                             label: 'Límite Superior (+Std Err)',
                             data: upperBounds,
                             borderColor: 'rgba(0, 229, 255, 0.15)',
-                            backgroundColor: 'rgba(0, 229, 255, 0.05)',
                             borderWidth: 1,
                             pointRadius: 0,
                             tension: 0.3,
-                            fill: '+1'
+                            fill: false
                         },
                         {
                             label: 'Límite Inferior (-Std Err)',
                             data: lowerBounds,
                             borderColor: 'rgba(0, 229, 255, 0.15)',
+                            backgroundColor: 'rgba(0, 229, 255, 0.05)',
                             borderWidth: 1,
                             pointRadius: 0,
                             tension: 0.3,
-                            fill: false
+                            fill: '-1' // Fills the area between this and the previous dataset (Límite Superior)
                         }
                     ]
                 },
