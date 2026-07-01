@@ -2097,7 +2097,11 @@ def schedule_blackwell_workload(job_specs):
                         if (step.highlight === 'sidebar-container') {
                             card.style.top = '100px';
                             card.style.left = (rect.right + 20) + 'px';
-                        } else if (step.highlight === 'saas-parameters-card' || step.highlight === 'twin-telemetry-card' || step.highlight === 'saas-nodes-card' || step.highlight === 'api-status-badge') {
+                        } else if (step.highlight === 'saas-nodes-card') {
+                            // Elements on the right: place tutorial card to their left
+                            card.style.top = rect.top + 'px';
+                            card.style.left = (rect.left - 380 - 20) + 'px';
+                        } else if (step.highlight === 'saas-parameters-card' || step.highlight === 'twin-telemetry-card' || step.highlight === 'api-status-badge') {
                             card.style.top = rect.top + 'px';
                             card.style.left = (rect.right + 20) + 'px';
                         } else {
