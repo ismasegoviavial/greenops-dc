@@ -1,0 +1,8 @@
+requests
+beautifulsoup4
+playwright
+pandas
+openpyxl
+google-cloud-bigquery
+pandas-gbq
+db-dtypes

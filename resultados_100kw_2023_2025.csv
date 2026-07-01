@@ -1,0 +1,19 @@
+Localidad,Tecnología,Free Cooling Hours (FCH),Free Cooling % (FCP),Ahorro Estimado vs Baseline (ESQ)
+"Isla Gordon, Chile",RDHx (Aire/Agua Baseline),25415,96.62%,Determinado por PUE de 1.15
+"Isla Gordon, Chile",D2C Bifásico (Termosifón D2C),26304,100.00%,Determinado por PUE de 1.05
+"Isla Gordon, Chile",Inmersión Bifásica,26304,100.00%,Determinado por PUE de 1.02
+"Colchane, Chile",RDHx (Aire/Agua Baseline),14879,56.57%,Determinado por PUE de 1.15
+"Colchane, Chile",D2C Bifásico (Termosifón D2C),26302,99.99%,Determinado por PUE de 1.05
+"Colchane, Chile",Inmersión Bifásica,26304,100.00%,Determinado por PUE de 1.02
+"Reykjavik, Islandia",RDHx (Aire/Agua Baseline),21444,81.52%,Determinado por PUE de 1.15
+"Reykjavik, Islandia",D2C Bifásico (Termosifón D2C),26304,100.00%,Determinado por PUE de 1.05
+"Reykjavik, Islandia",Inmersión Bifásica,26304,100.00%,Determinado por PUE de 1.02
+"Helsinki, Finlandia",RDHx (Aire/Agua Baseline),15841,60.22%,Determinado por PUE de 1.15
+"Helsinki, Finlandia",D2C Bifásico (Termosifón D2C),26221,99.68%,Determinado por PUE de 1.05
+"Helsinki, Finlandia",Inmersión Bifásica,26304,100.00%,Determinado por PUE de 1.02
+"Lulea, Suecia",RDHx (Aire/Agua Baseline),17526,66.63%,Determinado por PUE de 1.15
+"Lulea, Suecia",D2C Bifásico (Termosifón D2C),26182,99.54%,Determinado por PUE de 1.05
+"Lulea, Suecia",Inmersión Bifásica,26304,100.00%,Determinado por PUE de 1.02
+"Quebec, Canada",RDHx (Aire/Agua Baseline),15213,57.84%,Determinado por PUE de 1.15
+"Quebec, Canada",D2C Bifásico (Termosifón D2C),25495,96.92%,Determinado por PUE de 1.05
+"Quebec, Canada",Inmersión Bifásica,26304,100.00%,Determinado por PUE de 1.02

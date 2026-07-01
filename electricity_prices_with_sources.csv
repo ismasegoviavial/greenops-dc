@@ -1,0 +1,36 @@
+Localidad,Pais,Precio_USD_kWh,Fuente,URL_Fuente,Fecha_Consulta,Metodo
+"Helsinki, Finlandia",Finlandia,0.085,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Oulu, Finlandia",Finlandia,0.085,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Lulea, Suecia",Suecia,0.0924,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Estocolmo, Suecia",Suecia,0.0924,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Trondheim, Noruega",Noruega,0.0655,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Stavanger, Noruega",Noruega,0.0655,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Oslo, Noruega",Noruega,0.0655,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Reykjavik, Islandia",Islandia,0.1029,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Tallin, Estonia",Estonia,0.1488,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Copenhague, Dinamarca",Dinamarca,0.1379,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Frankfurt, Alemania",Alemania,0.2191,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Amsterdam, Holanda",Holanda,0.1865,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Dublin, Irlanda",Irlanda,0.273,"Eurostat API - NRG_PC_205 (2024-S2, excl. impuestos)",https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205/default/table?lang=en&category=nrg.nrg_price.nrg_pc,2026-06-12,API Eurostat (tiempo real)
+"Isla Gordon, Chile",N/A,0.176,BloombergNEF Global Climatescope 2024 - Chile Market Profile,https://global-climatescope.org/markets/cl/,2026-06-12,Referencia institucional
+"Colchane, Chile",N/A,0.176,BloombergNEF Global Climatescope 2024 - Chile Market Profile,https://global-climatescope.org/markets/cl/,2026-06-12,Referencia institucional
+"Punta Arenas, Chile",N/A,0.176,BloombergNEF Global Climatescope 2024 - Chile Market Profile,https://global-climatescope.org/markets/cl/,2026-06-12,Referencia institucional
+"Puerto Natales, Chile",N/A,0.176,BloombergNEF Global Climatescope 2024 - Chile Market Profile,https://global-climatescope.org/markets/cl/,2026-06-12,Referencia institucional
+"Coyhaique, Chile",N/A,0.176,BloombergNEF Global Climatescope 2024 - Chile Market Profile,https://global-climatescope.org/markets/cl/,2026-06-12,Referencia institucional
+"Mendoza, Argentina",N/A,0.085,IEA Energy Prices 2024 - Argentina (MIEM industrial avg),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Ushuaia, Argentina",N/A,0.085,IEA Energy Prices 2024 - Argentina (MIEM industrial avg),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Montevideo, Uruguay",N/A,0.13,IEA Energy Prices 2024 - Uruguay (UTE tarifa industrial),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Bogota, Colombia",N/A,0.12,IEA Energy Prices 2024 - Colombia (CREG tarifa media),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Quito, Ecuador",N/A,0.1,IEA Energy Prices 2024 - Ecuador (ARCONEL tarifa industrial),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Zurich, Suiza",N/A,0.15,Eurostat nrg_pc_205 2024-S2 - Switzerland (excl. taxes),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,2026-06-12,Referencia institucional
+"Londres, UK",N/A,0.16,Eurostat nrg_pc_205 2024-S2 - United Kingdom (excl. taxes),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,2026-06-12,Referencia institucional
+"Quebec, Canada",N/A,0.09,Hydro-Quebec Comparison of Electricity Prices in Major Cities 2024,https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf,2026-06-12,Referencia institucional
+"Vancouver, Canada",N/A,0.095,BC Hydro Industrial Rates 2024,https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html,2026-06-12,Referencia institucional
+"Hokkaido (Sapporo), Japon",N/A,0.18,IEA Energy Prices 2024 - Japan (industrial HV tariff avg),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Ulaanbaatar, Mongolia",N/A,0.065,IEA Energy Prices 2024 - Mongolia (LCDP industrial rate),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Christchurch, Nueva Zelanda",N/A,0.12,IEA Energy Prices 2024 - New Zealand (industrial avg excl. GST),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional
+"Seoul, Corea del Sur",N/A,0.12,KEPCO Industrial Rate Table 2024 - Korea Electric Power Corp,https://home.kepco.co.kr/kepco/EN/main.do,2026-06-12,Referencia institucional
+Singapur,N/A,0.17,Energy Market Authority Singapore - Non-Household Tariff 2024,https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends,2026-06-12,Referencia institucional
+"Dubai, EAU",N/A,0.08,DEWA (Dubai Electricity & Water Authority) - Industrial Tariff 2024,https://www.dewa.gov.ae/en/consumer/electricity/tariffs,2026-06-12,Referencia institucional
+"Nairobi, Kenia",N/A,0.18,KPLC (Kenya Power) - Industrial Tariff SC6 2024,https://www.kplc.co.ke/category/view/50/tariffs,2026-06-12,Referencia institucional
+"Yakutsk, Rusia",N/A,0.05,IEA Energy Prices 2024 - Russia (industrial avg subsidized),https://www.iea.org/data-and-statistics/data-product/energy-prices,2026-06-12,Referencia institucional

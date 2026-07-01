@@ -1,0 +1,196 @@
+Region,Localidad,Precio_USD_kWh,Fuente_Tarifa,URL_Fuente,Sistema de Enfriamiento,Horas Totales,Free Cooling Hours,FCH %,Energia Total (kWh),OPEX 3 Anios (USD)
+Sudamérica,"Isla Gordon, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,833310.72
+Sudamérica,"Isla Gordon, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,RDHx (Puerta Trasera),26304,25415,96.6,3056075.0,537869.2
+Sudamérica,"Isla Gordon, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Termosifon Bifasico Original,26304,26250,99.8,2895600.0,509625.6
+Sudamérica,"Isla Gordon, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,D2C Bifasico (Direct-to-Chip),26304,26304,100.0,2761920.0,486097.92
+Sudamérica,"Isla Gordon, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,472209.41
+Sudamérica,"Colchane, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,833310.72
+Sudamérica,"Colchane, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,RDHx (Puerta Trasera),26304,14879,56.6,3424835.0,602770.96
+Sudamérica,"Colchane, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Termosifon Bifasico Original,26304,21232,80.7,3096320.0,544952.32
+Sudamérica,"Colchane, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,D2C Bifasico (Direct-to-Chip),26304,26302,100.0,2761950.0,486103.2
+Sudamérica,"Colchane, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,472209.41
+Sudamérica,"Punta Arenas, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,833310.72
+Sudamérica,"Punta Arenas, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,RDHx (Puerta Trasera),26304,21484,81.7,3193660.0,562084.16
+Sudamérica,"Punta Arenas, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Termosifon Bifasico Original,26304,25886,98.4,2910160.0,512188.16
+Sudamérica,"Punta Arenas, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,D2C Bifasico (Direct-to-Chip),26304,26304,100.0,2761920.0,486097.92
+Sudamérica,"Punta Arenas, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,472209.41
+Sudamérica,"Puerto Natales, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,833310.72
+Sudamérica,"Puerto Natales, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,RDHx (Puerta Trasera),26304,20770,79.0,3218650.0,566482.4
+Sudamérica,"Puerto Natales, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Termosifon Bifasico Original,26304,25450,96.8,2927600.0,515257.6
+Sudamérica,"Puerto Natales, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,D2C Bifasico (Direct-to-Chip),26304,26304,100.0,2761920.0,486097.92
+Sudamérica,"Puerto Natales, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,472209.41
+Sudamérica,"Coyhaique, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,833310.72
+Sudamérica,"Coyhaique, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,RDHx (Puerta Trasera),26304,18226,69.3,3307690.0,582153.44
+Sudamérica,"Coyhaique, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Termosifon Bifasico Original,26304,23666,90.0,2998960.0,527816.96
+Sudamérica,"Coyhaique, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,D2C Bifasico (Direct-to-Chip),26304,26210,99.6,2763330.0,486346.08
+Sudamérica,"Coyhaique, Chile",0.176,BloombergNEF Climatescope 2024,https://global-climatescope.org/markets/cl/,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,472209.41
+Sudamérica,"Mendoza, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,402451.2
+Sudamérica,"Mendoza, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,5220,19.8,3762900.0,319846.5
+Sudamérica,"Mendoza, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,10496,39.9,3525760.0,299689.6
+Sudamérica,"Mendoza, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,20786,79.0,2844690.0,241798.65
+Sudamérica,"Mendoza, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26094,99.2,2684688.0,228198.48
+Sudamérica,"Montevideo, Uruguay",0.13,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,615513.6
+Sudamérica,"Montevideo, Uruguay",0.13,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,2349,8.9,3863385.0,502240.05
+Sudamérica,"Montevideo, Uruguay",0.13,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,9876,37.5,3550560.0,461572.8
+Sudamérica,"Montevideo, Uruguay",0.13,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,24566,93.4,2787990.0,362438.7
+Sudamérica,"Montevideo, Uruguay",0.13,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26294,100.0,2683088.0,348801.44
+Sudamérica,"Ushuaia, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,402451.2
+Sudamérica,"Ushuaia, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,23047,87.6,3138955.0,266811.18
+Sudamérica,"Ushuaia, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,25960,98.7,2907200.0,247112.0
+Sudamérica,"Ushuaia, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,26304,100.0,2761920.0,234763.2
+Sudamérica,"Ushuaia, Argentina",0.085,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,228055.68
+,"Bogota, Colombia",0,,,CRAC (Aire Acond. Tradicional),0,0,0,0.0,0.0
+,"Bogota, Colombia",0,,,RDHx (Puerta Trasera),0,0,0,0.0,0.0
+,"Bogota, Colombia",0,,,Termosifon Bifasico Original,0,0,0,0.0,0.0
+,"Bogota, Colombia",0,,,D2C Bifasico (Direct-to-Chip),0,0,0,0.0,0.0
+,"Bogota, Colombia",0,,,Inmersion Liquida Bifasica,0,0,0,0.0,0.0
+Sudamérica,"Quito, Ecuador",0.1,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,473472.0
+Sudamérica,"Quito, Ecuador",0.1,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,9148,34.8,3625420.0,362542.0
+Sudamérica,"Quito, Ecuador",0.1,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,20550,78.1,3123600.0,312360.0
+Sudamérica,"Quito, Ecuador",0.1,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,26304,100.0,2761920.0,276192.0
+Sudamérica,"Quito, Ecuador",0.1,IEA Energy Prices 2024,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,268300.8
+Europa,"Reykjavik, Islandia",0.1029,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,487202.69
+Europa,"Reykjavik, Islandia",0.1029,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,21444,81.5,3195060.0,328771.67
+Europa,"Reykjavik, Islandia",0.1029,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,26064,99.1,2903040.0,298722.82
+Europa,"Reykjavik, Islandia",0.1029,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26304,100.0,2761920.0,284201.57
+Europa,"Reykjavik, Islandia",0.1029,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,276081.52
+Europa,"Helsinki, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,402451.2
+Europa,"Helsinki, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,15841,60.2,3391165.0,288249.03
+Europa,"Helsinki, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,19835,75.4,3152200.0,267937.0
+Europa,"Helsinki, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26221,99.7,2763165.0,234869.03
+Europa,"Helsinki, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,228055.68
+Europa,"Lulea, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,437488.13
+Europa,"Lulea, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,17526,66.6,3332190.0,307894.36
+Europa,"Lulea, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,21625,82.2,3080600.0,284647.44
+Europa,"Lulea, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26182,99.5,2763750.0,255370.5
+Europa,"Lulea, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,247909.94
+Europa,"Trondheim, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,310124.16
+Europa,"Trondheim, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,17178,65.3,3344370.0,219056.24
+Europa,"Trondheim, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,22677,86.2,3038520.0,199023.06
+Europa,"Trondheim, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26126,99.3,2764590.0,181080.65
+Europa,"Trondheim, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,175737.02
+Europa,"Stavanger, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,310124.16
+Europa,"Stavanger, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,14632,55.6,3433480.0,224892.94
+Europa,"Stavanger, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,22283,84.7,3054280.0,200055.34
+Europa,"Stavanger, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26288,99.9,2762160.0,180921.48
+Europa,"Stavanger, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,175737.02
+Europa,"Oulu, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,402451.2
+Europa,"Oulu, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,17543,66.7,3331595.0,283185.58
+Europa,"Oulu, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,21432,81.5,3088320.0,262507.2
+Europa,"Oulu, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26105,99.2,2764905.0,235016.93
+Europa,"Oulu, Finlandia",0.085,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,228055.68
+Europa,"Tallin, Estonia",0.1488,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,704526.34
+Europa,"Tallin, Estonia",0.1488,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,15721,59.8,3395365.0,505230.31
+Europa,"Tallin, Estonia",0.1488,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,20027,76.1,3144520.0,467904.58
+Europa,"Tallin, Estonia",0.1488,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26119,99.3,2764695.0,411386.62
+Europa,"Tallin, Estonia",0.1488,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,399231.59
+Europa,"Estocolmo, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,437488.13
+Europa,"Estocolmo, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,15459,58.8,3404535.0,314579.03
+Europa,"Estocolmo, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,20030,76.1,3144400.0,290542.56
+Europa,"Estocolmo, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26120,99.3,2764680.0,255456.43
+Europa,"Estocolmo, Suecia",0.0924,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,247909.94
+Europa,"Oslo, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,310124.16
+Europa,"Oslo, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,14970,56.9,3421650.0,224118.08
+Europa,"Oslo, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,19952,75.9,3147520.0,206162.56
+Europa,"Oslo, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26061,99.1,2765565.0,181144.51
+Europa,"Oslo, Noruega",0.0655,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,175737.02
+Europa,"Copenhague, Dinamarca",0.1379,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,652917.89
+Europa,"Copenhague, Dinamarca",0.1379,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,13405,51.0,3476425.0,479399.01
+Europa,"Copenhague, Dinamarca",0.1379,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,19043,72.4,3183880.0,439057.05
+Europa,"Copenhague, Dinamarca",0.1379,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26281,99.9,2762265.0,380916.34
+Europa,"Copenhague, Dinamarca",0.1379,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,369986.8
+Europa,"Frankfurt, Alemania",0.2191,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,1037377.15
+Europa,"Frankfurt, Alemania",0.2191,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,11511,43.8,3542715.0,776208.86
+Europa,"Frankfurt, Alemania",0.2191,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,17105,65.0,3261400.0,714572.74
+Europa,"Frankfurt, Alemania",0.2191,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,24904,94.7,2782920.0,609737.77
+Europa,"Frankfurt, Alemania",0.2191,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26285,99.9,2683160.0,587880.36
+Europa,"Amsterdam, Holanda",0.1865,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,883025.28
+Europa,"Amsterdam, Holanda",0.1865,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,11157,42.4,3555105.0,663027.08
+Europa,"Amsterdam, Holanda",0.1865,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,18371,69.8,3210760.0,598806.74
+Europa,"Amsterdam, Holanda",0.1865,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,25967,98.7,2766975.0,516040.84
+Europa,"Amsterdam, Holanda",0.1865,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,500380.99
+Europa,"Dublin, Irlanda",0.273,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,1292578.56
+Europa,"Dublin, Irlanda",0.273,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,11635,44.2,3538375.0,965976.38
+Europa,"Dublin, Irlanda",0.273,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,21112,80.3,3101120.0,846605.76
+Europa,"Dublin, Irlanda",0.273,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,26256,99.8,2762640.0,754200.72
+Europa,"Dublin, Irlanda",0.273,Eurostat NRG_PC_205 2024-S2,https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,732461.18
+,"Zurich, Suiza",0,,,CRAC (Aire Acond. Tradicional),0,0,0,0.0,0.0
+,"Zurich, Suiza",0,,,RDHx (Puerta Trasera),0,0,0,0.0,0.0
+,"Zurich, Suiza",0,,,Termosifon Bifasico Original,0,0,0,0.0,0.0
+,"Zurich, Suiza",0,,,D2C Bifasico (Direct-to-Chip),0,0,0,0.0,0.0
+,"Zurich, Suiza",0,,,Inmersion Liquida Bifasica,0,0,0,0.0,0.0
+Europa,"Londres, UK",0.16,Eurostat NRG_PC_205 2024-S2 (referencia),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,757555.2
+Europa,"Londres, UK",0.16,Eurostat NRG_PC_205 2024-S2 (referencia),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,RDHx (Puerta Trasera),26304,10082,38.3,3592730.0,574836.8
+Europa,"Londres, UK",0.16,Eurostat NRG_PC_205 2024-S2 (referencia),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Termosifon Bifasico Original,26304,18164,69.1,3219040.0,515046.4
+Europa,"Londres, UK",0.16,Eurostat NRG_PC_205 2024-S2 (referencia),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,D2C Bifasico (Direct-to-Chip),26304,25777,98.0,2769825.0,443172.0
+Europa,"Londres, UK",0.16,Eurostat NRG_PC_205 2024-S2 (referencia),https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,429281.28
+Norteamérica,"Quebec, Canada",0.09,Hydro-Quebec Electricity Prices 2024,https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,426124.8
+Norteamérica,"Quebec, Canada",0.09,Hydro-Quebec Electricity Prices 2024,https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf,RDHx (Puerta Trasera),26304,15213,57.8,3413145.0,307183.05
+Norteamérica,"Quebec, Canada",0.09,Hydro-Quebec Electricity Prices 2024,https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf,Termosifon Bifasico Original,26304,18986,72.2,3186160.0,286754.4
+Norteamérica,"Quebec, Canada",0.09,Hydro-Quebec Electricity Prices 2024,https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf,D2C Bifasico (Direct-to-Chip),26304,25495,96.9,2774055.0,249664.95
+Norteamérica,"Quebec, Canada",0.09,Hydro-Quebec Electricity Prices 2024,https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,241470.72
+Norteamérica,"Vancouver, Canada",0.095,BC Hydro Industrial Rates 2024,https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,449798.4
+Norteamérica,"Vancouver, Canada",0.095,BC Hydro Industrial Rates 2024,https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html,RDHx (Puerta Trasera),26304,13455,51.2,3474675.0,330094.12
+Norteamérica,"Vancouver, Canada",0.095,BC Hydro Industrial Rates 2024,https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html,Termosifon Bifasico Original,26304,19293,73.3,3173880.0,301518.6
+Norteamérica,"Vancouver, Canada",0.095,BC Hydro Industrial Rates 2024,https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html,D2C Bifasico (Direct-to-Chip),26304,26044,99.0,2765820.0,262752.9
+Norteamérica,"Vancouver, Canada",0.095,BC Hydro Industrial Rates 2024,https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,254885.76
+Norteamérica,"Anchorage, Alaska USA",0.17,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,804902.4
+Norteamérica,"Anchorage, Alaska USA",0.17,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,18580,70.6,3295300.0,560201.0
+Norteamérica,"Anchorage, Alaska USA",0.17,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,23794,90.5,2993840.0,508952.8
+Norteamérica,"Anchorage, Alaska USA",0.17,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,26299,100.0,2761995.0,469539.15
+Norteamérica,"Anchorage, Alaska USA",0.17,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,456111.36
+Norteamérica,"Des Moines, Iowa USA",0.07,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,331430.4
+Norteamérica,"Des Moines, Iowa USA",0.07,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,11208,42.6,3553320.0,248732.4
+Norteamérica,"Des Moines, Iowa USA",0.07,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,14430,54.9,3368400.0,235788.0
+Norteamérica,"Des Moines, Iowa USA",0.07,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,22983,87.4,2811735.0,196821.45
+Norteamérica,"Des Moines, Iowa USA",0.07,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26275,99.9,2683240.0,187826.8
+Norteamérica,"Portland, Oregon USA",0.08,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,378777.6
+Norteamérica,"Portland, Oregon USA",0.08,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,11687,44.4,3536555.0,282924.4
+Norteamérica,"Portland, Oregon USA",0.08,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,17641,67.1,3239960.0,259196.8
+Norteamérica,"Portland, Oregon USA",0.08,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,24474,93.0,2789370.0,223149.6
+Norteamérica,"Portland, Oregon USA",0.08,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26208,99.6,2683776.0,214702.08
+,"Hokkaido (Sapporo), Japon",0,,,CRAC (Aire Acond. Tradicional),0,0,0,0.0,0.0
+,"Hokkaido (Sapporo), Japon",0,,,RDHx (Puerta Trasera),0,0,0,0.0,0.0
+,"Hokkaido (Sapporo), Japon",0,,,Termosifon Bifasico Original,0,0,0,0.0,0.0
+,"Hokkaido (Sapporo), Japon",0,,,D2C Bifasico (Direct-to-Chip),0,0,0,0.0,0.0
+,"Hokkaido (Sapporo), Japon",0,,,Inmersion Liquida Bifasica,0,0,0,0.0,0.0
+Asia-Pacífico,"Ulaanbaatar, Mongolia",0.065,IEA Energy Prices 2024 - Mongolia,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,307756.8
+Asia-Pacífico,"Ulaanbaatar, Mongolia",0.065,IEA Energy Prices 2024 - Mongolia,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,17550,66.7,3331350.0,216537.75
+Asia-Pacífico,"Ulaanbaatar, Mongolia",0.065,IEA Energy Prices 2024 - Mongolia,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,20835,79.2,3112200.0,202293.0
+Asia-Pacífico,"Ulaanbaatar, Mongolia",0.065,IEA Energy Prices 2024 - Mongolia,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,25631,97.4,2772015.0,180180.98
+Asia-Pacífico,"Ulaanbaatar, Mongolia",0.065,IEA Energy Prices 2024 - Mongolia,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,174395.52
+Asia-Pacífico,"Christchurch, Nueva Zelanda",0.12,IEA Energy Prices 2024 - New Zealand,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,568166.4
+Asia-Pacífico,"Christchurch, Nueva Zelanda",0.12,IEA Energy Prices 2024 - New Zealand,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,9159,34.8,3625035.0,435004.2
+Asia-Pacífico,"Christchurch, Nueva Zelanda",0.12,IEA Energy Prices 2024 - New Zealand,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,18566,70.6,3202960.0,384355.2
+Asia-Pacífico,"Christchurch, Nueva Zelanda",0.12,IEA Energy Prices 2024 - New Zealand,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,25900,98.5,2767980.0,332157.6
+Asia-Pacífico,"Christchurch, Nueva Zelanda",0.12,IEA Energy Prices 2024 - New Zealand,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,321960.96
+,"Seoul, Corea del Sur",0,,,CRAC (Aire Acond. Tradicional),0,0,0,0.0,0.0
+,"Seoul, Corea del Sur",0,,,RDHx (Puerta Trasera),0,0,0,0.0,0.0
+,"Seoul, Corea del Sur",0,,,Termosifon Bifasico Original,0,0,0,0.0,0.0
+,"Seoul, Corea del Sur",0,,,D2C Bifasico (Direct-to-Chip),0,0,0,0.0,0.0
+,"Seoul, Corea del Sur",0,,,Inmersion Liquida Bifasica,0,0,0,0.0,0.0
+Asia-Pacífico,Singapur,0.17,EMA Singapore Non-Household Tariff 2024,https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,804902.4
+Asia-Pacífico,Singapur,0.17,EMA Singapore Non-Household Tariff 2024,https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends,RDHx (Puerta Trasera),26304,0,0.0,3945600.0,670752.0
+Asia-Pacífico,Singapur,0.17,EMA Singapore Non-Household Tariff 2024,https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends,Termosifon Bifasico Original,26304,0,0.0,3945600.0,670752.0
+Asia-Pacífico,Singapur,0.17,EMA Singapore Non-Household Tariff 2024,https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends,D2C Bifasico (Direct-to-Chip),26304,7930,30.1,3037530.0,516380.1
+Asia-Pacífico,Singapur,0.17,EMA Singapore Non-Household Tariff 2024,https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,456111.36
+Oriente Medio,"Dubai, EAU",0.08,DEWA Industrial Tariff 2024,https://www.dewa.gov.ae/en/consumer/electricity/tariffs,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,378777.6
+Oriente Medio,"Dubai, EAU",0.08,DEWA Industrial Tariff 2024,https://www.dewa.gov.ae/en/consumer/electricity/tariffs,RDHx (Puerta Trasera),26304,0,0.0,3945600.0,315648.0
+Oriente Medio,"Dubai, EAU",0.08,DEWA Industrial Tariff 2024,https://www.dewa.gov.ae/en/consumer/electricity/tariffs,Termosifon Bifasico Original,26304,238,0.9,3936080.0,314886.4
+Oriente Medio,"Dubai, EAU",0.08,DEWA Industrial Tariff 2024,https://www.dewa.gov.ae/en/consumer/electricity/tariffs,D2C Bifasico (Direct-to-Chip),26304,8990,34.2,3021630.0,241730.4
+Oriente Medio,"Dubai, EAU",0.08,DEWA Industrial Tariff 2024,https://www.dewa.gov.ae/en/consumer/electricity/tariffs,Inmersion Liquida Bifasica,26304,21739,82.6,2719528.0,217562.24
+África,"Nairobi, Kenia",0.18,KPLC Industrial Tariff SC6 2024,https://www.kplc.co.ke/category/view/50/tariffs,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,852249.6
+África,"Nairobi, Kenia",0.18,KPLC Industrial Tariff SC6 2024,https://www.kplc.co.ke/category/view/50/tariffs,RDHx (Puerta Trasera),26304,6,0.0,3945390.0,710170.2
+África,"Nairobi, Kenia",0.18,KPLC Industrial Tariff SC6 2024,https://www.kplc.co.ke/category/view/50/tariffs,Termosifon Bifasico Original,26304,2873,10.9,3830680.0,689522.4
+África,"Nairobi, Kenia",0.18,KPLC Industrial Tariff SC6 2024,https://www.kplc.co.ke/category/view/50/tariffs,D2C Bifasico (Direct-to-Chip),26304,23095,87.8,2810055.0,505809.9
+África,"Nairobi, Kenia",0.18,KPLC Industrial Tariff SC6 2024,https://www.kplc.co.ke/category/view/50/tariffs,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,482941.44
+Asia,"Yakutsk, Rusia",0.05,IEA Energy Prices 2024 - Russia,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,145,0.6,4734720.0,236736.0
+Asia,"Yakutsk, Rusia",0.05,IEA Energy Prices 2024 - Russia,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,18887,71.8,3284555.0,164227.75
+Asia,"Yakutsk, Rusia",0.05,IEA Energy Prices 2024 - Russia,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,21370,81.2,3090800.0,154540.0
+Asia,"Yakutsk, Rusia",0.05,IEA Energy Prices 2024 - Russia,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,25620,97.4,2772180.0,138609.0
+Asia,"Yakutsk, Rusia",0.05,IEA Energy Prices 2024 - Russia,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,26304,100.0,2683008.0,134150.4
+Norteamérica,"Phoenix, Arizona USA",0.075,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,CRAC (Aire Acond. Tradicional),26304,0,0.0,4734720.0,355104.0
+Norteamérica,"Phoenix, Arizona USA",0.075,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,RDHx (Puerta Trasera),26304,2587,9.8,3855055.0,289129.12
+Norteamérica,"Phoenix, Arizona USA",0.075,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Termosifon Bifasico Original,26304,6344,24.1,3691840.0,276888.0
+Norteamérica,"Phoenix, Arizona USA",0.075,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,D2C Bifasico (Direct-to-Chip),26304,13952,53.0,2947200.0,221040.0
+Norteamérica,"Phoenix, Arizona USA",0.075,IEA Energy Prices 2024 - USA,https://www.iea.org/data-and-statistics/data-product/energy-prices,Inmersion Liquida Bifasica,26304,21511,81.8,2721352.0,204101.4

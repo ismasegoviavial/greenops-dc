@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Comercial - Hub de Anuncios</title>
+    <style>
+        body { margin: 0; padding: 40px; text-align: center; font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; }
+        h1 { margin-bottom: 10px; font-size: 2.5rem; color: #38bdf8; }
+        p.subtitle { color: #94a3b8; font-size: 1.1rem; margin-bottom: 40px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #334155;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #38bdf8;
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 320px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: #0f172a;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: 320px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #0369a1;
+            font-size: 3rem;
+        }
+        .placeholder-img p { font-size: 1rem; font-weight: 700; margin-top: 10px; }
+
+        .card h2 { margin: 0 0 8px 0; font-size: 1.4rem; }
+        .card p { margin: 0; color: #94a3b8; font-size: 0.9rem; }
+
+        .badge {
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            color: #475569;
+            font-size: 0.85rem;
+        }
+        .footer-note a { color: #38bdf8; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>🦷 Demo Comercial: Clínica Dental</h1>
+    <p class="subtitle">Haz clic en un anuncio para ver cómo la Landing Page se adapta automáticamente al tratamiento.</p>
+
+    <div class="grid">
+        <!-- Implantes -->
+        <a href="http://localhost:5180/?campaign=implantes" target="_blank" class="card">
+            <div class="badge">💎 Alto Valor</div>
+            <img src="C:/Users/Fernanda/.gemini/antigravity/brain/fb8f4b11-c95d-4baf-91ec-9807aaaa3ff9/implantes_ig_mockup_1778599649830.png" alt="Anuncio Implantes" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="placeholder-img" style="display:none"><span>🦷</span><p>Implantes Dentales</p></div>
+            <h2>Implantes Dentales</h2>
+            <p>Preguntas sobre piezas perdidas y tiempo de reemplazo.</p>
+        </a>
+
+        <!-- Endodoncia -->
+        <a href="http://localhost:5180/?campaign=endodoncia" target="_blank" class="card">
+            <div class="badge">🚨 Urgencia / Dolor</div>
+            <img src="C:/Users/Fernanda/.gemini/antigravity/brain/fb8f4b11-c95d-4baf-91ec-9807aaaa3ff9/endodoncia_ig_mockup_1778599671979.png" alt="Anuncio Endodoncia" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="placeholder-img" style="display:none"><span>😬</span><p>Endodoncia</p></div>
+            <h2>Tratamiento de Conducto</h2>
+            <p>Preguntas sobre nivel de dolor y urgencia del tratamiento.</p>
+        </a>
+
+        <!-- Blanqueamiento -->
+        <a href="http://localhost:5180/?campaign=blanqueamiento" target="_blank" class="card">
+            <div class="badge">✨ Estética</div>
+            <img src="C:/Users/Fernanda/.gemini/antigravity/brain/fb8f4b11-c95d-4baf-91ec-9807aaaa3ff9/blanqueamiento_ig_mockup_1782263989340.png" alt="Anuncio Blanqueamiento" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="placeholder-img" style="display:none"><span>😁</span><p>Blanqueamiento</p></div>
+            <h2>Blanqueamiento Dental</h2>
+            <p>Preguntas sobre sensibilidad dental y hábitos de consumo.</p>
+        </a>
+    </div>
+
+    <p class="footer-note">
+        Esta página es el punto de entrada de la demo. Requiere que el servidor React esté corriendo en
+        <a href="http://localhost:5180" target="_blank">localhost:5180</a>.
+    </p>
+</body>
+</html>

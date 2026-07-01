@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Portafolio de diseño de interiores, muebles a medida y optimización de espacios de La Trêve Atelier.">
+    <title>Portafolio La Trêve - Design Atelier</title>
+    <!-- Se utiliza Cabin como tipografía secundaria oficial según el manual de marca, al no disponer de Gill Sans web-safe -->
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta Orgánica (Tonos Café/Madera) */
+            --bg-color: #1a1816;
+            /* Dark brown/black */
+            --text-color: #e6dfd1;
+            /* Light sand/wood tone */
+            --accent: #b09e86;
+            /* Warm wood accent */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #222;
+            /* Fondo de previsualización fuera de la página */
+            color: var(--text-color);
+            font-family: 'Cabin', sans-serif;
+            font-weight: 400;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background-color: var(--bg-color);
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        @media print {
+            body {
+                background-color: var(--bg-color);
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.5;
+            filter: grayscale(20%) brightness(1.1);
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 20mm;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .content.centered {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 52pt;
+            font-weight: 500;
+            letter-spacing: 4px;
+            margin-bottom: 5mm;
+            text-transform: none;
+            /* Según el manual, el logo usa serif, pero mantenemos elegancia */
+        }
+
+        h2 {
+            font-size: 28pt;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 10mm;
+            color: var(--accent);
+            text-transform: none;
+        }
+
+        h3 {
+            font-size: 18pt;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 5mm;
+            text-transform: none;
+            color: var(--text-color);
+        }
+
+        p {
+            font-size: 14pt;
+            line-height: 1.6;
+            margin-bottom: 8mm;
+            max-width: 90%;
+            color: rgba(230, 223, 209, 0.9);
+            text-align: justify;
+        }
+
+        .subtitle {
+            font-size: 18pt;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 15mm;
+            text-transform: uppercase;
+        }
+
+        .split-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        figure.image-area {
+            margin: 0;
+            flex: 6;
+            overflow: hidden;
+            display: block;
+            position: relative;
+        }
+
+        .split-layout .text-area {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15mm 20mm;
+            background-color: var(--bg-color);
+        }
+
+        .split-layout figure.image-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(1.15) contrast(1.05) saturate(1.05) sepia(0.05);
+        }
+
+        /* Square Layout para Proyectos */
+        .square-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .square-layout .image-area {
+            width: 210mm;
+            height: 210mm;
+            overflow: hidden;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .square-layout .text-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5mm 20mm;
+            background-color: var(--bg-color);
+        }
+
+        .square-layout .image-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* Efecto de rayo de sol cálido sobre las imágenes generadas */
+        .split-layout figure.image-area::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 230, 160, 0.15) 0%, rgba(255, 255, 255, 0) 50%);
+            mix-blend-mode: soft-light;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Specific Page Layouts */
+        .cover .content {
+            justify-content: flex-end;
+            padding-bottom: 30mm;
+        }
+
+        .cover h1 {
+            font-size: 64pt;
+            letter-spacing: 6px;
+            margin-bottom: 2mm;
+            font-family: serif;
+            font-weight: bold;
+        }
+
+        /* Serif simulando el logo */
+        .cover .subtitle {
+            font-size: 20pt;
+            letter-spacing: 6px;
+            color: var(--text-color);
+        }
+
+        .cover .tagline {
+            font-size: 14pt;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        .service-list,
+        .process-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .service-list li,
+        .process-list li {
+            font-size: 18pt;
+            line-height: 2.5;
+            border-bottom: 1px solid rgba(230, 223, 209, 0.2);
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+        }
+
+        .process-list li::before {
+            content: "0" counter(process) ". ";
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 5mm;
+        }
+
+        .process-list {
+            counter-reset: process;
+        }
+
+        .process-list li {
+            counter-increment: process;
+        }
+
+        .contact-page {
+            background-color: var(--bg-color);
+        }
+
+        .contact-page .bg-image {
+            opacity: 0.2;
+        }
+
+        .contact-page h2 {
+            color: var(--text-color);
+        }
+
+        .contact-page .social {
+            font-size: 24pt;
+            color: var(--accent);
+            letter-spacing: 3px;
+            display: block;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Utilities */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-large {
+            margin-top: 20mm;
+        }
+
+        .mb-none {
+            margin-bottom: 0;
+        }
+
+        .w-100 {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .w-80 {
+            width: 80%;
+        }
+
+        .enfoque-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10mm;
+            margin-top: 5mm;
+        }
+
+        .enfoque-item h3 {
+            margin-bottom: 2mm;
+            font-size: 16pt;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .enfoque-item p {
+            margin-bottom: 0;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <!-- PÁGINA 1 — PORTADA -->
+        <header class="page cover" aria-label="Portada del Portafolio">
+            <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_cover_1776979504746.png"
+                alt="Mobiliario minimalista de madera con iluminación elegante" class="bg-image" style="opacity: 0.5;">
+            <div class="content text-center">
+                <h1 class="visually-hidden"
+                    style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">
+                    La Trêve Design Atelier</h1>
+                <img src="C:/Users/Fernanda/OneDrive/Desktop/La Treve/LA TREVE/LA TREVE/APLICACIONES/MARCA 1/MARCA WHITE NO BG.png"
+                    alt="Logotipo La Trêve" style="width: 400px; margin: 0 auto 10mm auto;">
+                <div class="tagline">Permanencia · Equilibrio · Materia</div>
+            </div>
+        </header>
+
+        <!-- PÁGINA 2 — QUIÉNES SOMOS -->
+        <section class="page split-layout" aria-labelledby="quienes-somos-title">
+            <figure class="image-area">
+                <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_materials_1776979531585.png"
+                    alt="Detalle de textura de madera noble, mostrando la calidad de los materiales" loading="lazy">
+            </figure>
+            <div class="text-area">
+                <h2 id="quienes-somos-title">Quiénes somos</h2>
+                <h3 style="font-size: 18pt; font-weight: 500; color: var(--accent); line-height: 1.4;">Integramos diseño
+                    y manufactura para proyectos de interiorismo.</h3>
+                <p>En La Trêve somos aliados estratégicos en el desarrollo y ejecución de mobiliario a medida, aportando
+                    precisión técnica y valor estético a cada proyecto arquitectónico.</p>
+                <p>Trabajamos en sinergia con oficinas de arquitectura e inmobiliarias para materializar espacios
+                    coherentes, rentables y de alto estándar. Diseñamos internamente y fabricamos cada pieza con
+                    precisión en nuestro centro de manufactura local, garantizando un control absoluto sobre el
+                    resultado final.</p>
+            </div>
+        </section>
+
+        <!-- PÁGINA 3 — ENFOQUE -->
+        <section class="page split-layout" aria-labelledby="enfoque-title">
+            <div class="text-area">
+                <h2 id="enfoque-title">Nuestro enfoque</h2>
+                <div class="enfoque-grid">
+                    <article class="enfoque-item">
+                        <h3>Permanencia</h3>
+                        <p>Durabilidad y rentabilidad a largo plazo.</p>
+                    </article>
+                    <article class="enfoque-item">
+                        <h3>Equilibrio</h3>
+                        <p>Equilibrio espacial y funcional.</p>
+                    </article>
+                    <article class="enfoque-item">
+                        <h3>Materia</h3>
+                        <p>Materialidad noble y escalabilidad de producción.</p>
+                    </article>
+                </div>
+            </div>
+            <figure class="image-area">
+                <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_cover_1776979504746.png"
+                    alt="Muebles a medida integrados en un espacio funcional" loading="lazy">
+            </figure>
+        </section>
+
+        <!-- PÁGINA 4 — SERVICIOS -->
+        <section class="page" aria-labelledby="servicios-title">
+            <div class="content">
+                <h2 id="servicios-title" class="text-center mt-large" style="margin-bottom: 20mm;">Servicios</h2>
+                <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <ul class="service-list w-80 text-center">
+                        <li>Diseño de autor y manufactura local</li>
+                        <li>Colaboración técnica en diseño de interiores</li>
+                        <li>Equipamiento residencial y corporativo</li>
+                        <li>Asesoría en interiorismo</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 5 — PROYECTO -->
+        <section class="page split-layout" aria-labelledby="proyecto-title">
+            <figure class="image-area" style="flex: 6;">
+                <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_living_1776979519362.png"
+                    alt="Proyecto de optimización de living, mostrando repisas de madera integradas y orden visual"
+                    loading="lazy">
+            </figure>
+            <div class="text-area" style="flex: 4;">
+                <h2 id="proyecto-title" style="font-size: 14pt; margin-bottom: 2mm;">Proyecto conceptual</h2>
+                <h3
+                    style="font-size: 18pt; font-weight: 500; color: var(--accent); margin-bottom: 4mm; line-height: 1.4;">
+                    Caso de Estudio: Integración Residencial</h3>
+                <p style="font-size: 11pt; color: rgba(230,223,209,0.7); margin-bottom: 6mm; font-style: italic;">
+                    <strong>Ubicación:</strong> Chicureo | <strong>Cliente:</strong> Juan Lopez</p>
+                <p class="mb-none" style="font-size: 13pt; opacity: 0.8;"><strong>Desafío:</strong> Maximizar la
+                    funcionalidad espacial manteniendo la pureza volumétrica exigida por la arquitectura.</p>
+                <p style="font-size: 13pt; margin-top: 5mm;"><strong>Solución:</strong> Diseño y fabricación de
+                    mobiliario a medida en madera noble, integrando sistemas de iluminación y herrajes ocultos.</p>
+                <div style="margin-top: 8mm; border-left: 2px solid var(--accent); padding-left: 5mm;">
+                    <p style="font-size: 12pt; margin-bottom: 0;"><strong>Resultado:</strong><br>Aumento del valor
+                        percibido del inmueble y resolución técnica impecable en los plazos establecidos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 6 — PROYECTO 2 -->
+        <section class="page square-layout" aria-labelledby="proyecto2-title">
+            <figure class="image-area">
+                <img src="C:/Users/Fernanda/Downloads/Gemini_Generated_Image_afkwxtafkwxtafkw.png" alt="Sofá L'Essence"
+                    loading="lazy">
+            </figure>
+            <div class="text-area">
+                <h2 id="proyecto2-title" style="font-size: 14pt; margin-bottom: 2mm;">Diseño Conceptual | Fabricación a
+                    Pedido</h2>
+                <h3
+                    style="font-size: 22pt; font-weight: 500; color: var(--accent); margin-bottom: 4mm; line-height: 1.2;">
+                    Sofá L'Essence</h3>
+                <p style="font-size: 12pt; line-height: 1.4; margin-bottom: 4mm;">Diseño atemporal de proporciones
+                    exactas. La pureza de la forma y la calidad del textil se unen para crear una pieza de confort
+                    absoluto, respetando la pureza del proyecto arquitectónico.</p>
+                <div style="border-left: 2px solid var(--accent); padding-left: 5mm;">
+                    <p style="font-size: 11pt; margin-bottom: 0; line-height: 1.3;"><strong>Aplicación:</strong>
+                        Proyectos residenciales de alto estándar y hospitality.</p>
+                </div>
+                <p
+                    style="font-size: 10pt; font-style: italic; color: rgba(230,223,209,0.5); margin-top: 5mm; line-height: 1.3;">
+                    * Propuesta de diseño exclusivo La Trêve. Dimensiones y materialidad adaptables según requerimientos
+                    del cliente.</p>
+            </div>
+        </section>
+
+        <!-- PÁGINA 7 — PROYECTO 3 -->
+        <section class="page square-layout" aria-labelledby="proyecto3-title">
+            <figure class="image-area">
+                <img src="C:/Users/Fernanda/Downloads/Gemini_Generated_Image_k6u4rpk6u4rpk6u4.png" alt="Sofá Le Plateau"
+                    loading="lazy">
+            </figure>
+            <div class="text-area">
+                <h2 id="proyecto3-title" style="font-size: 14pt; margin-bottom: 2mm;">Diseño Conceptual | Fabricación a
+                    Pedido</h2>
+                <h3
+                    style="font-size: 22pt; font-weight: 500; color: var(--accent); margin-bottom: 4mm; line-height: 1.2;">
+                    Sofá Le Plateau</h3>
+                <p style="font-size: 12pt; line-height: 1.4; margin-bottom: 4mm;">Asientos extendidos sobre una base
+                    sólida. Una reinterpretación de la pausa horizontal, ideal para lobbys corporativos o residenciales
+                    que requieren presencia visual y elegancia prolongada.</p>
+                <div style="border-left: 2px solid var(--accent); padding-left: 5mm;">
+                    <p style="font-size: 11pt; margin-bottom: 0; line-height: 1.3;"><strong>Aplicación:</strong> Lobbys,
+                        salas de espera premium y residencias de lujo.</p>
+                </div>
+                <p
+                    style="font-size: 10pt; font-style: italic; color: rgba(230,223,209,0.5); margin-top: 5mm; line-height: 1.3;">
+                    * Propuesta de diseño exclusivo La Trêve. Dimensiones y materialidad adaptables según requerimientos
+                    del cliente.</p>
+            </div>
+        </section>
+
+        <!-- PÁGINA 8 — PROYECTO 4 -->
+        <section class="page square-layout" aria-labelledby="proyecto4-title">
+            <figure class="image-area">
+                <img src="C:/Users/Fernanda/Downloads/LaTrve_httpss.mj.run2QnRw4kYYYE_High-end_professional_interio_cff58391-c7b7-45ed-9e31-23522bb9603d_2.png"
+                    alt="Sofá Le Cocon" loading="lazy">
+            </figure>
+            <div class="text-area">
+                <h2 id="proyecto4-title" style="font-size: 14pt; margin-bottom: 2mm;">Diseño Conceptual | Fabricación a
+                    Pedido</h2>
+                <h3
+                    style="font-size: 22pt; font-weight: 500; color: var(--accent); margin-bottom: 4mm; line-height: 1.2;">
+                    Sofá Le Cocon</h3>
+                <p style="font-size: 12pt; line-height: 1.4; margin-bottom: 4mm;">Líneas envolventes y materialidad
+                    táctil diseñadas para jerarquizar espacios. Cada costura refleja el estándar de calidad y la
+                    búsqueda de una estética diferenciadora para el proyecto.</p>
+                <div style="border-left: 2px solid var(--accent); padding-left: 5mm;">
+                    <p style="font-size: 11pt; margin-bottom: 0; line-height: 1.3;"><strong>Aplicación:</strong>
+                        Proyectos boutique y espacios directivos.</p>
+                </div>
+                <p
+                    style="font-size: 10pt; font-style: italic; color: rgba(230,223,209,0.5); margin-top: 5mm; line-height: 1.3;">
+                    * Propuesta de diseño exclusivo La Trêve. Dimensiones y materialidad adaptables según requerimientos
+                    del cliente.</p>
+            </div>
+        </section>
+
+        <!-- PÁGINA 9 — PROCESO -->
+        <section class="page split-layout" aria-labelledby="proceso-title">
+            <figure class="image-area">
+                <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_process_1776979547048.png"
+                    alt="Espacio de trabajo del diseñador con bocetos y muestras de madera" loading="lazy">
+            </figure>
+            <div class="text-area">
+                <h2 id="proceso-title" style="margin-bottom: 15mm;">Proceso</h2>
+                <ol class="process-list w-100">
+                    <li>Análisis de espacios y requerimientos</li>
+                    <li>Desarrollo de planimetría de mueblería y prototipado</li>
+                    <li>Coordinación de interiorismo</li>
+                    <li>Fabricación detallada bajo estrictos estándares</li>
+                    <li>Instalación final con equipo especializado</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- PÁGINA 7 — CIERRE -->
+        <section class="page centered" aria-label="Mensaje de cierre">
+            <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_cover_1776979504746.png"
+                alt="Mobiliario elegante y ambiente armónico" class="bg-image" style="opacity: 0.3;" loading="lazy">
+            <div class="content centered" style="z-index: 3;">
+                <h2
+                    style="font-size: 38pt; text-transform: none; font-weight: 400; text-align: center; max-width: 90%; line-height: 1.4; color: var(--text-color);">
+                    Somos un aliado estratégico para tus proyectos más exigentes.</h2>
+            </div>
+        </section>
+
+        <!-- PÁGINA 8 — CONTACTO -->
+        <footer class="page contact-page centered" aria-labelledby="contacto-title">
+            <div class="content centered">
+                <img src="C:/Users/Fernanda/.gemini/antigravity/brain/0ce79e3c-8c47-488a-94f3-400bfa8efee1/la_treve_materials_1776979531585.png"
+                    alt="Textura de madera en tonos oscuros" class="bg-image" loading="lazy">
+                <h2 id="contacto-title"
+                    style="font-size: 32pt; letter-spacing: 4px; text-transform: none; margin-bottom: 5mm; position: relative; z-index: 2;">
+                    Hablemos de su próximo proyecto</h2>
+                <a href="https://instagram.com/la.treve.atelier" class="social"
+                    style="margin-top: 10mm; position: relative; z-index: 2;"
+                    aria-label="Instagram de La Trêve Atelier">@la.treve.atelier</a>
+                <img src="C:/Users/Fernanda/OneDrive/Desktop/La Treve/LA TREVE/LA TREVE/APLICACIONES/MARCA 2/MARCA 2 WHITE NO BG.png"
+                    alt="Logotipo Secundario La Trêve"
+                    style="width: 90px; margin-top: 35mm; position: relative; z-index: 2; filter: brightness(0) invert(1); opacity: 0.95;">
+            </div>
+        </footer>
+    </main>
+</body>
+
+</html>

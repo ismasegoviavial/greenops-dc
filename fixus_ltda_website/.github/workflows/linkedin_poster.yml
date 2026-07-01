@@ -1,0 +1,43 @@
+name: Hermes LinkedIn Daily Poster
+
+on:
+  schedule:
+    # Ejecutar todos los días a las 14:00 UTC (Aprox. 10:00 AM en hora local según zona horaria)
+    - cron: '0 14 * * *'
+  workflow_dispatch: # Permite ejecución manual desde la web de GitHub
+
+jobs:
+  post-to-linkedin:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests duckduckgo_search python-dotenv
+          
+      - name: Ejecutar Agente Hermes
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+        run: |
+          python linkedin_poster_agent.py
+          
+      - name: Guardar estado (Hacer commit de content_db.json)
+        run: |
+          git config --global user.name "Hermes AI Agent"
+          git config --global user.email "hermes@fixusconsulting.com"
+          git add content_db.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update content_db.json state"
+          git push

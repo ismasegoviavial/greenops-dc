@@ -1,0 +1,31 @@
+Localidad,Tecnología,Horas Totales,Free Cooling Hours,Energía Total (kWh),Costo Energía (USD),Precio USD/kWh
+"Isla Gordon, Chile",CRAC (Aire Acondicionado Tradicional),26304,0,4734720.00,833310.72,0.176
+"Isla Gordon, Chile",RDHx (Rear Door Heat Exchanger),26304,25415,3056075.00,537869.20,0.176
+"Isla Gordon, Chile",Termosifón Bifásico Original (Por Aire),26304,26250,2895600.00,509625.60,0.176
+"Isla Gordon, Chile",D2C Bifásico (Direct-to-Chip),26304,26304,2761920.00,486097.92,0.176
+"Isla Gordon, Chile",Inmersión Líquida Bifásica,26304,26304,2683008.00,472209.41,0.176
+"Colchane, Chile",CRAC (Aire Acondicionado Tradicional),26304,0,4734720.00,833310.72,0.176
+"Colchane, Chile",RDHx (Rear Door Heat Exchanger),26304,14879,3424835.00,602770.96,0.176
+"Colchane, Chile",Termosifón Bifásico Original (Por Aire),26304,21232,3096320.00,544952.32,0.176
+"Colchane, Chile",D2C Bifásico (Direct-to-Chip),26304,26302,2761950.00,486103.20,0.176
+"Colchane, Chile",Inmersión Líquida Bifásica,26304,26304,2683008.00,472209.41,0.176
+"Reykjavik, Islandia",CRAC (Aire Acondicionado Tradicional),26304,0,4734720.00,378777.60,0.08
+"Reykjavik, Islandia",RDHx (Rear Door Heat Exchanger),26304,21444,3195060.00,255604.80,0.08
+"Reykjavik, Islandia",Termosifón Bifásico Original (Por Aire),26304,26064,2903040.00,232243.20,0.08
+"Reykjavik, Islandia",D2C Bifásico (Direct-to-Chip),26304,26304,2761920.00,220953.60,0.08
+"Reykjavik, Islandia",Inmersión Líquida Bifásica,26304,26304,2683008.00,214640.64,0.08
+"Helsinki, Finlandia",CRAC (Aire Acondicionado Tradicional),26304,0,4734720.00,402451.20,0.085
+"Helsinki, Finlandia",RDHx (Rear Door Heat Exchanger),26304,15841,3391165.00,288249.03,0.085
+"Helsinki, Finlandia",Termosifón Bifásico Original (Por Aire),26304,19835,3152200.00,267937.00,0.085
+"Helsinki, Finlandia",D2C Bifásico (Direct-to-Chip),26304,26221,2763165.00,234869.03,0.085
+"Helsinki, Finlandia",Inmersión Líquida Bifásica,26304,26304,2683008.00,228055.68,0.085
+"Lulea, Suecia",CRAC (Aire Acondicionado Tradicional),26304,0,4734720.00,402451.20,0.085
+"Lulea, Suecia",RDHx (Rear Door Heat Exchanger),26304,17526,3332190.00,283236.15,0.085
+"Lulea, Suecia",Termosifón Bifásico Original (Por Aire),26304,21625,3080600.00,261851.00,0.085
+"Lulea, Suecia",D2C Bifásico (Direct-to-Chip),26304,26182,2763750.00,234918.75,0.085
+"Lulea, Suecia",Inmersión Líquida Bifásica,26304,26304,2683008.00,228055.68,0.085
+"Quebec, Canada",CRAC (Aire Acondicionado Tradicional),26304,0,4734720.00,426124.80,0.09
+"Quebec, Canada",RDHx (Rear Door Heat Exchanger),26304,15213,3413145.00,307183.05,0.09
+"Quebec, Canada",Termosifón Bifásico Original (Por Aire),26304,18986,3186160.00,286754.40,0.09
+"Quebec, Canada",D2C Bifásico (Direct-to-Chip),26304,25495,2774055.00,249664.95,0.09
+"Quebec, Canada",Inmersión Líquida Bifásica,26304,26304,2683008.00,241470.72,0.09

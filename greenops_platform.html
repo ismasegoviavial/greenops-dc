@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenOps DC – Platform Dashboard</title>
+    <meta name="description" content="AI-Powered GreenOps platform for optimizing data center thermodynamics, cost, and carbon footprint.">
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for High-Performance Visuals -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --panel-bg: rgba(22, 26, 38, 0.75);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --accent-green: #00e676;
+            --accent-green-glow: rgba(0, 230, 118, 0.25);
+            --accent-cyan: #00e5ff;
+            --accent-cyan-glow: rgba(0, 229, 255, 0.25);
+            --accent-orange: #ff9100;
+            --accent-red: #ff3d00;
+            --text-primary: #f5f6fa;
+            --text-secondary: #a0a5b5;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(14, 17, 28, 0.95);
+            border-right: 1px solid var(--panel-border);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .logo-container i {
+            font-size: 28px;
+            color: var(--accent-green);
+            text-shadow: 0 0 15px var(--accent-green-glow);
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--panel-border);
+        }
+
+        .nav-item.active i {
+            color: var(--accent-green);
+            text-shadow: 0 0 10px var(--accent-green-glow);
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid var(--panel-border);
+            padding-top: 15px;
+            font-size: 11px;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* Main view container */
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient gradient background glows */
+        .glow-1 {
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glow-2 {
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.06) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .header-bar {
+            height: 80px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--panel-border);
+            z-index: 2;
+            background: rgba(11, 12, 16, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            color: var(--accent-green);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.05);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-green);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 10px var(--accent-green); }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* Views (Tabs) */
+        .view-content {
+            padding: 30px 40px;
+            flex-grow: 1;
+            overflow-y: auto;
+            z-index: 2;
+            display: none;
+            box-sizing: border-box;
+        }
+
+        .view-content.active {
+            display: block;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .grid-2-1 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .grid-1-2 {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        /* Metric Widgets */
+        .metric-widget {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .metric-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--panel-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--accent-green);
+        }
+
+        .metric-icon.blue { color: var(--accent-cyan); }
+        .metric-icon.orange { color: var(--accent-orange); }
+
+        .metric-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        /* Forms / Inputs styles */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-group select, .input-group input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-group select:focus, .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
+        }
+
+        /* Collapsible Section */
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+            border-top: 1px solid var(--panel-border);
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 15px;
+        }
+
+        .collapsible-content {
+            display: none;
+            padding-top: 15px;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 14px;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.01);
+        }
+
+        /* Action Buttons */
+        .btn {
+            background: var(--accent-green);
+            color: #000;
+            border: none;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.45);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--panel-border);
+            box-shadow: none;
+            padding: 12px 24px;
+            font-size: 13px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: none;
+            transform: translateY(-2px);
+        }
+
+        /* Telemetry Elements */
+        .telemetry-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .telemetry-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dotted rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+        }
+
+        .telemetry-row span:first-child {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .telemetry-row span:last-child {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Custom badge indicator colors */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge.green { background: rgba(0,230,118,0.15); color: var(--accent-green); }
+        .badge.cyan { background: rgba(0,229,255,0.15); color: var(--accent-cyan); }
+        .badge.orange { background: rgba(255,145,0,0.15); color: var(--accent-orange); }
+        .badge.red { background: rgba(255,61,0,0.15); color: var(--accent-red); }
+
+        .log-console {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #00ff66;
+            height: 180px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .log-timestamp {
+            color: #888;
+            margin-right: 8px;
+        }
+
+        .card-header-with-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Slider styles */
+        .slider-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider-control input[type=range] {
+            flex-grow: 1;
+            background: rgba(0,0,0,0.3);
+            height: 6px;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-control input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-green-glow);
+        }
+
+        .slider-val {
+            font-family: 'Outfit', sans-serif;
+            font-weight: bold;
+            font-size: 15px;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        /* 3D WebGL Globe container */
+        .globe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #101426 0%, #05060b 100%);
+            margin-bottom: 20px;
+        }
+
+        #globe-canvas {
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+
+        .globe-overlay-info {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(11, 12, 16, 0.85);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--panel-border);
+            font-size: 11px;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        /* API Swagger Hub Layout */
+        .swagger-section {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .swagger-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .swagger-method {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+        .swagger-method.get { background: #00e5ff20; color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+        .swagger-method.post { background: #00e67620; color: var(--accent-green); border: 1px solid var(--accent-green); }
+
+        .swagger-path {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 14px;
+            flex-grow: 1;
+        }
+
+        .swagger-body {
+            display: none;
+            padding: 20px;
+            border-top: 1px solid var(--panel-border);
+            background: rgba(0,0,0,0.25);
+        }
+        .swagger-body.active {
+            display: block;
+        }
+
+        .code-block {
+            background: #05060b;
+            border: 1px solid var(--panel-border);
+            border-radius: 6px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #dcdcdc;
+            overflow-x: auto;
+            margin-top: 10px;
+            white-space: pre;
+        }
+
+        /* TUTORIAL SYSTEM STYLES */
+        .tutorial-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(2px);
+            z-index: 999;
+            display: none;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .tutorial-backdrop.active {
+            display: block;
+            pointer-events: auto;
+        }
+
+        .tutorial-card {
+            position: fixed;
+            z-index: 1000;
+            width: 380px;
+            background: rgba(18, 22, 33, 0.95);
+            border: 1.5px solid var(--accent-green);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 15px 45px rgba(0, 230, 118, 0.25);
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(25px);
+        }
+        .tutorial-card.active {
+            display: flex;
+        }
+
+        .tutorial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 12px;
+        }
+        .tutorial-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--accent-green);
+        }
+        .tutorial-step-indicator {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        .tutorial-body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .tutorial-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            border-top: 1px solid var(--panel-border);
+            padding-top: 15px;
+        }
+
+        .tutorial-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tutorial-btn {
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            border: none;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tutorial-btn.primary {
+            background: var(--accent-green);
+            color: #000;
+            box-shadow: 0 2px 8px rgba(0, 230, 118, 0.3);
+        }
+        .tutorial-btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 230, 118, 0.5);
+        }
+        .tutorial-btn.secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+        }
+        .tutorial-btn.secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .tutorial-btn.skip {
+            background: transparent;
+            color: var(--accent-red);
+            font-size: 11px;
+            padding: 8px 0;
+        }
+        .tutorial-btn.skip:hover {
+            color: #ff6e40;
+            text-decoration: underline;
+        }
+
+        /* Element highlight effect */
+        .tutorial-highlight {
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.6) !important;
+            border-color: var(--accent-green) !important;
+            z-index: 1001 !important;
+            position: relative !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TUTORIAL OVERLAY & CARD -->
+    <div class="tutorial-backdrop" id="tutorial-backdrop"></div>
+    <div class="tutorial-card" id="tutorial-card">
+        <div class="tutorial-header">
+            <span class="tutorial-title" id="tutorial-title">Bienvenido</span>
+            <span class="tutorial-step-indicator" id="tutorial-step-indicator">1 / 5</span>
+        </div>
+        <div class="tutorial-body" id="tutorial-body">
+            Contenido del tutorial.
+        </div>
+        <div class="tutorial-footer">
+            <button class="tutorial-btn skip" id="tutorial-btn-skip" onclick="closeTutorial()">Saltar Tutorial</button>
+            <div class="tutorial-btn-group">
+                <button class="tutorial-btn secondary" id="tutorial-btn-prev" onclick="prevTutorialStep()">Atrás</button>
+                <button class="tutorial-btn primary" id="tutorial-btn-next" onclick="nextTutorialStep()">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar-container">
+        <div class="logo-container">
+            <i class="fa-solid fa-wind"></i>
+            <div class="logo-text">GreenOps DC</div>
+        </div>
+
+        <div class="nav-menu">
+            <div class="nav-item active" id="nav-overview" onclick="switchView('overview')">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Overview</span>
+            </div>
+            <div class="nav-item" id="nav-saas" onclick="switchView('saas')">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>Feasibility Studio</span>
+            </div>
+            <div class="nav-item" id="nav-twin" onclick="switchView('twin')">
+                <i class="fa-solid fa-server"></i>
+                <span>Digital Twin</span>
+            </div>
+            <div class="nav-item" id="nav-forecast" onclick="switchView('forecast')">
+                <i class="fa-solid fa-cloud-sun-rain"></i>
+                <span>Proactive Forecast</span>
+            </div>
+            <div class="nav-item" id="nav-api" onclick="switchView('api')">
+                <i class="fa-solid fa-code"></i>
+                <span>API Integration</span>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <span>Powered by Vertex AI & BQ ML</span>
+            <span>Fixus © 2026</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+
+        <!-- HEADER -->
+        <div class="header-bar">
+            <div class="header-title" id="view-title-text">Dashboard Overview</div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <button class="btn btn-outline" id="header-btn-tutorial" onclick="startTutorial()">
+                    <i class="fa-solid fa-graduation-cap"></i> Tutorial
+                </button>
+                <div class="status-badge" id="platform-status">
+                    <div class="status-dot"></div>
+                    <span>Live Telemetry</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 1: OVERVIEW -->
+        <div class="view-content active" id="view-overview">
+            <div class="grid-3" id="overview-metrics-grid">
+                <div class="glass-card metric-widget">
+                    <div class="metric-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">Carga IT Total Monitoreada</span>
+                        <span class="metric-value">3,500 kW</span>
+                    </div>
+                </div>
+                <div class="glass-card metric-widget">
+                    <div class="metric-icon blue"><i class="fa-solid fa-gauge-high"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">PUE Promedio de Red</span>
+                        <span class="metric-value" id="network-avg-pue">1.034</span>
+                    </div>
+                </div>
+                <div class="glass-card metric-widget">
+                    <div class="metric-icon orange"><i class="fa-solid fa-leaf"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">Emisiones Scope 2 Ahorradas</span>
+                        <span class="metric-value">1,480 tCO₂e/año</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2-1">
+                <div class="glass-card">
+                    <h3 class="card-title" style="margin-bottom: 20px;">Monitoreo Global de Activos (Sedes Activas)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Localidad</th>
+                                <th>Tecnología</th>
+                                <th>PUE Medio</th>
+                                <th>Free Cooling Hours</th>
+                                <th>Estado Operacional</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Isla Gordon, Chile</td>
+                                <td>Direct-to-Chip Bifásico</td>
+                                <td>1.05</td>
+                                <td>100.00%</td>
+                                <td><span class="badge green">Estable - FC Pasivo</span></td>
+                            </tr>
+                            <tr>
+                                <td>Reykjavik, Islandia</td>
+                                <td>Inmersión Líquida Bifásica</td>
+                                <td>1.02</td>
+                                <td>100.00%</td>
+                                <td><span class="badge green">Estable - FC Pasivo</span></td>
+                            </tr>
+                            <tr>
+                                <td>Quebec, Canadá</td>
+                                <td>RDHx Puerta Trasera</td>
+                                <td>1.15</td>
+                                <td>57.84%</td>
+                                <td><span class="badge orange">Eficiencia Media</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="glass-card">
+                    <h3 class="card-title" style="margin-bottom: 20px;">Alertas de Gestión de Activos</h3>
+                    <div class="telemetry-container" id="overview-alerts-container">
+                        <div class="telemetry-row">
+                            <span>Isla Gordon - D2C</span>
+                            <span style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i> Normal</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span>Reykjavik - Immersion</span>
+                            <span style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i> Normal</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span>Quebec - RDHx</span>
+                            <span style="color: var(--accent-orange);"><i class="fa-solid fa-triangle-exclamation"></i> Chiller activo predicho</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: FEASIBILITY STUDIO (SaaS Simulator & 3D Globe) -->
+        <div class="view-content" id="view-saas">
+            <div class="grid-1-2">
+                <!-- Parámetros del simulador -->
+                <div class="glass-card" id="saas-parameters-card">
+                    <h3 class="card-title" style="margin-bottom: 20px;">Configuración de Viabilidad</h3>
+                    
+                    <div class="input-group">
+                        <label for="saas-location">Localidad del Proyecto (o clic en Globo 3D)</label>
+                        <select id="saas-location" onchange="onSaaSLocationChange()"></select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="saas-system">Tecnología de Enfriamiento</label>
+                        <select id="saas-system" onchange="runSaaSSimulation()"></select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="saas-racks">Cantidad de Racks</label>
+                        <input type="number" id="saas-racks" value="10" min="1" oninput="runSaaSSimulation()">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="saas-density">Densidad por Rack (kW)</label>
+                        <input type="number" id="saas-density" value="100" min="5" max="150" oninput="runSaaSSimulation()">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="saas-tariff">Tarifa Eléctrica (USD / kWh)</label>
+                        <input type="number" id="saas-tariff" value="0.176" step="0.001" oninput="runSaaSSimulation()">
+                    </div>
+                    
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-top: -10px; margin-bottom: 15px;">
+                        Fuente tarifa: <span id="saas-source-label">-</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="saas-lifetime">Vida Útil del Proyecto (Años)</label>
+                        <input type="number" id="saas-lifetime" value="10" min="1" max="30" oninput="runSaaSSimulation()">
+                    </div>
+
+                    <!-- MÓDULO B: Parámetros de Hardware Avanzados (Retrofit) -->
+                    <div class="collapsible-header" onclick="toggleCollapsible('saas-adv-config')">
+                        <span>Configuración de Hardware (Retrofit)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="collapsible-content" id="saas-adv-config">
+                        <div class="input-group">
+                            <label for="saas-baseline-pue">PUE Baseline de Aire actual</label>
+                            <input type="number" id="saas-baseline-pue" value="1.80" step="0.05" oninput="runSaaSSimulation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="saas-chiller-cop">COP del Chiller mecánico</label>
+                            <input type="number" id="saas-chiller-cop" value="3.5" step="0.1" oninput="runSaaSSimulation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="saas-fan-kw">Potencia Ventilador Dry Cooler (kW)</label>
+                            <input type="number" id="saas-fan-kw" value="15" step="1" oninput="runSaaSSimulation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="saas-pump-kw">Potencia Bomba de Agua (kW)</label>
+                            <input type="number" id="saas-pump-kw" value="5" step="0.5" oninput="runSaaSSimulation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="saas-water-price">Costo de Agua (USD / m³)</label>
+                            <input type="number" id="saas-water-price" value="1.50" step="0.10" oninput="runSaaSSimulation()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nodos Recomendados (Reemplazo del Globo 3D) -->
+                <div class="telemetry-container" style="display: flex; flex-direction: column; gap: 25px;">
+                    <div class="glass-card" id="saas-nodes-card" style="padding: 20px;">
+                        <h3 class="card-title" style="font-size: 16px; margin-bottom: 15px;"><i class="fa-solid fa-map-location-dot"></i> Nodos de Enfriamiento Estratégicos (Tesis & SaaS)</h3>
+                        <div class="nodes-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                            <div class="node-card" onclick="selectStrategicNode('Isla Gordon, Chile')" id="node-gordon" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px;">Isla Gordon</span>
+                                    <i class="fa-solid fa-snowflake" style="color: var(--accent-cyan); font-size: 12px;"></i>
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Tundra (Chile)</span>
+                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">100% Free Cooling</div>
+                            </div>
+                            <div class="node-card" onclick="selectStrategicNode('Colchane, Chile')" id="node-colchane" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px;">Colchane</span>
+                                    <i class="fa-solid fa-mountain" style="color: var(--accent-orange); font-size: 12px;"></i>
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Altiplano (Chile)</span>
+                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">98.4% Free Cooling</div>
+                            </div>
+                            <div class="node-card" onclick="selectStrategicNode('Reykjavik, Islandia')" id="node-reykjavik" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px;">Reykjavik</span>
+                                    <i class="fa-solid fa-icicles" style="color: var(--accent-cyan); font-size: 12px;"></i>
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Subpolar (Islandia)</span>
+                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">100% Free Cooling</div>
+                            </div>
+                            <div class="node-card" onclick="selectStrategicNode('Helsinki, Finlandia')" id="node-helsinki" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px;">Helsinki</span>
+                                    <i class="fa-solid fa-cloud-showers-water" style="color: var(--text-secondary); font-size: 12px;"></i>
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Boreal (Finlandia)</span>
+                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">88.2% Free Cooling</div>
+                            </div>
+                            <div class="node-card" onclick="selectStrategicNode('Lulea, Suecia')" id="node-lulea" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px;">Luleå</span>
+                                    <i class="fa-solid fa-temperature-low" style="color: var(--accent-cyan); font-size: 12px;"></i>
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Subártico (Suecia)</span>
+                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">94.7% Free Cooling</div>
+                            </div>
+                            <div class="node-card" onclick="selectStrategicNode('Quebec, Canada')" id="node-quebec" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px;">Quebec</span>
+                                    <i class="fa-solid fa-tree" style="color: var(--accent-orange); font-size: 12px;"></i>
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Continental (Canadá)</span>
+                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">57.8% Free Cooling</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="glass-card metric-widget">
+                            <div class="metric-icon blue"><i class="fa-solid fa-snowflake"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-label">Free Cooling (FCH %)</span>
+                                <span class="metric-value" id="saas-res-fch">100.0%</span>
+                            </div>
+                        </div>
+                        <div class="glass-card metric-widget">
+                            <div class="metric-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-label">PUE Dinámico Medio</span>
+                                <span class="metric-value" id="saas-res-pue">1.03</span>
+                            </div>
+                        </div>
+                        <div class="glass-card metric-widget">
+                            <div class="metric-icon orange"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-label">Payback Period</span>
+                                <span class="metric-value" id="saas-res-payback">2.4 Años</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficas de ROI y desglose económico -->
+                    <div class="glass-card" id="saas-roi-card">
+                        <div class="card-header-with-actions">
+                            <h3 class="card-title">Retorno de Inversión (ROI) y Carbono</h3>
+                        </div>
+                        <div class="grid-2-1" style="margin-bottom: 0;">
+                            <div class="telemetry-container">
+                                <div class="telemetry-row">
+                                    <span>Consumo Eléctrico Anual (Sistema)</span>
+                                    <span id="saas-val-energy">- kWh</span>
+                                </div>
+                                <div class="telemetry-row">
+                                    <span>Costo Operativo Anual (OPEX)</span>
+                                    <span id="saas-val-opex">- USD</span>
+                                </div>
+                                <div class="telemetry-row">
+                                    <span>Ahorro de OPEX Anual vs Baseline</span>
+                                    <span id="saas-val-savings" style="color: var(--accent-green); font-weight: bold;">- USD</span>
+                                </div>
+                                <div class="telemetry-row">
+                                    <span>Inversión Inicial Estimada (CAPEX)</span>
+                                    <span id="saas-val-capex">- USD</span>
+                                </div>
+                                <div class="telemetry-row">
+                                    <span>Valor Presente Neto (VPN) del Ahorro</span>
+                                    <span id="saas-val-npv" style="color: var(--accent-cyan);">- USD</span>
+                                </div>
+                                <div class="telemetry-row">
+                                    <span>Ahorro de Carbono Neto</span>
+                                    <span id="saas-val-carbon" style="color: var(--accent-green);">- tCO₂e/año</span>
+                                </div>
+                            </div>
+                            <!-- Gráfico de Dona para Desglose de PUE -->
+                            <div style="max-height: 220px; display: flex; justify-content: center; align-items: center; position: relative;">
+                                <canvas id="saas-chart" style="max-height: 200px; max-width: 200px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: DIGITAL TWIN (Asset Management Telemetry & IoT Integration) -->
+        <div class="view-content" id="view-twin">
+            <div class="grid-2-1">
+                <!-- Telemetría e Inputs en Tiempo Real -->
+                <div class="glass-card" id="twin-telemetry-card" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="card-header-with-actions">
+                        <h3 class="card-title">Telemetría de Termosifón Direct-to-Chip</h3>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <!-- MÓDULO D: Interruptor de conexión a sensores físicos -->
+                            <label style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" id="twin-iot-toggle" onchange="toggleIoTConnection()"> Conectar IoT (Local API)
+                            </label>
+                            <span class="badge green" id="twin-status-badge">Operación Normal</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="glass-card metric-widget" style="padding: 15px; background: rgba(0,0,0,0.2);">
+                            <div class="metric-info">
+                                <span class="metric-label" style="font-size: 11px;">Temp. Chip (Tj)</span>
+                                <span class="metric-value" id="twin-val-tj" style="font-size: 22px;">58.4 °C</span>
+                            </div>
+                        </div>
+                        <div class="glass-card metric-widget" style="padding: 15px; background: rgba(0,0,0,0.2);">
+                            <div class="metric-info">
+                                <span class="metric-label" style="font-size: 11px;">Presión Interna</span>
+                                <span class="metric-value" id="twin-val-p" style="font-size: 22px;">1.12 bar</span>
+                            </div>
+                        </div>
+                        <div class="glass-card metric-widget" style="padding: 15px; background: rgba(0,0,0,0.2);">
+                            <div class="metric-info">
+                                <span class="metric-label" style="font-size: 11px;">PUE Instantáneo</span>
+                                <span class="metric-value" id="twin-val-pue" style="font-size: 22px;">1.05</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles deslizantes interactivos para cambiar la física (Manual) -->
+                    <div class="input-group" id="twin-sliders-group">
+                        <div class="slider-control" style="margin-bottom: 10px;">
+                            <label style="min-width: 150px;">Densidad de Carga IT:</label>
+                            <input type="range" id="twin-control-load" min="10" max="150" value="100" oninput="updateTwinSimulation()">
+                            <span class="slider-val" id="twin-val-load">100 kW</span>
+                        </div>
+                        <div class="slider-control" style="margin-bottom: 10px;">
+                            <label style="min-width: 150px;">Temp. Ambiente Ext:</label>
+                            <input type="range" id="twin-control-temp" min="-10" max="45" value="15" oninput="updateTwinSimulation()">
+                            <span class="slider-val" id="twin-val-temp">15 °C</span>
+                        </div>
+                        <div class="slider-control">
+                            <label style="min-width: 150px;">Caudal Refrigerante Secundario:</label>
+                            <input type="range" id="twin-control-flow" min="0.1" max="2.0" step="0.1" value="1.0" oninput="updateTwinSimulation()">
+                            <span class="slider-val" id="twin-val-flow">1.0 L/s</span>
+                        </div>
+                    </div>
+
+                    <!-- Orquestación GreenOps activa -->
+                    <div style="margin-top: 10px; border-top: 1px solid var(--panel-border); padding-top: 15px;">
+                        <h4 style="margin: 0 0 12px 0; font-family: 'Outfit'; font-size: 15px;">GreenOps Active Control (Orquestación Computacional)</h4>
+                        <button class="btn" id="btn-migrate" onclick="triggerWorkloadMigration()">
+                            <i class="fa-solid fa-share-nodes"></i> Migrar Cargas a Gordon Island (FC)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Gemelo Digital e Logs -->
+                <div style="display: flex; flex-direction: column; gap: 25px;">
+                    <div class="glass-card">
+                        <h3 class="card-title" style="margin-bottom: 15px;">Efectividad Térmica (Epsilon-NTU)</h3>
+                        <div style="height: 180px; position: relative;">
+                            <canvas id="twin-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="glass-card" id="twin-logs-card" style="padding: 15px;">
+                        <h3 class="card-title" style="font-size: 15px; margin-bottom: 10px;"><i class="fa-solid fa-terminal"></i> Consola Operacional de Activos</h3>
+                        <div class="log-console" id="twin-logs">
+                            <div class="log-entry"><span class="log-timestamp">[10:00:00]</span> Gemelo digital iniciado. Fluidos dieléctricos cargados.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: PROACTIVE FORECAST (BigQuery ML & Vertex AI Integration) -->
+        <div class="view-content" id="view-forecast">
+            <div class="grid-2-1">
+                <!-- Forecast Chart -->
+                <div class="glass-card" id="forecast-chart-card" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="card-header-with-actions">
+                        <h3 class="card-title">Previsión Meteorológica ARIMA_PLUS (24h)</h3>
+                        <div class="input-group" style="margin: 0; min-width: 200px;">
+                            <select id="forecast-location" onchange="updateForecastView()"></select>
+                        </div>
+                    </div>
+                    <div style="height: 350px; position: relative;">
+                        <canvas id="forecast-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Planificación Proactiva -->
+                <div class="glass-card" style="display: flex; flex-direction: column; gap: 20px;">
+                    <h3 class="card-title">Plan de Enfriamiento Proactivo</h3>
+                    
+                    <div class="telemetry-container">
+                        <div class="telemetry-row">
+                            <span>Sede Seleccionada</span>
+                            <span id="forecast-res-location">-</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span>Temp. Máx. Pronosticada</span>
+                            <span id="forecast-res-max-temp" style="color: var(--accent-orange);">- °C</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span>Free Cooling horas (próximas 24h)</span>
+                            <span id="forecast-res-fc-hours" style="color: var(--accent-green);">- hrs</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span>Estrategia de Enfriamiento Predominante</span>
+                            <span id="forecast-res-mode">-</span>
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px solid var(--panel-border); padding-top: 15px;">
+                        <h4 style="margin: 0 0 12px 0; font-family: 'Outfit'; font-size: 15px;">Logs de Decisiones de Vertex AI Agent</h4>
+                        <div class="log-console" id="forecast-agent-logs" style="height: 160px; color: #00e5ff;">
+                            <div class="log-entry"><span class="log-timestamp">[VERTEX_AI]</span> Solicitando predicciones del Model Registry...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 5: API INTEGRATION HUB -->
+        <div class="view-content" id="view-api">
+            <div class="glass-card" style="margin-bottom: 25px;">
+                <h3 class="card-title" style="margin-bottom: 15px;">Documentación de API e Integraciones Activas</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                    La plataforma expone endpoints JSON listos para producción para integrar con software de reporte ESG (como <strong>ESGtrack AI</strong> o <strong>Salesforce Net Zero</strong>) y con sensores físicos locales.
+                </p>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <div class="status-badge" id="api-status-badge" style="background: rgba(255, 61, 0, 0.1); border-color: rgba(255, 61, 0, 0.3); color: var(--accent-red);">
+                        <div class="status-dot" style="background-color: var(--accent-red);" id="api-status-dot"></div>
+                        <span id="api-status-text">Local API: Offline</span>
+                    </div>
+                    <button class="btn btn-outline" onclick="checkLocalAPIExt()">Comprobar Conexión</button>
+                </div>
+            </div>
+
+            <!-- Swagger Endpoint 1 -->
+            <div class="swagger-section">
+                <div class="swagger-header" onclick="toggleSwagger('swagger-esg')">
+                    <span class="swagger-method get">GET</span>
+                    <span class="swagger-path">/api/v1/esg-metrics</span>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Consulta de reporte corporativo de sustentabilidad Scope 2</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="swagger-body" id="swagger-esg">
+                    <p style="font-size: 13px; color: var(--text-secondary);">Parámetros: <code>location</code> (string), <code>racks</code> (int), <code>density</code> (float).</p>
+                    <div class="code-block" id="swagger-esg-response">Cargando esquema de respuesta...</div>
+                </div>
+            </div>
+
+            <!-- Swagger Endpoint 2 -->
+            <div class="swagger-section">
+                <div class="swagger-header" onclick="toggleSwagger('swagger-iot')">
+                    <span class="swagger-method get">GET</span>
+                    <span class="swagger-path">/api/v1/iot-telemetry</span>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Lectura en tiempo real del sensor de hardware</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="swagger-body" id="swagger-iot">
+                    <div class="code-block" id="swagger-iot-response">Cargando esquema de respuesta...</div>
+                </div>
+            </div>
+
+            <!-- MÓDULO E: Orquestación Computacional de Cargas de Trabajo (Kubernetes) -->
+            <div class="glass-card" style="margin-top: 25px;">
+                <h3 class="card-title" style="margin-bottom: 15px;"><i class="fa-solid fa-share-nodes"></i> Orquestador de Carga de Trabajo GreenOps (Concepto)</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                    En producción, este conector se comunica directamente con el planificador de **Kubernetes (K8s Scheduler)** o **Slurm**. 
+                    El agente inteligente intercepta las tareas de entrenamiento de IA de alta densidad, consulta el pronóstico ARIMA de Vertex AI, y migra físicamente los contenedores hacia el centro de datos que ofrezca el PUE más bajo o la energía verde más barata en ese momento.
+                </p>
+                <div class="code-block" style="color: #00e5ff;">
+# Script conceptual de asignación proactiva K8s
+def schedule_blackwell_workload(job_specs):
+    predictions = fetch_vertex_arima_forecast()
+    optimal_location = min(predictions, key=lambda x: x['predicted_pue'] * x['energy_price'])
+    print(f"Redirigiendo Pod {job_specs['pod_id']} a {optimal_location['name']} (PUE esperado: {optimal_location['predicted_pue']})")
+    deploy_to_k8s_cluster(optimal_location['k8s_api_endpoint'], job_specs)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cargar base de datos generada -->
+    <script src="cooling_data.js"></script>
+
+    <!-- LOGICA DEL CLIENTE (JAVASCRIPT) -->
+    <script>
+        // Collapsible section logic
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id);
+            content.classList.toggle('active');
+        }
+
+        // Swagger details toggle
+        function toggleSwagger(id) {
+            const body = document.getElementById(id);
+            body.classList.toggle('active');
+        }
+
+        // Tab switching logic
+        function switchView(tabId) {
+            document.querySelectorAll('.view-content').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById('view-' + tabId).classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
+            
+            const titleMap = {
+                'overview': 'Dashboard Overview',
+                'saas': 'Feasibility Studio – SaaS Site Selector',
+                'twin': 'Digital Twin Telemetry – Asset Control',
+                'forecast': 'Proactive Forecast – Vertex AI & BigQuery ML',
+                'api': 'API Integration Hub'
+            };
+            document.getElementById('view-title-text').innerText = titleMap[tabId];
+            
+            if (tabId === 'saas') {
+                runSaaSSimulation();
+            } else if (tabId === 'twin') {
+                initTwinChart();
+            } else if (tabId === 'forecast') {
+                initForecastChart();
+            } else if (tabId === 'api') {
+                loadSwaggerDocs();
+                checkLocalAPI();
+            }
+        }
+
+        // API checks
+        function checkLocalAPI() {
+            fetch("http://127.0.0.1:8000/")
+                .then(res => res.json())
+                .then(data => {
+                    const badge = document.getElementById('api-status-badge');
+                    const dot = document.getElementById('api-status-dot');
+                    const txt = document.getElementById('api-status-text');
+                    badge.style.background = "rgba(0, 230, 118, 0.1)";
+                    badge.style.borderColor = "rgba(0, 230, 118, 0.3)";
+                    badge.style.color = "var(--accent-green)";
+                    dot.style.backgroundColor = "var(--accent-green)";
+                    txt.innerText = "Local API: Connected (Ingestion Ready)";
+                })
+                .catch(err => {
+                    const badge = document.getElementById('api-status-badge');
+                    const dot = document.getElementById('api-status-dot');
+                    const txt = document.getElementById('api-status-text');
+                    badge.style.background = "rgba(255, 61, 0, 0.1)";
+                    badge.style.borderColor = "rgba(255, 61, 0, 0.3)";
+                    badge.style.color = "var(--accent-red)";
+                    dot.style.backgroundColor = "var(--accent-red)";
+                    txt.innerText = "Local API: Offline";
+                });
+        }
+        function checkLocalAPIExt() {
+            checkLocalAPI();
+            setTimeout(() => {
+                alert(document.getElementById('api-status-text').innerText);
+            }, 500);
+        }
+
+        // Live IoT telemetry updater
+        let iotTimer = null;
+        function toggleIoTConnection() {
+            const isChecked = document.getElementById('twin-iot-toggle').checked;
+            const sliders = document.getElementById('twin-sliders-group');
+            
+            if (isChecked) {
+                pushLog("ENLACE IoT ACTIVADO. Intentando conectar a FastAPI server (puente MQTT/Modbus)...", "warning");
+                sliders.style.opacity = "0.4";
+                sliders.style.pointerEvents = "none";
+                
+                iotTimer = setInterval(() => {
+                    fetch("http://127.0.0.1:8000/api/v1/iot-telemetry")
+                        .then(res => res.json())
+                        .then(data => {
+                            // Update values in UI from FastAPI
+                            document.getElementById('twin-val-load').innerText = data.it_load_kw + " kW";
+                            document.getElementById('twin-control-load').value = data.it_load_kw;
+
+                            document.getElementById('twin-val-temp').innerText = data.external_temp_c + " °C";
+                            document.getElementById('twin-control-temp').value = data.external_temp_c;
+
+                            document.getElementById('twin-val-flow').innerText = data.flow_rate_ls + " L/s";
+                            document.getElementById('twin-control-flow').value = data.flow_rate_ls;
+
+                            document.getElementById('twin-val-tj').innerText = data.chip_temp_c + " °C";
+                            document.getElementById('twin-val-p').innerText = data.pressure_bar + " bar";
+                            document.getElementById('twin-val-pue').innerText = data.pue_instantaneous.toFixed(3);
+
+                            const badgeEl = document.getElementById('twin-status-badge');
+                            badgeEl.innerText = data.status;
+                            badgeEl.className = data.status.includes("Estable") ? "badge green" : "badge orange";
+
+                            // Push to chart
+                            chartDataTj.shift();
+                            chartDataTj.push(data.chip_temp_c);
+                            chartDataText.shift();
+                            chartDataText.push(data.external_temp_c);
+                            chartLabels.shift();
+                            const d = new Date();
+                            chartLabels.push(d.toLocaleTimeString());
+                            if (twinLineChart) twinLineChart.update();
+                        })
+                        .catch(err => {
+                            pushLog("ERROR DE INGESTA: Sin respuesta de FastAPI. Verifica que fastapi_server.py esté corriendo.", "critical");
+                            document.getElementById('twin-iot-toggle').checked = false;
+                            toggleIoTConnection();
+                        });
+                }, 2000);
+            } else {
+                if (iotTimer) clearInterval(iotTimer);
+                sliders.style.opacity = "1";
+                sliders.style.pointerEvents = "auto";
+                pushLog("ENLACE IoT DESACTIVADO. Volviendo a simulación manual.", "info");
+            }
+        }
+
+        function loadSwaggerDocs() {
+            const esgDoc = {
+                "metadata": {
+                    "platform": "Fixus GreenOps DC",
+                    "compliance_standard": "GHG Protocol Scope 2"
+                },
+                "metrics": {
+                    "location": "Isla Gordon, Chile",
+                    "average_pue": 1.034,
+                    "energy_savings_mwh": 1972.4,
+                    "carbon_reduction_tco2e": 749.5
+                }
+            };
+            document.getElementById('swagger-esg-response').innerText = JSON.stringify(esgDoc, null, 2);
+
+            const iotDoc = {
+                "location": "Isla Gordon, Chile",
+                "it_load_kw": 105.4,
+                "external_temp_c": 11.2,
+                "flow_rate_ls": 1.1,
+                "chip_temp_c": 54.2,
+                "pressure_bar": 1.10,
+                "pue_instantaneous": 1.031,
+                "status": "Estable - FC Pasivo"
+            };
+            document.getElementById('swagger-iot-response').innerText = JSON.stringify(iotDoc, null, 2);
+        }
+
+        // --- SAAS SIMULATOR SECTION ---
+        let saasDoughnutChart = null;
+
+        function populateSaaSLocations() {
+            const locSelect = document.getElementById('saas-location');
+            locSelect.innerHTML = "";
+            for (const loc in GLOBAL_COOLING_DATA) {
+                const opt = document.createElement('option');
+                opt.value = loc;
+                opt.innerText = loc + " (" + GLOBAL_COOLING_DATA[loc].region + ")";
+                locSelect.appendChild(opt);
+            }
+            if (GLOBAL_COOLING_DATA["Isla Gordon, Chile"]) {
+                locSelect.value = "Isla Gordon, Chile";
+            }
+            onSaaSLocationChange();
+        }
+
+        function onSaaSLocationChange() {
+            const locName = document.getElementById('saas-location').value;
+            const locData = GLOBAL_COOLING_DATA[locName];
+            if (!locData) return;
+            
+            document.getElementById('saas-tariff').value = locData.electricity_price;
+            document.getElementById('saas-source-label').innerText = locData.tariff_source;
+
+            const sysSelect = document.getElementById('saas-system');
+            sysSelect.innerHTML = "";
+            for (const sys in locData.systems) {
+                const opt = document.createElement('option');
+                opt.value = sys;
+                opt.innerText = sys;
+                sysSelect.appendChild(opt);
+            }
+            
+            const d2c_key = Object.keys(locData.systems).find(k => k.includes("D2C") || k.includes("Termosifon"));
+            if (d2c_key) {
+                sysSelect.value = d2c_key;
+            }
+
+            // Sync active node cards
+            document.querySelectorAll('.node-card').forEach(card => {
+                card.style.background = 'rgba(255,255,255,0.02)';
+                card.style.borderColor = 'var(--panel-border)';
+            });
+            const cardMap = {
+                'Isla Gordon, Chile': 'node-gordon',
+                'Colchane, Chile': 'node-colchane',
+                'Reykjavik, Islandia': 'node-reykjavik',
+                'Helsinki, Finlandia': 'node-helsinki',
+                'Lulea, Suecia': 'node-lulea',
+                'Quebec, Canada': 'node-quebec'
+            };
+            const activeId = cardMap[locName];
+            if (activeId) {
+                const activeCard = document.getElementById(activeId);
+                if (activeCard) {
+                    activeCard.style.background = 'rgba(0, 230, 118, 0.08)';
+                    activeCard.style.borderColor = 'var(--accent-green)';
+                }
+            }
+
+            runSaaSSimulation();
+        }
+
+        function runSaaSSimulation() {
+            const locName = document.getElementById('saas-location').value;
+            const sysName = document.getElementById('saas-system').value;
+            const numRacks = parseFloat(document.getElementById('saas-racks').value) || 1;
+            const density = parseFloat(document.getElementById('saas-density').value) || 100;
+            const tariff = parseFloat(document.getElementById('saas-tariff').value) || 0.1;
+            const lifetime = parseFloat(document.getElementById('saas-lifetime').value) || 10;
+
+            // Advanced hardware params
+            const baseline_pue = parseFloat(document.getElementById('saas-baseline-pue').value) || 1.8;
+            const chiller_cop = parseFloat(document.getElementById('saas-chiller-cop').value) || 3.5;
+            const fan_kw = parseFloat(document.getElementById('saas-fan-kw').value) || 15;
+            const pump_kw = parseFloat(document.getElementById('saas-pump-kw').value) || 5;
+
+            const locData = GLOBAL_COOLING_DATA[locName];
+            if (!locData) return;
+            const sysData = locData.systems[sysName];
+            if (!sysData) return;
+
+            const fcp = sysData.free_cooling_pct;
+            document.getElementById('saas-res-fch').innerText = fcp.toFixed(1) + "%";
+
+            // Determine PUE limits dynamically using hardware params
+            let capex_per_rack = 25000;
+            let pue_fc = 1.05;
+            let pue_base = 1.20;
+
+            if (sysName.includes("Inmersion") || sysName.includes("Inmersión")) {
+                capex_per_rack = 40000;
+                // Immersion uses less fan power
+                pue_fc = 1.01 + (pump_kw / (density * numRacks));
+                pue_base = pue_fc + (1 / chiller_cop);
+            } else if (sysName.includes("RDHx")) {
+                capex_per_rack = 15000;
+                pue_fc = 1.08 + ((fan_kw + pump_kw) / (density * numRacks));
+                pue_base = pue_fc + (1.2 / chiller_cop);
+            } else if (sysName.includes("CRAC")) {
+                capex_per_rack = 5000;
+                pue_fc = baseline_pue;
+                pue_base = baseline_pue;
+            } else { // Termosifon / D2C
+                capex_per_rack = 25000;
+                pue_fc = 1.02 + ((fan_kw * 0.5 + pump_kw) / (density * numRacks));
+                pue_base = pue_fc + (1.1 / chiller_cop);
+            }
+
+            const avg_pue = (fcp / 100) * pue_fc + (1 - fcp / 100) * ((pue_fc + pue_base) / 2);
+            document.getElementById('saas-res-pue').innerText = avg_pue.toFixed(3);
+
+            const it_power = density * numRacks;
+            const energy_it_yr = it_power * 8760;
+
+            const energy_sys_yr = energy_it_yr * avg_pue;
+            const energy_baseline_yr = energy_it_yr * baseline_pue;
+
+            const energy_saved_yr = energy_baseline_yr - energy_sys_yr;
+            const annual_opex_savings = energy_saved_yr * tariff;
+            const annual_opex = energy_sys_yr * tariff;
+
+            const total_capex = capex_per_rack * numRacks;
+
+            const payback = annual_opex_savings > 0 ? (total_capex / annual_opex_savings) : Infinity;
+            document.getElementById('saas-res-payback').innerText = payback === Infinity ? "N/A" : payback.toFixed(1) + " Años";
+
+            const discount_rate = 0.08;
+            let npv = -total_capex;
+            for (let t = 1; t <= lifetime; t++) {
+                npv += annual_opex_savings / Math.pow(1 + discount_rate, t);
+            }
+
+            let grid_factor = 0.35;
+            if (locName.includes("Islandia") || locName.includes("Reykjavik")) grid_factor = 0.01;
+            else if (locName.includes("Canadá") || locName.includes("Quebec")) grid_factor = 0.03;
+            else if (locName.includes("Finlandia")) grid_factor = 0.08;
+            else if (locName.includes("Suecia")) grid_factor = 0.02;
+
+            const carbon_saved_yr = (energy_saved_yr / 1000) * grid_factor;
+
+            document.getElementById('saas-val-energy').innerText = formatNumber(energy_sys_yr) + " kWh/año";
+            document.getElementById('saas-val-opex').innerText = "$" + formatNumber(annual_opex) + " USD/año";
+            document.getElementById('saas-val-savings').innerText = "+$" + formatNumber(annual_opex_savings) + " USD/año";
+            document.getElementById('saas-val-capex').innerText = "$" + formatNumber(total_capex) + " USD";
+            document.getElementById('saas-val-npv').innerText = (npv < 0 ? "-" : "") + "$" + formatNumber(Math.abs(npv)) + " USD";
+            document.getElementById('saas-val-carbon').innerText = carbon_saved_yr.toFixed(1) + " tCO₂e/año";
+
+            updateSaaSChart(fcp, 100 - fcp);
+        }
+
+        function formatNumber(num) {
+            return num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // --- NODES SELECTION STRATEGY ---
+        function selectStrategicNode(nodeName) {
+            const locSelect = document.getElementById('saas-location');
+            locSelect.value = nodeName;
+            onSaaSLocationChange();
+            
+            // Highlight node card visually
+            document.querySelectorAll('.node-card').forEach(card => {
+                card.style.background = 'rgba(255,255,255,0.02)';
+                card.style.borderColor = 'var(--panel-border)';
+            });
+            
+            const cardMap = {
+                'Isla Gordon, Chile': 'node-gordon',
+                'Colchane, Chile': 'node-colchane',
+                'Reykjavik, Islandia': 'node-reykjavik',
+                'Helsinki, Finlandia': 'node-helsinki',
+                'Lulea, Suecia': 'node-lulea',
+                'Quebec, Canada': 'node-quebec'
+            };
+            
+            const activeId = cardMap[nodeName];
+            if (activeId) {
+                const activeCard = document.getElementById(activeId);
+                if (activeCard) {
+                    activeCard.style.background = 'rgba(0, 230, 118, 0.08)';
+                    activeCard.style.borderColor = 'var(--accent-green)';
+                }
+            }
+        }
+
+        // --- DIGITAL TWIN SIMULATOR SECTION ---
+        let twinLineChart = null;
+        let simulationTimer = null;
+
+        const max_history = 15;
+        let chartDataTj = Array(max_history).fill(55);
+        let chartDataText = Array(max_history).fill(15);
+        let chartLabels = Array(max_history).fill("");
+
+        function initTwinChart() {
+            if (twinLineChart) return;
+            const ctx = document.getElementById('twin-chart').getContext('2d');
+            
+            twinLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [
+                        {
+                            label: 'Temp. Chip (Tj)',
+                            data: chartDataTj,
+                            borderColor: '#ff3d00',
+                            backgroundColor: 'rgba(255, 61, 0, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Temp. Ambiente Exterior (Text)',
+                            data: chartDataText,
+                            borderColor: '#00e5ff',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: -15,
+                            max: 100,
+                            ticks: { color: '#a0a5b5' },
+                            grid: { color: 'rgba(255,255,255,0.05)' }
+                        },
+                        x: {
+                            ticks: { display: false },
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            if (simulationTimer) clearInterval(simulationTimer);
+            simulationTimer = setInterval(tickTwinSimulation, 2000);
+        }
+
+        function tickTwinSimulation() {
+            const isChecked = document.getElementById('twin-iot-toggle').checked;
+            if (isChecked) return; // Managed by API polling
+
+            const extTempSlider = document.getElementById('twin-control-temp');
+            if (!extTempSlider) return;
+            const originalVal = parseFloat(extTempSlider.value);
+            const fluctuation = (Math.random() - 0.5) * 1.5;
+            
+            let newVal = originalVal + fluctuation;
+            if (newVal < -10) newVal = -10;
+            if (newVal > 45) newVal = 45;
+            
+            document.getElementById('twin-val-temp').innerText = newVal.toFixed(1) + " °C";
+            calculateTwinPhysics(newVal);
+        }
+
+        function updateTwinSimulation() {
+            const extTemp = parseFloat(document.getElementById('twin-control-temp').value);
+            document.getElementById('twin-val-temp').innerText = extTemp.toFixed(0) + " °C";
+            
+            const itLoad = parseFloat(document.getElementById('twin-control-load').value);
+            document.getElementById('twin-val-load').innerText = itLoad.toFixed(0) + " kW";
+
+            const flow = parseFloat(document.getElementById('twin-control-flow').value);
+            document.getElementById('twin-val-flow').innerText = flow.toFixed(1) + " L/s";
+
+            calculateTwinPhysics(extTemp);
+        }
+
+        function calculateTwinPhysics(extTemp) {
+            const itLoad = parseFloat(document.getElementById('twin-control-load').value);
+            const flow = parseFloat(document.getElementById('twin-control-flow').value);
+
+            const R_condenser = 0.08 / flow;
+            const T_sat = extTemp + itLoad * R_condenser;
+            const Tj = T_sat + (itLoad / 100) * 15;
+            const P_bar = 1.013 * Math.exp(-3140 * (1 / (T_sat + 273.15) - 1 / 334.15));
+
+            let instantPue = 1.02;
+            let status = "Operación Estable (FC Pasivo)";
+            let statusClass = "badge green";
+
+            if (extTemp < 25) {
+                instantPue = 1.03 + (itLoad / 150) * 0.02;
+            } else if (extTemp >= 25 && extTemp <= 35) {
+                const mixedFactor = (extTemp - 25) / 10;
+                instantPue = 1.05 + mixedFactor * 0.08 + (itLoad / 150) * 0.04;
+                status = "Chiller Assist Activo (Modo Mixto)";
+                statusClass = "badge orange";
+            } else {
+                instantPue = 1.15 + (extTemp - 35) * 0.01 + (itLoad / 150) * 0.05;
+                status = "Compresión Mecánica Activa (Chiller)";
+                statusClass = "badge red";
+            }
+
+            checkAlarms(Tj, P_bar, instantPue, status);
+
+            document.getElementById('twin-val-tj').innerText = Tj.toFixed(1) + " °C";
+            document.getElementById('twin-val-p').innerText = P_bar.toFixed(2) + " bar";
+            document.getElementById('twin-val-pue').innerText = instantPue.toFixed(3);
+            
+            const badgeEl = document.getElementById('twin-status-badge');
+            badgeEl.innerText = status;
+            badgeEl.className = statusClass;
+
+            chartDataTj.shift();
+            chartDataTj.push(Tj);
+            chartDataText.shift();
+            chartDataText.push(extTemp);
+            chartLabels.shift();
+            
+            const d = new Date();
+            const timeStr = d.getHours().toString().padStart(2, '0') + ":" + 
+                            d.getMinutes().toString().padStart(2, '0') + ":" + 
+                            d.getSeconds().toString().padStart(2, '0');
+            chartLabels.push(timeStr);
+
+            if (twinLineChart) {
+                twinLineChart.update();
+            }
+        }
+
+        let lastAlarmState = "";
+        function checkAlarms(Tj, P_bar, PUE, status) {
+            let logMsg = "";
+            let logType = "info";
+
+            if (Tj > 80 && lastAlarmState !== "CRITICAL_TJ") {
+                logMsg = `ALERTA CRÍTICA: Tj a ${Tj.toFixed(1)}°C supera límite térmico (80°C). Activando estrangulamiento térmico de GPU Blackwell.`;
+                logType = "critical";
+                lastAlarmState = "CRITICAL_TJ";
+            } else if (P_bar > 1.8 && lastAlarmState !== "WARNING_P") {
+                logMsg = `ADVERTENCIA: Presión en condensador de termosifón crítica (${P_bar.toFixed(2)} bar). Riesgo de vapor-lock. Aumentar caudal de agua secundario.`;
+                logType = "warning";
+                lastAlarmState = "WARNING_P";
+            } else if (PUE > 1.15 && lastAlarmState !== "WARNING_PUE") {
+                logMsg = `ALERTA EFICIENCIA: PUE instantáneo crítico (${PUE.toFixed(3)}). Enfriamiento mecánico al límite.`;
+                logType = "warning";
+                lastAlarmState = "WARNING_PUE";
+            } else if (Tj <= 75 && P_bar <= 1.5 && PUE <= 1.08 && lastAlarmState !== "NORMAL") {
+                logMsg = `SISTEMA ESTABLE: Enfriamiento Direct-to-Chip normalizado. PUE: ${PUE.toFixed(3)}, Presión: ${P_bar.toFixed(2)} bar.`;
+                logType = "info";
+                lastAlarmState = "NORMAL";
+            }
+
+            if (logMsg) {
+                pushLog(logMsg, logType);
+            }
+        }
+
+        function pushLog(message, type) {
+            const container = document.getElementById('twin-logs');
+            const d = new Date();
+            const timeStr = d.toLocaleTimeString();
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            let color = '#00ff66';
+            if (type === 'warning') color = '#ff9100';
+            else if (type === 'critical') color = '#ff3d00';
+
+            logEntry.innerHTML = `<span class="log-timestamp">[${timeStr}]</span> <span style="color: ${color}">${message}</span>`;
+            container.appendChild(logEntry);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function triggerWorkloadMigration() {
+            pushLog("INICIANDO GREENOPS ACTIVE CONTROL: Migrando 35% de la carga IT de aceleradores a Gordon Island...", "warning");
+            document.getElementById('twin-control-load').value = 65;
+            updateTwinSimulation();
+            setTimeout(() => {
+                pushLog("GREENOPS COMPLETA: Cargas reasignadas correctamente. Temperatura de los chips regulada a niveles óptimos.", "info");
+            }, 1500);
+        }
+
+
+        // --- PROACTIVE FORECASTING SECTION ---
+        let forecastChart = null;
+
+        function populateForecastLocations() {
+            const locSelect = document.getElementById('forecast-location');
+            locSelect.innerHTML = "";
+            for (const loc in FORECAST_DATA) {
+                const opt = document.createElement('option');
+                opt.value = loc;
+                opt.innerText = loc;
+                locSelect.appendChild(opt);
+            }
+            if (FORECAST_DATA["Isla Gordon, Chile"]) {
+                locSelect.value = "Isla Gordon, Chile";
+            }
+            updateForecastView();
+        }
+
+        function updateForecastView() {
+            const locName = document.getElementById('forecast-location').value;
+            const forecastList = FORECAST_DATA[locName];
+            
+            if (!forecastList) return;
+
+            document.getElementById('forecast-res-location').innerText = locName;
+
+            const labels = forecastList.map(item => item.time);
+            const temps = forecastList.map(item => item.temp_c);
+            const errors = forecastList.map(item => item.std_error);
+
+            const maxTemp = Math.max(...temps);
+            document.getElementById('forecast-res-max-temp').innerText = maxTemp.toFixed(1) + " °C";
+
+            const fcHoursCount = temps.filter(t => t < 25.0).length;
+            document.getElementById('forecast-res-fc-hours').innerText = fcHoursCount + " / 24 hrs";
+
+            let strategy = "100% Free Cooling (Pasivo Autónomo)";
+            if (maxTemp >= 25 && maxTemp <= 35) {
+                strategy = "Modo Mixto (Chiller Assist Predicho)";
+            } else if (maxTemp > 35) {
+                strategy = "Compresión Total Proactiva";
+            }
+            document.getElementById('forecast-res-mode').innerText = strategy;
+
+            const fLog = document.getElementById('forecast-agent-logs');
+            fLog.innerHTML = "";
+            
+            const entries = [
+                `[VERTEX_AI] ARIMA_PLUS cargado para ${locName}.`,
+                `[VERTEX_AI] Analizando perfiles térmicos y programaciones de carga...`,
+                `[GREENOPS_PROACTIVE] Temperatura máxima predicha: ${maxTemp.toFixed(1)}°C.`,
+                `[GREENOPS_PROACTIVE] Acciones preventivas: ${fcHoursCount < 24 ? 'Monitorear horas críticas.' : 'Mantener termosifones en modo 100% pasivo.'}`
+            ];
+
+            entries.forEach(e => {
+                const el = document.createElement('div');
+                el.className = 'log-entry';
+                el.innerHTML = `<span class="log-timestamp">[AI_AGENT]</span> ${e}`;
+                fLog.appendChild(el);
+            });
+
+            renderForecastChart(labels, temps, errors);
+        }
+
+        function renderForecastChart(labels, temps, errors) {
+            const ctx = document.getElementById('forecast-chart').getContext('2d');
+            if (forecastChart) {
+                forecastChart.destroy();
+            }
+
+            const upperBounds = temps.map((t, idx) => t + errors[idx]);
+            const lowerBounds = temps.map((t, idx) => t - errors[idx]);
+
+            forecastChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Temperatura Predicha (°C)',
+                            data: temps,
+                            borderColor: '#00e5ff',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: false,
+                            z: 10
+                        },
+                        {
+                            label: 'Límite Superior (+Std Err)',
+                            data: upperBounds,
+                            borderColor: 'rgba(0, 229, 255, 0.15)',
+                            backgroundColor: 'rgba(0, 229, 255, 0.05)',
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            tension: 0.3,
+                            fill: '+1'
+                        },
+                        {
+                            label: 'Límite Inferior (-Std Err)',
+                            data: lowerBounds,
+                            borderColor: 'rgba(0, 229, 255, 0.15)',
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            tension: 0.3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            ticks: { color: '#a0a5b5' },
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            title: { display: true, text: 'Temperatura (°C)', color: '#a0a5b5' }
+                        },
+                        x: {
+                            ticks: { color: '#a0a5b5' },
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            title: { display: true, text: 'Hora del Día (Pronóstico)', color: '#a0a5b5' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+
+        // --- INTERACTIVE TUTORIAL LOGIC ---
+        let currentTutorialStep = 0;
+        const tutorialSteps = [
+            {
+                title: "¡Bienvenido a GreenOps DC!",
+                body: "Esta plataforma interactiva de Fixus permite planificar la sustentabilidad de centros de datos de IA (SaaS) y gestionar activos físicos en tiempo real. Hagamos un tour rápido.",
+                highlight: null,
+                action: () => switchView('overview')
+            },
+            {
+                title: "Menú de Navegación",
+                body: "Usa la barra lateral para alternar entre las vistas del simulador: Overview, Feasibility Studio, Gemelo Digital, Pronósticos de Vertex AI e integración de APIs.",
+                highlight: "sidebar-container",
+                action: () => switchView('overview')
+            },
+            {
+                title: "Nodos Estratégicos",
+                body: "Calcula el retorno financiero (VPN, Payback) variando la potencia de tus racks. Puedes hacer clic sobre las tarjetas de acceso rápido de los 6 nodos recomendados de tu tesis para compararlos instantáneamente.",
+                highlight: "saas-nodes-card",
+                action: () => switchView('saas')
+            },
+            {
+                title: "Gestión de Activos (Digital Twin)",
+                body: "Monitorea la física de refrigeración líquida de un rack. Modifica la carga y el calor externo para ver cambios en la presión del termosifón y las temperaturas de junta del chip. ¡Hasta puedes conectar sensores reales mediante el toggle de IoT!",
+                highlight: "twin-telemetry-card",
+                action: () => switchView('twin')
+            },
+            {
+                title: "API Hub e Integraciones Activas",
+                body: "Consulta la documentación interactiva de APIs en vivo para exportar tus reportes Scope 2 a ESGtrack AI o Salesforce Net Zero. Comprueba el estado de conexión del backend aquí.",
+                highlight: "api-status-badge",
+                action: () => switchView('api')
+            },
+            {
+                title: "¡Listo para operar!",
+                body: "Ya estás preparado para operar la herramienta. Recuerda que puedes volver a iniciar este tutorial en cualquier momento haciendo clic en el botón 'Tutorial' de la barra superior.",
+                highlight: null,
+                action: () => switchView('overview')
+            }
+        ];
+
+        function startTutorial() {
+            currentTutorialStep = 0;
+            document.getElementById('tutorial-backdrop').classList.add('active');
+            document.getElementById('tutorial-card').classList.add('active');
+            showTutorialStep(0);
+        }
+
+        function closeTutorial() {
+            document.getElementById('tutorial-backdrop').classList.remove('active');
+            document.getElementById('tutorial-card').classList.remove('active');
+            
+            document.querySelectorAll('.tutorial-highlight').forEach(el => {
+                el.classList.remove('tutorial-highlight');
+            });
+        }
+
+        function nextTutorialStep() {
+            if (currentTutorialStep < tutorialSteps.length - 1) {
+                currentTutorialStep++;
+                showTutorialStep(currentTutorialStep);
+            } else {
+                closeTutorial();
+            }
+        }
+
+        function prevTutorialStep() {
+            if (currentTutorialStep > 0) {
+                currentTutorialStep--;
+                showTutorialStep(currentTutorialStep);
+            }
+        }
+
+        function showTutorialStep(idx) {
+            const step = tutorialSteps[idx];
+            if (step.action) step.action();
+
+            document.getElementById('tutorial-title').innerText = step.title;
+            document.getElementById('tutorial-body').innerText = step.body;
+            document.getElementById('tutorial-step-indicator').innerText = (idx + 1) + " / " + tutorialSteps.length;
+
+            document.getElementById('tutorial-btn-prev').style.display = idx === 0 ? 'none' : 'block';
+            document.getElementById('tutorial-btn-next').innerText = idx === tutorialSteps.length - 1 ? 'Finalizar' : 'Siguiente';
+
+            document.querySelectorAll('.tutorial-highlight').forEach(el => {
+                el.classList.remove('tutorial-highlight');
+            });
+
+            if (step.highlight) {
+                const target = document.getElementById(step.highlight);
+                if (target) {
+                    target.classList.add('tutorial-highlight');
+                    const rect = target.getBoundingClientRect();
+                    const card = document.getElementById('tutorial-card');
+                    
+                    if (step.highlight === 'sidebar-container') {
+                        card.style.top = '100px';
+                        card.style.left = (rect.right + 20) + 'px';
+                    } else if (step.highlight === 'saas-parameters-card' || step.highlight === 'twin-telemetry-card' || step.highlight === 'saas-nodes-card' || step.highlight === 'api-status-badge') {
+                        card.style.top = rect.top + 'px';
+                        card.style.left = (rect.right + 20) + 'px';
+                    } else {
+                        card.style.top = (rect.bottom + 20) + 'px';
+                        card.style.left = (rect.left + (rect.width/2) - 190) + 'px';
+                    }
+                }
+            } else {
+                const card = document.getElementById('tutorial-card');
+                card.style.top = '30%';
+                card.style.left = 'calc(50% - 190px)';
+            }
+        }
+
+
+        // On Window Load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof GLOBAL_COOLING_DATA === 'undefined') {
+                alert("Error: base de datos cooling_data.js no encontrada.");
+                return;
+            }
+
+            // Populate forms
+            populateSaaSLocations();
+            populateForecastLocations();
+
+            // Set PUE Avg in Overview
+            calculateOverviewAverages();
+
+            // Check API
+            checkLocalAPI();
+
+            // Start tutorial automatically on first view
+            setTimeout(startTutorial, 1500);
+        });
+
+        function calculateOverviewAverages() {
+            let totalPue = 0;
+            let count = 0;
+            for (const loc in GLOBAL_COOLING_DATA) {
+                const sysD2C = GLOBAL_COOLING_DATA[loc].systems["D2C Bifasico (Direct-to-Chip)"] || GLOBAL_COOLING_DATA[loc].systems["Termosifon Bifasico Original"];
+                if (sysD2C) {
+                    const fcp = sysD2C.free_cooling_pct;
+                    const avg_pue = (fcp / 100) * 1.05 + (1 - fcp / 100) * 1.125;
+                    totalPue += avg_pue;
+                    count++;
+                }
+            }
+            if (count > 0) {
+                document.getElementById('network-avg-pue').innerText = (totalPue / count).toFixed(3);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+[
+    {
+        "type": "header",
+        "title": "El Ciclo del Agua",
+        "subtitle": "Un viaje esencial para la vida en la Tierra",
+        "theme": "primary"
+    },
+    {
+        "type": "content-image",
+        "title": "¿Qué es el ciclo del agua?",
+        "content": [
+            "Es el proceso continuo de circulación del agua en la Tierra.",
+            "Involucra la evaporación, condensación y precipitación."
+        ],
+        "imagePrompt": "A modern illustration of the water cycle showing evaporation, condensation, and precipitation",
+        "theme": "light"
+    },
+    {
+        "type": "stats",
+        "title": "Evaporación",
+        "stat": "90%",
+        "content": "del agua en la atmósfera proviene del océano.",
+        "icon": "🌊"
+    },
+    {
+        "type": "list",
+        "title": "Etapas del Ciclo del Agua",
+        "items": [
+            "Evaporación",
+            "Condensación",
+            "Precipitación",
+            "Colección"
+        ],
+        "icon": "💧"
+    },
+    {
+        "type": "content-image",
+        "title": "Importancia del Ciclo del Agua",
+        "content": [
+            "Regula el clima.",
+            "Soporta la vida en ecosistemas.",
+            "Proporciona agua dulce."
+        ],
+        "imagePrompt": "A modern infographic showing the importance of the water cycle for ecosystems and climate regulation",
+        "theme": "accent"
+    },
+    {
+        "type": "footer",
+        "content": "Entender el ciclo del agua es clave para cuidar nuestro planeta."
+    }
+]
