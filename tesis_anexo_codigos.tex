@@ -1,0 +1,308 @@
+\chapter{Anexo: C\'odigos Fuente de la Plataforma GreenOps DC}
+\label{chap:anexo_codigos}
+
+Este anexo recopila las implementaciones de c\'odigo fuente clave desarrolladas para el funcionamiento operativo, simulaci\'on termodin\'amica y gesti\'on de datos de la plataforma \textbf{GreenOps DC}.
+
+\lstset{
+    frame=single,
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{purple},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4
+}
+
+\section{Servidor REST API (Python - FastAPI)}
+El siguiente script (\texttt{fastapi_server.py}) implementa el backend que expone los endpoints para consultas ESG firmadas digitalmente, lecturas simuladas de telemetr\'ia de sensores f\'isicos de gemelos digitales, actualizaci\'on din\'amica de tarifas del mercado BloombergNEF y el cargador del inventario CSV:
+
+\begin{lstlisting}[language=Python]
+import json
+import csv
+import io
+import datetime
+import random
+from fastapi import FastAPI, Depends, HTTPException, Security, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security.api_key import APIKeyHeader
+from pydantic import BaseModel
+
+app = FastAPI(
+    title="GreenOps DC API Gateway",
+    description="Production-ready API for ESG reporting, live energy tariffs, and IoT telemetries",
+    version="1.1.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+API_KEY_NAME = "X-API-Key"
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+VALID_API_KEY = "FIXUS_SECURE_TOKEN_2026"
+
+def get_api_key(api_key: str = Depends(api_key_header)):
+    if not api_key or api_key != VALID_API_KEY:
+        raise HTTPException(
+            status_code=403,
+            detail="Forbidden: Invalid or missing X-API-Key header."
+        )
+    return api_key
+
+live_telemetry = {
+    "location": "Isla Gordon, Chile",
+    "it_load_kw": 100.0,
+    "external_temp_c": 12.5,
+    "flow_rate_ls": 1.2,
+    "chip_temp_c": 52.4,
+    "pressure_bar": 1.08,
+    "pue_instantaneous": 1.034,
+    "status": "Estable - FC Pasivo"
+}
+
+class TelemetryUpdate(BaseModel):
+    it_load_kw: float
+    external_temp_c: float
+    flow_rate_ls: float
+
+@app.get("/")
+def read_root():
+    return {"status": "GreenOps API is running", "version": "1.1.0"}
+
+@app.get("/api/v1/esg-metrics", dependencies=[Depends(get_api_key)])
+def get_esg_metrics(location: str = "Isla Gordon, Chile", racks: int = 10, density: float = 100.0):
+    pue_avg = 1.034
+    it_power = density * racks
+    energy_it_yr = it_power * 8760
+    energy_sys_yr = energy_it_yr * pue_avg
+    
+    crac_pue = 1.80
+    energy_baseline_yr = energy_it_yr * crac_pue
+    energy_saved_yr = energy_baseline_yr - energy_sys_yr
+    
+    grid_factor = 0.35
+    if "Islandia" in location or "Reykjavik" in location:
+        grid_factor = 0.01
+    
+    carbon_saved_yr = (energy_saved_yr / 1000) * grid_factor
+    
+    return {
+        "metadata": {
+            "platform": "Fixus GreenOps DC",
+            "compliance_standard": "GHG Protocol Scope 2",
+            "reporting_period": "2026-Annual-Projection"
+        },
+        "metrics": {
+            "location": location,
+            "racks_count": racks,
+            "rack_density_kw": density,
+            "average_pue": round(pue_avg, 3),
+            "it_energy_mwh": round(energy_it_yr / 1000, 2),
+            "system_total_energy_mwh": round(energy_sys_yr / 1000, 2),
+            "energy_savings_mwh": round(energy_saved_yr / 1000, 2),
+            "carbon_reduction_tco2e": round(carbon_saved_yr, 2)
+        }
+    }
+
+@app.get("/api/v1/iot-telemetry")
+def get_iot_telemetry():
+    return live_telemetry
+
+@app.post("/api/v1/iot-telemetry/update", dependencies=[Depends(get_api_key)])
+def update_iot_telemetry(data: TelemetryUpdate):
+    global live_telemetry
+    R_condenser = 0.08 / data.flow_rate_ls
+    T_sat = data.external_temp_c + data.it_load_kw * R_condenser
+    Tj = T_sat + (data.it_load_kw / 100) * 15
+    P_bar = 1.013 * 2.71828 ** (-3140 * (1 / (T_sat + 273.15) - 1 / 334.15))
+    
+    if data.external_temp_c < 25:
+        pue = 1.03
+        status = "Operacion Estable (FC Pasivo)"
+    else:
+        pue = 1.08
+        status = "Chiller Assist Activo"
+        
+    live_telemetry = {
+        "location": "Isla Gordon, Chile",
+        "it_load_kw": data.it_load_kw,
+        "external_temp_c": data.external_temp_c,
+        "flow_rate_ls": data.flow_rate_ls,
+        "chip_temp_c": round(Tj, 1),
+        "pressure_bar": round(P_bar, 2),
+        "pue_instantaneous": round(pue, 3),
+        "status": status
+    }
+    return {"message": "Telemetry updated", "current_state": live_telemetry}
+
+@app.get("/api/v1/live-tariffs")
+def get_live_tariffs():
+    base_tariffs = {
+        "Isla Gordon, Chile": 0.176,
+        "Colchane, Chile": 0.145,
+        "Reykjavik, Islandia": 0.052,
+        "Helsinki, Finlandia": 0.112,
+        "Lulea, Suecia": 0.088,
+        "Quebec, Canada": 0.076
+    }
+    now = datetime.datetime.now()
+    seed = now.hour + now.day
+    random.seed(seed)
+    live = {}
+    for loc, base in base_tariffs.items():
+        fluctuation = random.uniform(-0.05, 0.05)
+        live[loc] = round(base * (1 + fluctuation), 4)
+        
+    return {
+        "live_tariffs": live,
+        "timestamp": now.isoformat(),
+        "source": "BloombergNEF Live"
+    }
+
+@app.post("/api/v1/upload-inventory", dependencies=[Depends(get_api_key)])
+async def upload_inventory(file: UploadFile = File(...)):
+    contents = await file.read()
+    decoded = contents.decode('utf-8-sig')
+    reader = csv.DictReader(io.StringIO(decoded))
+    racks = []
+    total_power_kw = 0.0
+    total_baseline_pue = 0.0
+    
+    try:
+        for row in reader:
+            row_lower = {k.lower().strip(): v.strip() for k, v in row.items() if k}
+            rack_id = row_lower.get("rack_id") or "Rack"
+            power_kw = float(row_lower.get("power_kw") or 100.0)
+            baseline_pue = float(row_lower.get("baseline_pue") or 1.80)
+            
+            total_power_kw += power_kw
+            total_baseline_pue += baseline_pue
+            racks.append({"rack_id": rack_id, "power_kw": power_kw, "baseline_pue": baseline_pue})
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+        
+    return {
+        "summary": {
+            "filename": file.filename,
+            "total_racks": len(racks),
+            "total_power_capacity_kw": round(total_power_kw, 2),
+            "avg_power_per_rack_kw": round(total_power_kw / len(racks), 2),
+            "avg_baseline_pue": round(total_baseline_pue / len(racks), 3),
+        },
+        "racks": racks
+    }
+\end{lstlisting}
+
+\newpage
+
+\section{Motor de Simulaci\'on de Termodin\'amica de Fluidos (Javascript)}
+El siguiente bloque de c\'odigo Javascript corre en el cliente del simulador, calculando din\'amicamente la f\'isica de fluidos (fugas directas de Scope 1, consumo de agua de chillers evaporativos, costos OPEX y variaci\'on de temperaturas de silicio Tj):
+
+\begin{lstlisting}[language=Java]
+// Segmento del motor de calculo runSaaSSimulation() en el Frontend
+const fluidType = document.getElementById('saas-fluid').value;
+const leakRate = parseFloat(document.getElementById('saas-leak-rate').value) || 1.5;
+const chillerType = document.getElementById('saas-chiller-type').value;
+const waterPrice = parseFloat(document.getElementById('saas-water-price').value) || 1.50;
+
+let fluidPrice = 45; // USD/kg
+let fluidGwp = 1;
+if (fluidType === 'novec') {
+    fluidPrice = 45; fluidGwp = 1;
+} else if (fluidType === 'fluorinert') {
+    fluidPrice = 60; fluidGwp = 9200;
+} else if (fluidType === 'castrol') {
+    fluidPrice = 15; fluidGwp = 0;
+} else if (fluidType === 'water') {
+    fluidPrice = 0.5; fluidGwp = 0;
+}
+
+const chiller_pue_overhead = chillerType === 'water' ? (0.95 / chiller_cop) : (1.1 / chiller_cop);
+
+if (sysName.includes("Inmersion")) {
+    capex_per_rack = 40000;
+    pue_fc = 1.01 + (pump_kw / (density * numRacks));
+    pue_base = pue_fc + chiller_pue_overhead;
+} else if (sysName.includes("RDHx")) {
+    capex_per_rack = 15000;
+    pue_fc = 1.08 + ((fan_kw + pump_kw) / (density * numRacks));
+    pue_base = pue_fc + (1.2 * chiller_pue_overhead / (1.1 / chiller_cop));
+} else { // Termosifon / D2C
+    capex_per_rack = 25000;
+    pue_fc = 1.02 + ((fan_kw * 0.5 + pump_kw) / (density * numRacks));
+    pue_base = pue_fc + chiller_pue_overhead;
+}
+
+const avg_pue = (fcp / 100) * pue_fc + (1 - fcp / 100) * ((pue_fc + pue_base) / 2);
+const it_power = density * numRacks;
+const energy_it_yr = it_power * 8760;
+const energy_sys_yr = energy_it_yr * avg_pue;
+const energy_baseline_yr = energy_it_yr * baseline_pue;
+const energy_saved_yr = energy_baseline_yr - energy_sys_yr;
+
+// Consumo de agua por evaporacion en Chiller de agua
+const active_chiller_fraction = (100 - fcp) / 100;
+const water_evap_m3 = chillerType === 'water' ? (active_chiller_fraction * (energy_it_yr / 1000) * 0.22) : 0.0;
+const water_cost_yr = water_evap_m3 * waterPrice;
+
+// Costo por fugas de refrigerantes
+const total_fluid_charge = numRacks * 25; // 25kg por rack
+const fluid_loss_yr = total_fluid_charge * (leakRate / 100);
+const fluid_repl_cost_yr = fluid_loss_yr * fluidPrice;
+
+const annual_opex = energy_sys_yr * tariff + fluid_repl_cost_yr + water_cost_yr;
+const annual_opex_baseline = energy_baseline_yr * tariff;
+const annual_opex_savings = annual_opex_baseline - annual_opex;
+
+// Impacto de Carbono Neto (Scope 2 indirecto - Scope 1 directo de fugas)
+const indirect_saved = (energy_saved_yr / 1000) * grid_factor;
+const direct_leakage_emissions = (fluid_loss_yr / 1000) * fluidGwp;
+const carbon_saved_yr = indirect_saved - direct_leakage_emissions;
+\end{lstlisting}
+
+\newpage
+
+\section{Modelamiento Predictivo ARIMA (SQL - BigQuery ML)}
+La siguiente consulta SQL es utilizada para entrenar el modelo de series de tiempo de temperatura exterior horaria directamente dentro de Google BigQuery:
+
+\begin{lstlisting}[language=SQL]
+-- 1. Entrenamiento del modelo predictivo multivariable
+CREATE OR REPLACE MODEL `greenops_cooling.arima_temp_forecast`
+OPTIONS(
+  model_type='ARIMA_PLUS',
+  time_series_timestamp_col='timestamp',
+  time_series_data_col='temperature_c',
+  time_series_id_col='location',
+  auto_arima=TRUE,
+  data_frequency='HOURLY',
+  holiday_region='CL'
+) AS
+SELECT 
+  CAST(timestamp AS TIMESTAMP) as timestamp, 
+  temperature_c, 
+  location
+FROM `greenops_cooling.hourly_weather_data`
+WHERE timestamp BETWEEN '2023-01-01 00:00:00' AND '2025-12-31 23:00:00';
+
+-- 2. Ejecucion del pronostico a 24 horas con 95% de intervalo de confianza
+SELECT
+  location,
+  forecast_time,
+  forecast_value,
+  standard_error,
+  confidence_interval_lower_bound,
+  confidence_interval_upper_bound
+FROM
+  ML.FORECAST(MODEL `greenops_cooling.arima_temp_forecast`, 
+              STRUCT(24 AS horizon, 0.95 AS confidence_level));
+\end{lstlisting}

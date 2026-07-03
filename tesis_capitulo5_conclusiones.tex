@@ -1,0 +1,29 @@
+\chapter{Conclusiones Generales y Trabajo Futuro}
+\label{chap:conclusiones}
+
+Este cap\'itulo consolida los hallazgos de la investigaci\'on t\'ermica y econ\'omica de los sistemas de enfriamiento por cambio de fase a alta densidad ($100\text{ kW}$ por rack), analiza las implicaciones para la geolocalizaci\'on de centros de datos de IA en el hemisferio sur y establece las bases para futuros desarrollos predictivos.
+
+\section{S\'intesis de Conclusiones T\'ermicas y F\'isicas}
+Las simulaciones de tres a\~nos completos ($2023-2025$) validaron las ventajas de la ebullici\'on diel\'ectrica frente al enfriamiento monof\'asico convencional:
+\begin{enumerate}
+    \item \textbf{Mitigaci\'on del Muro T\'ermico:} El termosif\'on Direct-to-Chip (D2C) bif\'asico logr\'o disipar con \'exito $100\text{ kW}$ por rack con un caudal volum\'etrico reducido en un factor de $9.200$ frente a la disipaci\'on por aire, reduciendo significativamente las p\'erdidas de carga del fluido.
+    \item \textbf{Potencial de Free Cooling en Chile:} Isla Gordon y Colchane demostraron un potencial t\'ermico excepcional al alcanzar el $100\%$ de Free Cooling trienal en configuraciones D2C e Inmersi\'on, igualando el comportamiento de Reykjavik y superando a Lule\aa\ y Helsinki en la puerta trasera aire-agua (RDHx).
+    \item \textbf{Estabilidad Operativa:} Las condiciones clim\'aticas estables de la Patagonia reducen el diferencial t\'ermico diurno/nocturno, minimizando la fatiga mec\'anica en los chips por ciclos t\'ermicos.
+\end{enumerate}
+
+\section{Implicaciones Econ\'omicas y Recomendaciones Estrat\'egicas}
+La viabilidad comercial de data centers hiperescala en Chile est\'a determinada por la paradoja clim\'atica-tarifaria. Aunque Chile consume menos o igual energ\'ia de refrigeraci\'on que las regiones n\'ordicas, su tarifa el\'ectrica industrial ($0,176\text{ USD/kWh}$) es significativamente mayor. Se recomiendan tres l\'ineas de acci\'on:
+\begin{itemize}
+    \item \textbf{Contratos de Energ\'ia Clean Power (PPA):} Acordar tarifas de clientes libres ($\le 0,085\text{ USD/kWh}$) mediante contratos directos a largo plazo con generadoras de energ\'ia renovable locales (e\'olica en la Patagonia o solar en Atacama).
+    \item \textbf{Sustentabilidad H\'idrica y Huella H\'idrica Cero:} Utilizar el Free Cooling seco para posicionar a Chile como alternativa ecol\'ogica cr\'itica frente a zonas c\'alidas que evaporan millones de litros de agua dulce en chillers h\'umedos tradicionales.
+    \item \textbf{Latencia Geogr\'afica:} Aprovechar la ubicaci\'on geogr\'afica del Cono Sur para suministrar servicios de inferencia de baja latencia a toda Latinoam\'erica, compensando el sobrecosto el\'ectrico nominal.
+\end{itemize}
+
+\section{Trabajo Futuro y L\'ineas de Investigaci\'on}
+La integraci\'on exitosa del pipeline de datos con GCP y el entrenamiento de modelos de series de tiempo abre dos l\'ineas de investigaci\'on futura:
+
+\subsection{Regulaci\'on en Lazo Cerrado Mediante Modelos Predictivos}
+Incorporar las predicciones horarias de temperatura del modelo \texttt{ARIMA\_PLUS} de BigQuery ML directamente en el PLC de control del BMS. Esto permitir\'a regular de forma anticipada y adaptativa las v\'alvulas de flujo y la velocidad del ventilador del condensador, compensando la inercia t\'ermica del bucle de cambio de fase ante fluctuaciones ambientales r\'apidas.
+
+\subsection{Orquestaci\'on T\'ermica Global de Cargas de Computaci\'on (Workload Migration)}
+Desarrollar un algoritmo de programaci\'on de tareas distribuidas que eval\'ue de forma continua los pron\'osticos térmicos y de PUE en centros de datos conectados globalmente. Si el modelo predice picos de calor en una localidad que obligar\'an a encender compresores mec\'anicos, las tareas de entrenamiento masivo de IA se migrar\'an autom\'aticamente a nodos ubicados en zonas de Free Cooling activo (como Isla Gordon), optimizando el PUE y la huella de carbono a nivel global.

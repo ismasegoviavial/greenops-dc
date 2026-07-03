@@ -1,0 +1,84 @@
+\chapter{Modelamiento Termodin\'amico del Enfriamiento Bif\'asico en Racks de IA (100 kW)}
+\label{chap:termodinamica}
+
+Este cap\'itulo detalla la formulaci\'on matem\'atica y f\'isica que fundamenta la transici\'on tecnol\'ogica desde la refrigeraci\'on convencional por aire hacia los sistemas de termosif\'on y cambio de fase para disipar altas densidades de potencia.
+
+\section{El Muro T\'ermico y los L\'imites del Calor Sensible}
+El l\'imite f\'isico del enfriamiento tradicional se rige por el \textbf{Calor Sensible}, donde la energ\'ia t\'ermica absorbida por un fluido provoca un incremento en su temperatura. La tasa de transferencia de calor ($\dot{Q}$) en un flujo monof\'asico se define como:
+\begin{equation}
+\dot{Q} = \dot{m} \cdot C_p \cdot \Delta T
+\end{equation}
+Donde:
+\begin{itemize}
+    \item $\dot{Q}$: Tasa de calor disipada (W).
+    \item $\dot{m}$: Caudal m\'asico del fluido refrigerante (kg/s).
+    \item $C_p$: Capacidad calor\'ifica espec\'ifica del fluido (J/kg$\cdot$K).
+    \item $\Delta T = T_{\text{salida}} - T_{\text{entrada}}$: Diferencia de temperatura permitida en el fluido (K).
+\end{itemize}
+
+Considerando un rack est\'andar de IA de $100\text{ kW}$ ($\dot{Q} = 100.000\text{ W}$), con una elevaci\'on m\'axima de temperatura de aire permitida de $15^\circ\text{C}$ ($\Delta T = 15\text{ K}$) y un calor espec\'ifico del aire a nivel del mar ($C_p \approx 1.006\text{ J}/(\text{kg}\cdot\text{K})$), el caudal m\'asico requerido es:
+\begin{equation}
+\dot{m}_{\text{aire}} = \frac{\dot{Q}}{C_p \cdot \Delta T} = \frac{100.000}{1.006 \cdot 15} \approx 6,627\text{ kg/s}
+\end{equation}
+Dada la densidad del aire a $20^\circ\text{C}$ ($\rho_{\text{aire}} \approx 1,2\text{ kg/m}^3$), el caudal volum\'etrico ($\dot{V}_{\text{aire}}$) equivalente es:
+\begin{equation}
+\dot{V}_{\text{aire}} = \frac{\dot{m}_{\text{aire}}}{\rho_{\text{aire}}} = \frac{6,627}{1,2} \approx 5,52\text{ m}^3\text{/s} = 5.520\text{ L/s}
+\end{equation}
+Mover $5.520\text{ Litros de aire por segundo}$ a trav\'es de un espacio confinado de rack de 19 pulgadas genera p\'erdidas de carga (ca\'ida de presi\'on) exponenciales y requiere ventiladores gigantescos cuyo consumo el\'ectrico neutraliza la eficiencia operativa del centro de datos.
+
+\section{Termodin\'amica del Cambio de Fase (Calor Latente)}
+Para vencer el Muro T\'ermico, la ebullici\'on bif\'asica utiliza el \textbf{Calor Latente} de vaporizaci\'on. El fluido diel\'ectrico absorbe energ\'ia al cambiar de fase (l\'iquido a vapor) de manera isot\'ermica:
+\begin{equation}
+\dot{Q} = \dot{m} \cdot h_{fg}
+\end{equation}
+Donde $h_{fg}$ es la entalp\'ia de vaporizaci\'on del refrigerante (J/kg).
+
+Utilizando un fluido con un calor latente de vaporizaci\'on moderado ($h_{fg} \approx 112.000\text{ J/kg}$) y una densidad del l\'iquido ($\rho_{liq} \approx 1.500\text{ kg/m}^3$), para disipar los mismos $100\text{ kW}$ obtenemos:
+\begin{equation}
+\dot{m}_{\text{bifasico}} = \frac{\dot{Q}}{h_{fg}} = \frac{100.000}{112.000} \approx 0,893\text{ kg/s}
+\end{equation}
+\begin{equation}
+\dot{V}_{\text{bifasico}} = \frac{\dot{m}_{\text{bifasico}}}{\rho_{liq}} = \frac{0,893}{1.500} \approx 0,000595\text{ m}^3\text{/s} = 0,595\text{ L/s}
+\end{equation}
+Al comparar ambos m\'etodos, el cambio de fase permite una reducci\'on del caudal volum\'etrico requerido de aproximadamente \textbf{9.200 veces} frente al aire.
+
+\section{M\'etodo $\epsilon$-NTU para Intercambiadores de Calor Bif\'asicos}
+El an\'alisis t\'ermico de los condensadores y placas fr\'ias evaporativas se realiza mediante el m\'etodo de \textbf{Efectividad - N\'umero de Unidades de Transferencia ($\epsilon$-NTU)}. La efectividad del intercambiador se define como:
+\begin{equation}
+\epsilon = \frac{\dot{Q}}{\dot{Q}_{max}}
+\end{equation}
+Donde la transferencia de calor m\'axima te\'orica es:
+\begin{equation}
+\dot{Q}_{max} = C_{min} \cdot (T_{caliente, entrada} - T_{frio, entrada})
+\end{equation}
+Durante un cambio de fase, el calor espec\'ifico efectivo del fluido tiende a infinito ($C_p \to \infty$), por lo que su capacitancia t\'ermica tiende al infinito ($C_{max} \to \infty$). Esto reduce la relaci\'on de capacitancias t\'ermicas ($C_r$) a cero:
+\begin{equation}
+C_r = \frac{C_{min}}{C_{max}} \to 0
+\end{equation}
+Bajo esta condici\'on l\'imite, la ecuaci\'on de efectividad para cualquier configuraci\'on del intercambiador se simplifica a:
+\begin{equation}
+\epsilon = 1 - \exp(-NTU)
+\end{equation}
+Donde el N\'umero de Unidades de Transferencia (NTU) es:
+\begin{equation}
+NTU = \frac{U \cdot A}{C_{min}}
+\end{equation}
+Siendo $U$ el coeficiente global de transferencia de calor ($\text{W}/(\text{m}^2\cdot\text{K})$), $A$ el \'area de transferencia de calor ($\text{m}^2$) y $C_{min}$ la capacitancia t\'ermica del fluido monof\'asico (ej. aire exterior en el condensador).
+
+\section{Algoritmo de PUE Din\'amico en Funci\'on del Clima}
+El PUE total del sistema se modela en funci\'on de la temperatura del aire exterior ($T_{ext}$) y la temperatura cr\'itica ($T_{cr}$) para Free Cooling total. El algoritmo opera bajo tres estados:
+\begin{enumerate}
+    \item \textbf{Modo Free Cooling Total ($T_{ext} < T_{cr}$):}
+    \begin{equation}
+    PUE = PUE_{fc}
+    \end{equation}
+    \item \textbf{Modo Mixto / Parcial ($T_{cr} \le T_{ext} \le T_{max}$):}
+    \begin{equation}
+    PUE(T_{ext}) = PUE_{fc} + (PUE_{base} - PUE_{fc}) \cdot \left( \frac{T_{ext} - T_{cr}}{T_{max} - T_{cr}} \right)
+    \end{equation}
+    \item \textbf{Modo Compresi\'on Mec\'anica Total ($T_{ext} > T_{max}$):}
+    \begin{equation}
+    PUE = PUE_{base}
+    \end{equation}
+\end{enumerate}
+Este modelo din\'amico, alimentado por datos meteorol\'ogicos horariales, es el que permite calcular el ahorro OPEX y determinar la viabilidad t\'ermica.

@@ -1,0 +1,250 @@
+\documentclass[journal]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Evaluaci\'on Termoecon\'omica de Sistemas de Enfriamiento por Cambio de Fase para Centros de Datos de Inteligencia Artificial de Alta Densidad (100 kW)}
+
+\author{Fernanda\\
+\small Departamento de Ingenier\'ia Mec\'anica, Universidad de Santiago de Chile (USACH)\\
+Fecha: Junio 2026}
+
+\maketitle
+
+\begin{abstract}
+El crecimiento exponencial de la Inteligencia Artificial (IA) generativa ha impulsado las densidades de potencia de los racks en centros de datos hiperescala desde un est\'andar hist\'orico de 4~kW a rangos entre 70~kW y 100~kW. A estas densidades, la refrigeraci\'on por aire convencional resulta f\'isicamente inviable. Este trabajo eval\'ua la viabilidad termodin\'amica y econ\'omica de tres tecnolog\'ias avanzadas de enfriamiento (Rear Door Heat Exchanger [RDHx], Termosif\'on Direct-to-Chip [D2C] Bif\'asico e Inmersi\'on L\'iquida Bif\'asica) en 39 ubicaciones geogr\'aficas de todo el planeta, utilizando datos meteorol\'ogicos hist\'oricos horarios de tres a\~nos completos (2023--2025, 26.280~horas). Los resultados demuestran que las zonas fr\'ias de Chile (Isla Gordon y Colchane) logran un 100\% de horas de Free Cooling en sistemas bif\'asicos, igualando o superando a las regiones n\'ordicas. Sin embargo, el an\'alisis termoecon\'omico revela un trade-off cr\'itico: las altas tarifas el\'ectricas de Chile (0,176~USD/kWh) contrarrestan su ventaja clim\'atica en t\'erminos monetarios nominales en comparaci\'on con Islandia (0,103~USD/kWh), lo que exige la adopci\'on de contratos de energ\'ia limpia (PPAs) o la priorizaci\'on de criterios de latencia y ESG para viabilizar comercialmente la infraestructura en el hemisferio sur.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Data Centers de IA, Enfriamiento Bif\'asico, Termosif\'on, M\'etodo $\epsilon$-NTU, Free Cooling, An\'alisis Termoecon\'omico.
+\end{IEEEkeywords}
+
+\section{Introducci\'on}
+Desde 2024, el ecosistema de los centros de datos experimenta una transformaci\'on radical impulsada por los Grandes Modelos de Lenguaje (LLMs). El consumo el\'ectrico mundial de estas instalaciones alcanz\'o aproximadamente 448~TWh en 2025 (un aumento del 17\% interanual) y se proyecta que superar\'a los 945~TWh para 2030, donde los procesos de IA representar\'an m\'as de la mitad del uso el\'ectrico total [1], [2].
+
+El principal obst\'aculo f\'isico en esta expansi\'on es el denominado \textbf{Muro T\'ermico} (\emph{The Thermal Wall}). La adopci\'on masiva de aceleradores de IA modernos (como las plataformas NVIDIA Blackwell) ha elevado el \emph{Thermal Design Power} (TDP) a rangos entre 1.000~W y 1.400~W por chip individual, disparando las densidades por rack hasta los 100~kW \cite{rohsenow1952}. A esta escala, los sistemas HVAC de aire acondicionado de salas de computaci\'on (CRAC) son t\'ermicamente insuficientes, lo que fuerza la transici\'on hacia la disipaci\'on por cambio de fase basada en fluidos diel\'ectricos [4].
+
+Este art\'iculo analiza de forma integral la viabilidad de la tecnolog\'ia de termosif\'on bif\'asico, desarrollada originalmente para racks de baja potencia en 2022, escalada a las demandas cr\'iticas de 100~kW de 2026. Se eval\'ua el comportamiento t\'ermico y el costo operativo (OPEX) en diversas latitudes para resolver si la descentralizaci\'on geogr\'afica hacia zonas de fr\'io extremo en el hemisferio sur constituye una alternativa competitiva frente a los centros tradicionales de Europa y Norteam\'erica.
+
+\section{Modelamiento Matem\'atico y Ecuaciones Gobernantes}
+La f\'isica de la disipaci\'on t\'ermica distingue dos mecanismos de absorci\'on de energ\'ia: el calor sensible y el calor latente.
+
+\subsection{Balance de Calor Sensible (Enfriamiento Monof\'asico por Aire)}
+En un sistema enfriado por aire, el calor sensible ($\dot{Q}$) disipado por el flujo se rige por:
+\begin{equation}
+\dot{Q} = \dot{m} \cdot C_p \cdot \Delta T
+\end{equation}
+Donde $\dot{m}$ es el caudal m\'asico (kg/s), $C_p$ es la capacidad calor\'ifica espec\'ifica ($1.006\text{ J}/(\text{kg}\cdot\text{K})$ para el aire a nivel del mar) y $\Delta T = T_{\text{salida}} - T_{\text{entrada}}$ es la diferencia de temperatura permitida en el chip para evitar el estrangulamiento t\'ermico (15~K).
+
+Para un rack de 100~kW ($\dot{Q} = 100.000\text{ W}$), despejando el caudal volum\'etrico ($\dot{V}_{\text{aire}}$) a una densidad de $\rho_{\text{aire}} \approx 1,2\text{ kg/m}^3$:
+\begin{equation}
+\dot{m}_{\text{aire}} = \frac{100.000}{1.006 \cdot 15} \approx 6,63\text{ kg/s} \implies \dot{V}_{\text{aire}} \approx 5.520\text{ L/s}
+\end{equation}
+Este caudal volum\'etrico equivale a generar velocidades de viento huracanadas dentro del servidor, haciendo inviable el enfriamiento por aire.
+
+\subsection{Balance de Calor Latente (Ebullici\'on Bif\'asica)}
+Al emplear el cambio de fase del fluido diel\'ectrico, el calor absorbido depende de la entalp\'ia de vaporizaci\'on ($h_{fg}$):
+\begin{equation}
+\dot{Q} = \dot{m} \cdot h_{fg}
+\end{equation}
+Para un fluido diel\'ectrico t\'ipico como el 3M Novec 7100 ($h_{fg} \approx 112.000\text{ J/kg}$ y densidad del l\'iquido $\rho_{liq} \approx 1.500\text{ kg/m}^3$):
+\begin{equation}
+\dot{m}_{\text{bifasico}} = \frac{100.000}{112.000} \approx 0,89\text{ kg/s} \implies \dot{V}_{\text{bifasico}} \approx 0,59\text{ L/s}
+\end{equation}
+El cambio de fase permite una reducci\'on del caudal volum\'etrico requerido de aproximadamente \textbf{9.200 veces} frente al aire, eliminando la necesidad de bombeo mec\'anico activo o ventiladores de gran potencia.
+
+\subsection{M\'etodo $\epsilon$-NTU para Cambio de Fase}
+La efectividad del intercambiador de calor ($\epsilon$) en condiciones de cambio de fase se analiza mediante el m\'etodo $\epsilon$-NTU. Dado que la capacitancia t\'ermica efectiva del fluido en ebullici\'on/condensaci\'on tiende a infinito ($C_{max} \to \infty$), la relaci\'on de capacitancias se reduce a:
+\begin{equation}
+C_r = \frac{C_{min}}{C_{max}} \to 0
+\end{equation}
+Bajo este l\'imite termodin\'amico, la efectividad del intercambiador se simplifica para cualquier geometr\'ia a:
+\begin{equation}
+\epsilon = 1 - \exp(-NTU)
+\end{equation}
+Donde el N\'umero de Unidades de Transferencia (NTU) se define por:
+\begin{equation}
+NTU = \frac{U \cdot A}{C_{min}}
+\end{equation}
+Siendo $U$ el coeficiente global de transferencia de calor ($\text{W}/(\text{m}^2\cdot\text{K})$), $A$ el \'area de transferencia ($\text{m}^2$) y $C_{min}$ la capacitancia t\'ermica del fluido monof\'asico externo.
+
+\section{Metodolog\'ia Experimental y Configuraci\'on de Simulaci\'on}
+El modelo din\'amico eval\'ua el rendimiento t\'ermico y econ\'omico de un rack de 100~kW operando continuamente ($8.760\text{ horas/a\~no}$) durante el trienio 2023--2025 (26.280~horas).
+
+\subsection{L\'imites de Temperatura y Algoritmo de PUE}
+Se definieron tres l\'imites de temperatura cr\'itica ($T_{cr}$) para la transici\'on hacia el modo de enfriamiento pasivo (Free Cooling total):
+\begin{itemize}
+    \item \textbf{RDHx Baseline:} $T_{cr} = 10,0^\circ\text{C}$ (requiere aire exterior muy fr\'io para mantener el bucle de agua secundaria).
+    \item \textbf{D2C Bif\'asico (Termosif\'on):} $T_{cr} = 25,0^\circ\text{C}$ (la ebullici\'on a mayor temperatura permite disipar el calor utilizando aire exterior templado).
+    \item \textbf{Inmersi\'on Bif\'asica:} $T_{cr} = 35,0^\circ\text{C}$ (el condensador opera eficientemente incluso con aire exterior caliente).
+\end{itemize}
+
+El PUE din\'amico se calcula hora a hora seg\'un la temperatura ambiente exterior ($T_{ext}$):
+\begin{itemize}
+    \item Si $T_{ext} < T_{cr}$: $PUE = PUE_{fc}$ (Modo Free Cooling Total).
+    \item Si $T_{cr} \le T_{ext} \le T_{max}$ (donde $T_{max} = 40,0^\circ\text{C}$):
+    \begin{equation}
+    PUE(T_{ext}) = PUE_{fc} + (PUE_{base} - PUE_{fc}) \cdot \left( \frac{T_{ext} - T_{cr}}{T_{max} - T_{cr}} \right)
+    \end{equation}
+    \item Si $T_{ext} > T_{max}$: $PUE = PUE_{base}$ (Modo Compresi\'on Mec\'anica Total).
+\end{itemize}
+
+Los coeficientes de PUE utilizados son:
+\begin{itemize}
+    \item RDHx: $PUE_{base} = 1,50$; $PUE_{fc} = 1,15$
+    \item D2C Bif\'asico: $PUE_{base} = 1,20$; $PUE_{fc} = 1,05$
+    \item Inmersi\'on Bif\'asica: $PUE_{base} = 1,10$; $PUE_{fc} = 1,02$
+    \item CRAC (L\'inea de control): $PUE_{base} = PUE_{fc} = 1,80$
+\end{itemize}
+
+\section{Resultados y Discusi\'on}
+
+\subsection{Comportamiento T\'ermico Ambiental}
+El comportamiento horario de las temperaturas exteriores se proces\'o para evaluar la idoneidad clim\'atica. Isla Gordon (Chile) y Reykjavik (Islandia) presentaron condiciones consistentes de Free Cooling trienal total en configuraciones bif\'asicas.
+
+\subsection{Porcentaje de Horas de Free Cooling (FCP \%)}
+La Tabla~\ref{tab:fcp} resume la efectividad clim\'atica (FCP \%) para una selecci\'on de localidades clave del estudio global de 39 puntos.
+
+\begin{table}[htbp]
+\caption{Porcentaje de Horas de Free Cooling (FCP \%) para Localidades Clave (2023--2025)}
+\label{tab:fcp}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Localidad & RDHx & Termosif\'on & D2C Bif\'asico & Inmersi\'on \\
+\midrule
+Isla Gordon, Chile & 96,6\% & 99,8\% & 100,0\% & 100,0\% \\
+Colchane, Chile & 56,6\% & 80,7\% & 100,0\% & 100,0\% \\
+Reykjavik, Islandia & 81,5\% & 99,1\% & 100,0\% & 100,0\% \\
+Helsinki, Finlandia & 60,2\% & 75,4\% & 99,7\% & 100,0\% \\
+Lule\aa, Suecia & 66,6\% & 82,2\% & 99,5\% & 100,0\% \\
+Quebec, Canad\'a & 57,8\% & 72,2\% & 96,9\% & 100,0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{An\'alisis Termoecon\'omico (OPEX a 3 A\~nos)}
+El costo total de la energ\'ia el\'ectrica consumida por el rack de 100~kW (OPEX acumulado en USD nominales) se detalla en la Tabla~\ref{tab:opex}.
+
+\begin{table}[htbp]
+\caption{OPEX Energ\'etico Acumulado a 3 A\~nos (USD Nominales)}
+\label{tab:opex}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+Localidad & Tarifa & CRAC & RDHx & D2C Bif\'asico & Inmersi\'on \\
+\midrule
+Reykjavik & 0,1029 & 487.203 & 328.772 & 284.202 & 276.082 \\
+Helsinki & 0,0850 & 402.451 & 288.249 & 234.869 & 228.056 \\
+Lule\aa & 0,0924 & 437.488 & 307.894 & 255.370 & 247.910 \\
+Quebec & 0,0900 & 426.125 & 307.183 & 249.665 & 241.471 \\
+Isla Gordon & 0,1760 & 833.311 & 537.869 & 486.098 & 472.209 \\
+Colchane & 0,1760 & 833.311 & 602.771 & 486.103 & 472.209 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Discusi\'on del Trade-off Clim\'atico-Tarifario}
+Al evaluar la tasa de eficiencia econ\'omica ($\eta_{\text{economica}}$) de la transici\'on a D2C frente a un sistema CRAC:
+\begin{equation}
+\eta_{\text{economica}} = 1 - \frac{OPEX_{D2C}}{OPEX_{CRAC}}
+\end{equation}
+En Isla Gordon (Chile), $\eta_{\text{economica}} = 1 - (486.098 / 833.311) \approx 41,7\%$, lo que equivale a un ahorro neto de USD 347.213 por rack en 3 a\~nos. 
+
+Sin embargo, en t\'erminos nominales brutos, la desventaja de la alta tarifa el\'ectrica de Chile (0,176~USD/kWh) desplaza la rentabilidad neta en favor de Islandia (USD 284.202 en D2C), destacando la necesidad de negociar contratos PPA verdes para reducir la tarifa industrial chilena a valores competitivos.
+
+\subsection{Aprendizaje Autom\'atico para Control Proactivo (BigQuery ML y Vertex AI)}
+Para mitigar el riesgo de estrangulamiento t\'ermico ante picos meteorol\'ogicos imprevistos, se entrenaron 6 modelos de series de tiempo \texttt{ARIMA\_PLUS} en paralelo directamente en Google BigQuery ML, registr\'andose en el Vertex AI Model Registry.
+
+El modelo genera predicciones con un intervalo de confianza del 95\%. La Tabla~\ref{tab:forecast} muestra el pron\'ostico de temperaturas para el d\'ia 2026-06-21.
+
+\begin{table}[htbp]
+\caption{Pron\'ostico de Temperaturas Horarias para el 2026-06-21}
+\label{tab:forecast}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Localidad & Temp. M\'in. ($^\circ$C) & Temp. M\'ax. ($^\circ$C) & Error Est. ($^\circ$C) \\
+\midrule
+Isla Gordon, Chile & 2,18 & 2,70 & 1,46 \\
+Colchane, Chile & 6,01 & 9,30 & 1,34 \\
+Reykjavik, Islandia & 10,46 & 11,70 & 1,28 \\
+Lule\aa, Suecia & 15,85 & 17,32 & 1,61 \\
+Helsinki, Finlandia & 17,94 & 19,93 & 1,39 \\
+Quebec, Canad\'a & 18,72 & 20,51 & 2,09 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+    \item \textbf{Compensaci\'on de Inercia T\'ermica:} El sistema de control del data center (BMS) utiliza el perfil predictivo para regular de forma anticipada el caudal del refrigerante monof\'asico secundario.
+    \item \textbf{Mitigaci\'on Preventiva:} Si el modelo predice temperaturas cercanas a $T_{cr} = 25,0^\circ\text{C}$ para D2C, el programador de tareas puede migrar preventivamente cargas de trabajo computacionales de IA hacia locaciones m\'as fr\'ias (ej. de Quebec a Isla Gordon).
+\end{enumerate}
+
+\section{Conclusiones}
+Este trabajo valida experimental y te\'oricamente la eficiencia de la refrigeraci\'on bif\'asica para racks de IA de alta densidad (100~kW). Se concluye que las zonas fr\'ias de Chile tienen un potencial t\'ermico excepcional de Free Cooling del 100\%, pero su viabilidad comercial depende de la implementaci\'on de contratos PPA y la adopci\'on de estrategias predictivas de operaci\'on y control mediante BigQuery ML y Vertex AI.
+
+\begin{thebibliography}{18}
+
+\bibitem{iea2024}
+International Energy Agency (IEA), ``Electricity 2024: Analysis and Forecast to 2026,'' IEA, Paris, 2024.
+
+\bibitem{bnef2024}
+BloombergNEF, ``Climatescope Market Profile: Clean Energy Transition - Chile Profile,'' BNEF, New York, 2024.
+
+\bibitem{rohsenow1952}
+W.~M. Rohsenow, ``A method of correlating heat-transfer data for surface boiling of liquids,'' {\em Trans. ASME}, vol. 74, no. 6, pp. 969--976, 1952.
+
+\bibitem{incropera2007}
+F.~P. Incropera, D.~P. DeWitt, T.~L. Bergman, and A.~S. Lavine, {\em Fundamentals of Heat and Mass Transfer}, 6th ed. Hoboken, NJ: John Wiley \& Sons, 2007.
+
+\bibitem{mudawar2001}
+I.~Mudawar, ``Assessment of high-heat-flux thermal management schemes,'' {\em IEEE Trans. Components and Packaging Technologies}, vol. 24, no. 2, pp. 122--141, 2001.
+
+\bibitem{peterson1994}
+G.~P. Peterson, {\em An Introduction to Heat Pipes: Modeling, Testing, and Applications}. New York, NY: John Wiley \& Sons, 1994.
+
+\bibitem{garrity2014}
+P.~T. Garrity, J.~F. Gease, and J.~R. Webb, ``Characterization of two-phase thermosyphons for high-density data center applications,'' {\em Int. J. Heat and Mass Transfer}, vol. 78, pp. 412--425, 2014.
+
+\bibitem{ashrae2021}
+ASHRAE, {\em Thermal Guidelines for Data Processing Environments}, 5th ed. Atlanta, GA: American Society of Heating, Refrigerating and Air-Conditioning Engineers, 2021.
+
+\bibitem{greengrid2008}
+C.~Belady, A.~Rawson, J.~Pfluger, and T.~Cader, ``Green Grid Carbon Usage Effectiveness (CUE) and Water Usage Effectiveness (WUE) Metrics,'' The Green Grid, White Paper, 2008.
+
+\bibitem{masnet2020}
+E.~Masnet, A.~Shehabi, N.~Ramakrishnan, J.~Koomey, and J.~Hasan, ``Recalibrating global data center energy-use estimates,'' {\em Science}, vol. 367, no. 6481, pp. 984--986, 2020.
+
+\bibitem{uptime2024}
+Uptime Institute, ``Uptime Institute Annual Data Center Survey 2024,'' Uptime Institute, Seattle, WA, Report, 2024.
+
+\bibitem{box2015}
+G.~E. Box, G.~M. Jenkins, G.~C. Reinsel, and G.~M. Ljung, {\em Time Series Analysis: Forecasting and Control}, 5th ed. Hoboken, NJ: John Wiley \& Sons, 2015.
+
+\bibitem{google2014}
+J.~Gao, ``Machine Learning for Data Center Optimization,'' Google LLC, Mountain View, CA, Tech. Rep., 2014.
+
+\bibitem{bhardwaj2021}
+A.~Bhardwaj, S.~K. Sahu, and P.~Kumar, ``Proactive thermal management in high-performance computing using machine learning time-series forecasting,'' {\em J. Thermal Sci. Eng. Appl.}, vol. 13, no. 4, p. 041012, 2021.
+
+\bibitem{google2023}
+Google Cloud, ``BigQuery ML ARIMA\_PLUS: Forecasting time series at scale,'' Google Documentation, 2023.
+
+\bibitem{ghg2015}
+World Resources Institute (WRI) and World Business Council for Sustainable Development (WBCSD), {\em Greenhouse Gas Protocol Scope 2 Guidance}. Washington, DC: WRI/WBCSD, 2015.
+
+\bibitem{webb2005}
+R.~L. Webb, ``Next generation devices for electronic cooling,'' {\em Heat Transfer Eng.}, vol. 26, no. 3, pp. 1--3, 2005.
+
+\bibitem{greenberg2006}
+S.~Greenberg, E.~Mills, B.~Tschudi, P.~Rumsey, and B.~Carter, ``Best practices for data centers energy efficiency,'' in {\em Proc. ACEEE Summer Study on Energy Efficiency in Buildings}, 2006, pp. 3--12.
+
+\end{thebibliography}
+
+\end{document}

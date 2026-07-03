@@ -1097,9 +1097,21 @@
             <div class="grid-2-1">
                 <!-- Telemetría e Inputs en Tiempo Real -->
                 <div class="glass-card" id="twin-telemetry-card" style="display: flex; flex-direction: column; gap: 20px;">
-                    <div class="card-header-with-actions">
+                    <div class="card-header-with-actions" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <h3 class="card-title">Telemetría de Termosifón Direct-to-Chip</h3>
-                        <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                            <!-- Selector de Nodo Activo -->
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="font-size: 11px; color: var(--text-secondary);">Nodo:</span>
+                                <select id="twin-node-selector" onchange="onTwinNodeChange()" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--panel-border); border-radius: 4px; padding: 4px 8px; font-size: 12px; cursor: pointer; outline: none; font-family: 'Outfit';">
+                                    <option value="Isla Gordon, Chile">Isla Gordon, Chile</option>
+                                    <option value="Colchane, Chile">Colchane, Chile</option>
+                                    <option value="Reykjavik, Islandia">Reykjavik, Islandia</option>
+                                    <option value="Helsinki, Finlandia">Helsinki, Finlandia</option>
+                                    <option value="Lulea, Suecia">Luleå, Suecia</option>
+                                    <option value="Quebec, Canada">Quebec, Canadá</option>
+                                </select>
+                            </div>
                             <!-- MÓDULO D: Interruptor de conexión a sensores físicos -->
                             <label style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; cursor: pointer;">
                                 <input type="checkbox" id="twin-iot-toggle" onchange="toggleIoTConnection()"> Conectar IoT (Local API)
@@ -1744,6 +1756,29 @@ def schedule_blackwell_workload(job_specs):
             
             document.getElementById('twin-val-temp').innerText = newVal.toFixed(1) + " °C";
             calculateTwinPhysics(newVal);
+        }
+
+        function onTwinNodeChange() {
+            const node = document.getElementById('twin-node-selector').value;
+            const tempMap = {
+                "Isla Gordon, Chile": 6.2,
+                "Colchane, Chile": 9.5,
+                "Reykjavik, Islandia": 11.2,
+                "Helsinki, Finlandia": 18.5,
+                "Lulea, Suecia": 16.1,
+                "Quebec, Canada": 19.8
+            };
+            const extTemp = tempMap[node] || 15.0;
+            
+            pushLog(`Cambiando nodo activo del Gemelo Digital a ${node}. Cargando perfil meteorológico local.`, "info");
+            
+            const tempSlider = document.getElementById('twin-control-temp');
+            if (tempSlider) {
+                tempSlider.value = extTemp;
+                document.getElementById('twin-val-temp').innerText = extTemp.toFixed(1) + " °C";
+            }
+            
+            updateTwinSimulation();
         }
 
         function updateTwinSimulation() {
