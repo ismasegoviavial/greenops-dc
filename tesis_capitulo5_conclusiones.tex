@@ -23,7 +23,7 @@ La viabilidad comercial de data centers hiperescala en Chile est\'a determinada 
 La integraci\'on exitosa del pipeline de datos con GCP y el entrenamiento de modelos de series de tiempo abre dos l\'ineas de investigaci\'on futura:
 
 \subsection{Regulaci\'on en Lazo Cerrado Mediante Modelos Predictivos}
-Incorporar las predicciones horarias de temperatura del modelo \texttt{ARIMA\_PLUS} de BigQuery ML directamente en el PLC de control del BMS. Esto permitir\'a regular de forma anticipada y adaptativa las v\'alvulas de flujo y la velocidad del ventilador del condensador, compensando la inercia t\'ermica del bucle de cambio de fase ante fluctuaciones ambientales r\'apidas.
+Incorporar las predicciones horarias de temperatura del modelo \texttt{ARIMA\_}\-\texttt{PLUS} de BigQuery ML directamente en el PLC de control del BMS. Esto permitir\'a regular de forma anticipada y adaptativa las v\'alvulas de flujo y la velocidad del ventilador del condensador, compensando la inercia t\'ermica del bucle de cambio de fase ante fluctuaciones ambientales r\'apidas.
 
-\subsection{Orquestaci\'on T\'ermica Global de Cargas de Computaci\'on (Workload Migration)}
+\subsection{Orquestaci\'on T\'ermica y Migraci\'on de Cargas (Workload Migration)}
 Desarrollar un algoritmo de programaci\'on de tareas distribuidas que eval\'ue de forma continua los pron\'osticos térmicos y de PUE en centros de datos conectados globalmente. Si el modelo predice picos de calor en una localidad que obligar\'an a encender compresores mec\'anicos, las tareas de entrenamiento masivo de IA se migrar\'an autom\'aticamente a nodos ubicados en zonas de Free Cooling activo (como Isla Gordon), optimizando el PUE y la huella de carbono a nivel global.
