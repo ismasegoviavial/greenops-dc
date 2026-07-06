@@ -1,3 +1,4 @@
+\shorthandoff{<}\shorthandoff{>}
 \chapter{Metodolog\'ia Experimental y Configuraci\'on de la Simulaci\'on}
 \label{chap:metodologia}
 
@@ -153,3 +154,5 @@ Los datos se estructuraron bajo dos tablas en BigQuery:
 
 \section{Entrenamiento del Modelo ARIMA\_PLUS en BigQuery ML}
 El entrenamiento predictivo se configur\'o utilizando BigQuery ML mediante el script \texttt{train\_cooling\_model.py}. Esto permite entrenar de forma paralela 6 modelos individuales utilizando la opci\'on \texttt{time\_series\_id\_col='location'}. El modelo de series de tiempo resultante, \texttt{cooling\_forecast\_model}, se registra autom\'aticamente en el Vertex AI Model Registry de GCP para permitir su posterior consumo u operaci\'on automatizada en la nube.
+
+\shorthandon{<}\shorthandon{>}
