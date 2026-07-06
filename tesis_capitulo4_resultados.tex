@@ -16,6 +16,7 @@ La Tabla~\ref{tab:fcp_tesis} resume las horas y porcentajes de Free Cooling trie
 \caption{Horas de Free Cooling y FCP por Tecnolog\'ia (2023--2025)}
 \label{tab:fcp_tesis}
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 Localidad & RDHx ($T_{cr} = 10^\circ\text{C}$) & D2C Bif\'asico ($T_{cr} = 25^\circ\text{C}$) & Inmersi\'on ($T_{cr} = 35^\circ\text{C}$) \\
@@ -27,7 +28,8 @@ Helsinki, Finlandia & $15.823\text{ h } (60,2\%)$ & $26.208\text{ h } (99,7\%)$ 
 Quebec, Canad\'a & $15.195\text{ h } (57,8\%)$ & $25.467\text{ h } (96,9\%)$ & $26.280\text{ h } (100,0\%)$ \\
 Colchane, Chile & $14.887\text{ h } (56,6\%)$ & $26.280\text{ h } (100,0\%)$ & $26.280\text{ h } (100,0\%)$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 \begin{figure}[htbp]
@@ -44,7 +46,7 @@ Colchane, Chile & $14.887\text{ h } (56,6\%)$ & $26.280\text{ h } (100,0\%)$ & $
     legend pos=north west,
     ymajorgrids=true,
     grid style=dashed,
-    width=10.5cm, height=6.5cm
+    width=9.5cm, height=6.0cm
 ]
 
 % RDHx curve
@@ -97,6 +99,7 @@ La Tabla~\ref{tab:opex_tesis} detalla el OPEX acumulado en USD nominales para el
 \caption{OPEX Energ\'etico Acumulado a 3 A\~nos (USD Nominales)}
 \label{tab:opex_tesis}
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccc}
 \toprule
 Localidad & CRAC & RDHx & Termosif\'on (2022) & D2C Bif\'asico & Inmersi\'on \\
@@ -108,7 +111,8 @@ Quebec & USD 426.124 & USD 307.183 & USD 286.754 & USD 249.664 & USD 241.470 \\
 Isla Gordon & USD 833.310 & USD 537.869 & USD 509.625 & USD 486.097 & USD 472.209 \\
 Colchane & USD 833.310 & USD 602.770 & USD 544.952 & USD 486.103 & USD 472.209 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 \begin{figure}[htbp]
@@ -124,7 +128,7 @@ Colchane & USD 833.310 & USD 602.770 & USD 544.952 & USD 486.103 & USD 472.209 \
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
-    width=11cm, height=7.5cm,
+    width=10cm, height=7.0cm,
     title={Comparaci\'on de OPEX Energ\'etico Trienal},
     ymajorgrids=true,
     grid style=dashed
@@ -163,6 +167,7 @@ El modelo de series de tiempo \texttt{ARIMA\_PLUS} en BigQuery ML gener\'o un pr
 \caption{Resultados del Pron\'ostico de Temperatura (2026-06-21)}
 \label{tab:forecast_tesis}
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 Localidad & Temp. M\'inima ($^\circ\text{C}$) & Temp. M\'axima ($^\circ\text{C}$) & Error Est\'andar ($^\circ\text{C}$) \\
@@ -174,7 +179,8 @@ Lule\aa, Suecia & $15,85$ & $17,32$ & $1,61$ \\
 Helsinki, Finlandia & $17,94$ & $19,93$ & $1,39$ \\
 Quebec, Canad\'a & $18,72$ & $20,51$ & $2,09$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 Este pron\'ostico se emplea en el sistema BMS para:
