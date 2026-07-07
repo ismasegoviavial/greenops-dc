@@ -3,9 +3,9 @@
 
 Este cap\'itulo detalla la formulaci\'on matem\'atica y f\'isica que fundamenta la transici\'on tecnol\'ogica desde la refrigeraci\'on convencional por aire hacia los sistemas de termosif\'on y cambio de fase para disipar altas densidades de potencia \cite{incropera2007}.
 
-\section{El muro t\'ermico y los l\'imites del calor sensible}
+\section{El muro t\'ermico y los l\'imites del calor sensible}\label{sec:calor_sensible}
 El l\'imite f\'isico del enfriamiento tradicional se rige por el \textbf{Calor Sensible}, donde la energ\'ia t\'ermica absorbida por un fluido provoca un incremento en su temperatura. La tasa de transferencia de calor ($\dot{Q}$) en un flujo monof\'asico se define como:
-\begin{equation}
+\begin{equation}\label{eq:calor_sensible}
 \dot{Q} = \dot{m} \cdot C_p \cdot \Delta T
 \end{equation}
 Donde:
@@ -26,9 +26,9 @@ Dada la densidad del aire a $20^\circ\text{C}$ ($\rho_{\text{aire}} \approx 1,2\
 \end{equation}
 Mover $5.520\text{ Litros de aire por segundo}$ a trav\'es de un espacio confinado de rack de 19 pulgadas genera p\'erdidas de carga (ca\'ida de presi\'on) exponenciales y requiere ventiladores gigantescos cuyo consumo el\'ectrico neutraliza la eficiencia operativa del centro de datos \cite{uptime2024}.
 
-\section{Termodin\'amica del cambio de fase (calor latente)}
+\section{Termodin\'amica del cambio de fase (calor latente)}\label{sec:calor_latente}
 Para vencer el Muro T\'ermico, la ebullici\'on bif\'asica utiliza el \textbf{Calor Latente} de vaporizaci\'on. El fluido diel\'ectrico absorbe energ\'ia al cambiar de fase (l\'iquido a vapor) de manera isot\'ermica:
-\begin{equation}
+\begin{equation}\label{eq:calor_latente}
 \dot{Q} = \dot{m} \cdot h_{fg}
 \end{equation}
 Donde $h_{fg}$ es la entalp\'ia de vaporizaci\'on del refrigerante (J/kg).
@@ -42,9 +42,9 @@ Utilizando un fluido con un calor latente de vaporizaci\'on moderado ($h_{fg} \a
 \end{equation}
 Al comparar ambos m\'etodos, el cambio de fase permite una reducci\'on del caudal volum\'etrico requerido de aproximadamente \textbf{9.200 veces} frente al aire \cite{webb2005}.
 
-\section{M\'etodo \texorpdfstring{$\epsilon$}{epsilon}-NTU para intercambiadores de calor bif\'asicos}
+\section{M\'etodo \texorpdfstring{$\epsilon$}{epsilon}-NTU para intercambiadores de calor bif\'asicos}\label{sec:metodo_ntu}
 El an\'alisis t\'ermico de los condensadores y placas fr\'ias evaporativas se realiza mediante el m\'etodo de \textbf{Efectividad - N\'umero de Unidades de Transferencia ($\epsilon$-NTU)}. La efectividad del intercambiador se define como \cite{incropera2007}:
-\begin{equation}
+\begin{equation}\label{eq:efectividad_ntu}
 \epsilon = \frac{\dot{Q}}{\dot{Q}_{max}}
 \end{equation}
 Donde la transferencia de calor m\'axima te\'orica es:
@@ -56,7 +56,7 @@ Durante un cambio de fase, el calor espec\'ifico efectivo del fluido tiende a in
 C_r = \frac{C_{min}}{C_{max}} \to 0
 \end{equation}
 Bajo esta condici\'on l\'imite, la ecuaci\'on de efectividad para cualquier configuraci\'on del intercambiador se simplifica a:
-\begin{equation}
+\begin{equation}\label{eq:efectividad_cambio_fase}
 \epsilon = 1 - \exp(-NTU)
 \end{equation}
 Donde el N\'umero de Unidades de Transferencia (NTU) es:
@@ -65,7 +65,7 @@ NTU = \frac{U \cdot A}{C_{min}}
 \end{equation}
 Siendo $U$ el coeficiente global de transferencia de calor ($\text{W}/(\text{m}^2\cdot\text{K})$), $A$ el \'area de transferencia de calor ($\text{m}^2$) y $C_{min}$ la capacitancia t\'ermica del fluido monof\'asico (ej. aire exterior en el condensador).
 
-\section{Algoritmo de PUE din\'amico en funci\'on del clima}
+\section{Algoritmo de PUE din\'amico en funci\'on del clima}\label{sec:algoritmo_pue}
 El PUE total del sistema se modela en funci\'on de la temperatura del aire exterior ($T_{ext}$) y la temperatura cr\'itica ($T_{cr}$) para Free Cooling total \cite{greengrid2008}. El algoritmo opera bajo tres estados:
 \begin{enumerate}
     \item \textbf{Modo Free Cooling Total ($T_{ext} < T_{cr}$):}

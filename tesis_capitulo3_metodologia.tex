@@ -4,22 +4,22 @@
 
 Este cap\'itulo detalla el dise\~no metodol\'ogico implementado para la simulaci\'on termodin\'amica y econ\'omica de los sistemas de enfriamiento de alta densidad ($100\text{ kW}$ por rack), as\'i como la arquitectura del pipeline de datos e integraci\'on con la nube de Google Cloud Platform (GCP).
 
-\section{Arquitectura del simulador (Python)}
-El modelamiento del comportamiento t\'ermico y de costos operativos se program\'o en el entorno local utilizando Python 3.11, estructurado en dos scripts principales:
+\section{Arquitectura del simulador (Python)}\label{sec:arquitectura_simulador}
+El modelamiento del comportamiento t\'ermico y de costos operativos se program\'o en el entorno local utilizando Python 3.11, estructurado en dos scripts principales \cite{incropera2007}:
 \begin{enumerate}
     \item \textbf{\texttt{simulador\_ia\_100kw.py}}: Contiene la l\'ogica f\'isica para calcular el PUE din\'amico hora a hora.
     \item \textbf{\texttt{termo\_economia\_global.py}}: Ejecuta las simulaciones multianuales a gran escala, integrando los costos de electricidad industrial y fuentes de tarifas reales para cada ubicaci\'on geogr\'afica.
 \end{enumerate}
 
-La simulaci\'on se configur\'o con par\'ametros constantes representativos de la demanda de superc\'omputo de Inteligencia Artificial para el a\~no 2026:
+La simulaci\'on se configur\'o con par\'ametros constantes representativos de la demanda de superc\'omputo de Inteligencia Artificial para el a\~no 2026 \cite{ashrae2021}:
 \begin{itemize}
     \item Carga T\'ermica de TI ($P_{IT}$): $100\text{ kW}$ constantes ($24/7/365$).
     \item Rango de Operaci\'on del Procesador: Temperatura de uni\'on m\'axima permitida en el silicio ($T_{j,max}$) de $75^\circ\text{C}$ para evitar estrangulamiento t\'ermico \cite{ashrae2021}.
-    \item Flujo Volum\'etrico de Fluidos Diel\'ectricos: Configurado en $\dot{V}_{\text{bifasico}} = 0,6\text{ L/s}$ para ebullici\'on saturada (ej. 3M Novec 7100), logrando una reducci\'on volum\'etrica de $9.200$ veces en comparaci\'on con el caudal de aire requerido ($5.520\text{ L/s}$) para disipar la misma carga.
+    \item Flujo Volum\'etrico de Fluidos Diel\'ectricos: Configurado en $\dot{V}_{\text{bifasico}} = 0,6\text{ L/s}$ para ebullici\'on saturada (ej. 3M Novec 7100), logrando una reducci\'on volum\'etrica de $9.200$ veces en comparaci\'on con el caudal de aire requerido ($5.520\text{ L/s}$) para disipar la misma carga \cite{garrity2014}.
 \end{itemize}
 
-\section{Modelamiento del PUE din\'amico}
-El c\'alculo del PUE din\'amico de enfriamiento se rige por la relaci\'on entre la temperatura del aire exterior ($T_{ext}$) y la temperatura cr\'itica de transici\'on ($T_{cr}$) definida \cite{greengrid2008} para cada tecnolog\'ia:
+\section{Modelamiento del PUE din\'amico}\label{sec:modelamiento_pue_dinamico}
+El c\'alculo del PUE din\'amico de enfriamiento se rige por el algoritmo termodin\'amico detallado en la Sec.~\ref{sec:algoritmo_pue}, evaluando la relaci\'on entre la temperatura del aire exterior ($T_{ext}$) y la temperatura cr\'itica de transici\'on ($T_{cr}$) definida \cite{greengrid2008} para cada tecnolog\'ia:
 \begin{itemize}
     \item \textbf{Rear Door Heat Exchanger (RDHx) Baseline:} $T_{cr} = 10,0^\circ\text{C}$, $T_{max} = 40,0^\circ\text{C}$; $PUE_{fc} = 1,15$, $PUE_{base} = 1,50$.
     \item \textbf{Termosif\'on Direct-to-Chip (D2C) Bif\'asico:} $T_{cr} = 25,0^\circ\text{C}$, $T_{max} = 40,0^\circ\text{C}$; $PUE_{fc} = 1,05$, $PUE_{base} = 1,20$.
@@ -27,10 +27,10 @@ El c\'alculo del PUE din\'amico de enfriamiento se rige por la relaci\'on entre 
 \end{itemize}
 
 \section{Descripci\'on y esquemas de los sistemas de enfriamiento}
-En esta secci\'on se detalla la configuraci\'on f\'isica y el principio termodin\'amico de funcionamiento de las tres tecnolog\'ias evaluadas, representadas vectorialmente mediante diagramas en TikZ.
+En esta secci\'on se detalla la configuraci\'on f\'isica y el principio termodin\'amico de funcionamiento de las tres tecnolog\'ias evaluadas, representadas vectorialmente mediante diagramas en TikZ \cite{garrity2014}.
 
 \subsection{Rear door heat exchanger (RDHx)}
-El sistema RDHx (Fig.~\ref{fig:rdhx_diagram}) es una tecnolog\'ia h\'ibrida de aire-l\'iquido. En lugar de enfriar el aire de la sala, se acopla un intercambiador de calor de tubos aleteados directamente en la puerta trasera del rack. El aire caliente sale de los servidores empujado por los ventiladores del chasis, atraviesa las bobinas de cobre del RDHx donde rechaza el calor hacia un circuito secundario de agua a temperatura templada, y sale de la puerta a temperatura neutral.
+El sistema RDHx (Fig.~\ref{fig:rdhx_diagram}) es una tecnolog\'ia h\'ibrida de aire-l\'iquido. En lugar de enfriar el aire de la sala, se acopla un intercambiador de calor de tubos aleteados directamente en la puerta trasera del rack. El aire caliente sale de los servidores empujado por los ventiladores del chasis, atraviesa las bobinas de cobre del RDHx donde rechaza el calor hacia un circuito secundario de agua a temperatura templada, y sale de la puerta a temperatura neutral \cite{ashrae2021}.
 
 \begin{figure}[htbp]
 \centering
@@ -63,7 +63,7 @@ El sistema RDHx (Fig.~\ref{fig:rdhx_diagram}) es una tecnolog\'ia h\'ibrida de a
 \end{figure}
 
 \subsection{Termosif\'on direct-to-chip (D2C) bif\'asico}
-El termosif\'on D2C bif\'asico (Fig.~\ref{fig:d2c_diagram}) utiliza un circuito cerrado sin bombeo mec\'anico activo, aprovechando el cambio de fase de un fluido diel\'ectrico. El refrigerante l\'iquido ingresa a las placas fr\'ias evaporadoras acopladas sobre las CPU/GPU. La alta densidad de calor hace hervir el fluido a temperatura constante. El vapor generado, de baja densidad, asciende por el elevador hacia el condensador superior, donde condensa al transferir calor al lazo secundario, retornando l\'iquido por gravedad.
+El termosif\'on D2C bif\'asico (Fig.~\ref{fig:d2c_diagram}) utiliza un circuito cerrado sin bombeo mec\'anico activo, aprovechando el cambio de fase de un fluido diel\'ectrico. El refrigerante l\'iquido ingresa a las placas fr\'ias evaporadoras acopladas sobre las CPU/GPU. La alta densidad de calor hace hervir el fluido a temperatura constante. El vapor generado, de baja densidad, asciende por el elevador hacia el condensador superior, donde condensa al transferir calor al lazo secundario, retornando l\'iquido por gravedad \cite{garrity2014}.
 
 \begin{figure}[htbp]
 \centering
@@ -97,7 +97,7 @@ El termosif\'on D2C bif\'asico (Fig.~\ref{fig:d2c_diagram}) utiliza un circuito 
 \end{figure}
 
 \subsection{Inmersi\'on l\'iquida bif\'asica}
-En la inmersi\'on bif\'asica (Fig.~\ref{fig:immersion_diagram}), los servidores de IA se sumergen completamente en un tanque herm\'etico lleno de refrigerante diel\'ectrico con bajo punto de ebullici\'on. El fluido hierve en contacto directo con el silicio caliente, formando burbujas de vapor que ascienden a la superficie del l\'iquido. En la c\'upula sellada, el vapor choca contra un serpent\'in condensador refrigerado por agua de torre, volviendo al estado l\'iquido y goteando de vuelta al tanque de forma continua.
+En la inmersi\'on bif\'asica (Fig.~\ref{fig:immersion_diagram}), los servidores de IA se sumergen completamente en un tanque herm\'etico lleno de refrigerante diel\'ectrico con bajo punto de ebullici\'on. El fluido hierve en contacto directo con el silicio caliente, formando burbujas de vapor que ascienden a la superficie del l\'iquido. En la c\'upula sellada, el vapor choca contra un serpent\'in condensador refrigerado por agua de torre, volviendo al estado l\'iquido y goteando de vuelta al tanque de forma continua \cite{mudawar2001}.
 
 \begin{figure}[htbp]
 \centering
@@ -134,7 +134,7 @@ En la inmersi\'on bif\'asica (Fig.~\ref{fig:immersion_diagram}), los servidores 
 \end{figure}
 
 
-\section{Pipeline de datos e ingesta en GCP}
+\section{Pipeline de datos e ingesta en GCP}\label{sec:pipeline_gcp}
 Para procesar de forma masiva los datos meteorol\'ogicos de 39 localidades geogr\'aficas ($26.280\text{ horas}$ por ubicaci\'on, totalizando $1.025.856$ registros de temperatura), se dise\~n\'o \cite{masnet2020} un flujo de trabajo ETL (Extract, Translate, Load) automatizado:
 \begin{enumerate}
     \item \textbf{Descarga:} Obtenci\'on de las temperaturas hist\'oricas horarias (2023--2025) mediante la API de Open-Meteo.
@@ -143,16 +143,16 @@ Para procesar de forma masiva los datos meteorol\'ogicos de 39 localidades geogr
     \item \textbf{Ingesta incremental:} Script \texttt{daily\_weather\_etl.py} que consulta de manera diaria el clima del d\'ia anterior de las 6 ciudades clave y lo sube a la tabla.
 \end{enumerate}
 
-Para asegurar la idempotencia del ETL en el Sandbox de GCP (que restringe el uso de DML \texttt{DELETE}), el script realiza una comprobaci\'on \texttt{SELECT COUNT(1)} de la fecha del d\'ia. Si el conteo es mayor que cero, salta la inserci\'on previniendo registros duplicados.
+Para asegurar la idempotencia del ETL en el Sandbox de GCP (que restringe el uso de DML \texttt{DELETE}), el script realiza una comprobaci\'on \texttt{SELECT COUNT(1)} de la fecha del d\'ia. Si el conteo es mayor que cero, salta la inserci\'on previniendo registros duplicados \cite{google2023}.
 
-\section{Esquema de base de datos en BigQuery}
-Los datos se estructuraron bajo dos tablas en BigQuery:
+\section{Esquema de base de datos en BigQuery}\label{sec:esquema_bigquery}
+Los datos se estructuraron bajo dos tablas en BigQuery \cite{google2023}:
 \begin{itemize}
     \item \textbf{\texttt{climate\_data\_global}:} Almacena las variables de clima hist\'orico e incremental: \texttt{location} (STRING), \texttt{region} (STRING), \texttt{latitude} (FLOAT), \texttt{longitude} (FLOAT), \texttt{time} (TIMESTAMP) y \texttt{temperature\_c} (FLOAT).
     \item \textbf{\texttt{analisis\_termoeconomico\_global}:} Almacena los resultados de costos calculados trienales: \texttt{region} (STRING), \texttt{localidad} (STRING), \texttt{precio\_usd\_kwh} (FLOAT), \texttt{fuente\_tarifa} (STRING), \texttt{url\_fuente} (STRING), \texttt{sistema\_enfriamiento} (STRING), \texttt{horas\_totales} (INTEGER), \texttt{free\_cooling\_hours} (INTEGER), \texttt{fch\_pct} (FLOAT), \texttt{energia\_total\_kwh} (FLOAT) y \texttt{opex\_3\_anios\_usd} (FLOAT).
 \end{itemize}
 
-\section{Entrenamiento del modelo ARIMA\_PLUS en BigQuery ML}
-El entrenamiento predictivo se configur\'o utilizando BigQuery ML mediante el script \texttt{train\_cooling\_model.py}. Esto permite entrenar de forma paralela 6 modelos individuales utilizando la opci\'on \texttt{time\_series\_id\_col='location'}. El modelo de series de tiempo resultante, \texttt{cooling\_forecast\_model}, se registra autom\'aticamente en el Vertex AI Model Registry de GCP para permitir su posterior consumo u operaci\'on automatizada en la nube.
+\section{Entrenamiento del modelo ARIMA\_PLUS en BigQuery ML}\label{sec:modelo_arima}
+El entrenamiento predictivo se configur\'o utilizando BigQuery ML mediante el script \texttt{train\_cooling\_model.py}. Esto permite entrenar de forma paralela 6 modelos individuales utilizando la opci\'on \texttt{time\_series\_id\_col='location'}. El modelo de series de tiempo resultante, \texttt{cooling\_forecast\_model}, se registra autom\'aticamente en el Vertex AI Model Registry de GCP para permitir su posterior consumo u operaci\'on automatizada en la nube \cite{masnet2020}.
 
 \shorthandon{<}\shorthandon{>}

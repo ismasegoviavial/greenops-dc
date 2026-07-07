@@ -88,7 +88,7 @@ Por su parte, \textbf{Colchane}, ubicado en el altiplano, compensa la radiaci\'o
 
 \section{Evaluaci\'on termoecon\'omica (OPEX acumulado)}
 El costo de operaci\'on de energ\'ia ($OPEX$) se deriva del consumo del rack de TI y de la infraestructura de enfriamiento asociada, integrando el PUE din\'amico obtenido hora a hora \cite{greengrid2008}:
-\begin{equation}
+\begin{equation}\label{eq:opex_formula}
 OPEX = \sum_{h=1}^{H} \left( P_{IT} \cdot PUE_h \cdot \text{Tarifa}_{local} \right)
 \end{equation}
 Donde $P_{IT} = 100\text{ kW}$.
@@ -128,6 +128,7 @@ Colchane & USD 833.310 & USD 602.770 & USD 544.952 & USD 486.103 & USD 472.209 \
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
+    every node near coord/.append style={font=\tiny},
     width=10cm, height=7.0cm,
     title={Comparaci\'on de OPEX Energ\'etico Trienal},
     ymajorgrids=true,
@@ -161,7 +162,7 @@ OPEX_{\text{IG}} - OPEX_{\text{R}} = 486.097 - 220.953 = 265.144 \text{ USD}
 Las tarifas el\'ectricas industriales de Chile ($\approx 0,176\text{ USD/kWh}$) duplican a las de las regiones n\'ordicas ($\approx 0,08 - 0,10\text{ USD/kWh}$), lo que hace que la viabilidad comercial en el Cono Sur dependa de contratos preferenciales de compra de energ\'ia limpia (PPAs), la priorizaci\'on de la reducci\'on de huella h\'idrica (cero consumo en Free Cooling seco) y la reducci\'on de latencia de red \cite{bnef2024}.
 
 \section{Optimizaci\'on predictiva con BigQuery ML y Vertex AI}
-El modelo de series de tiempo \texttt{ARIMA\_PLUS} en BigQuery ML gener\'o un pron\'ostico horariode temperatura de $24\text{ horas}$ para el d\'ia $2026-06-21$ \cite{box2015}, \cite{google2023} (Tabla~\ref{tab:forecast_tesis}).
+El modelo de series de tiempo \texttt{ARIMA\_PLUS} en BigQuery ML, entrenado seg\'un la metodolog\'ia descrita en la Sec.~\ref{sec:modelo_arima}, gener\'o un pron\'ostico horariode temperatura de $24\text{ horas}$ para el d\'ia $2026-06-21$ \cite{box2015}, \cite{google2023} (Tabla~\ref{tab:forecast_tesis}).
 
 \begin{table}[htbp]
 \caption{Resultados del Pron\'ostico de Temperatura (2026-06-21)}
@@ -183,7 +184,7 @@ Quebec, Canad\'a & $18,72$ & $20,51$ & $2,09$ \\
 }
 \end{table}
 
-Este pron\'ostico se emplea en el sistema BMS para:
+Este pron\'ostico se almacena en el esquema relacional de la Sec.~\ref{sec:esquema_bigquery} y se emplea en el sistema BMS para:
 \begin{itemize}
     \item \textbf{Control de Caudal Proactivo:} Modula preventivamente la velocidad de los ventiladores y el caudal secundario en el condensador del termosif\'on para mitigar la inercia t\'ermica del bucle de cambio de fase.
     \item \textbf{Planificaci\'on Din\'amica de Tareas (IA):} Si el pron\'ostico muestra temperaturas cercanas al umbral de diseño ($25,0^\circ\text{C}$), se pueden migrar din\'amicamente cargas computacionales de IA hacia locaciones m\'as fr\'ias (ej. migrar tareas de Quebec a Isla Gordon) para evitar el encendido de chillers mec\'anicos y proteger los chips Blackwell \cite{google2014}, \cite{bhardwaj2021}.
