@@ -14,12 +14,12 @@ El modelamiento del comportamiento t\'ermico y de costos operativos se program\'
 La simulaci\'on se configur\'o con par\'ametros constantes representativos de la demanda de superc\'omputo de Inteligencia Artificial para el a\~no 2026:
 \begin{itemize}
     \item Carga T\'ermica de TI ($P_{IT}$): $100\text{ kW}$ constantes ($24/7/365$).
-    \item Rango de Operaci\'on del Procesador: Temperatura de uni\'on m\'axima permitida en el silicio ($T_{j,max}$) de $75^\circ\text{C}$ para evitar estrangulamiento t\'ermico.
+    \item Rango de Operaci\'on del Procesador: Temperatura de uni\'on m\'axima permitida en el silicio ($T_{j,max}$) de $75^\circ\text{C}$ para evitar estrangulamiento t\'ermico \cite{ashrae2021}.
     \item Flujo Volum\'etrico de Fluidos Diel\'ectricos: Configurado en $\dot{V}_{\text{bifasico}} = 0,6\text{ L/s}$ para ebullici\'on saturada (ej. 3M Novec 7100), logrando una reducci\'on volum\'etrica de $9.200$ veces en comparaci\'on con el caudal de aire requerido ($5.520\text{ L/s}$) para disipar la misma carga.
 \end{itemize}
 
 \section{Modelamiento del PUE Din\'amico}
-El c\'alculo del PUE din\'amico de enfriamiento se rige por la relaci\'on entre la temperatura del aire exterior ($T_{ext}$) y la temperatura cr\'itica de transici\'on ($T_{cr}$) definida para cada tecnolog\'ia:
+El c\'alculo del PUE din\'amico de enfriamiento se rige por la relaci\'on entre la temperatura del aire exterior ($T_{ext}$) y la temperatura cr\'itica de transici\'on ($T_{cr}$) definida \cite{greengrid2008} para cada tecnolog\'ia:
 \begin{itemize}
     \item \textbf{Rear Door Heat Exchanger (RDHx) Baseline:} $T_{cr} = 10,0^\circ\text{C}$, $T_{max} = 40,0^\circ\text{C}$; $PUE_{fc} = 1,15$, $PUE_{base} = 1,50$.
     \item \textbf{Termosif\'on Direct-to-Chip (D2C) Bif\'asico:} $T_{cr} = 25,0^\circ\text{C}$, $T_{max} = 40,0^\circ\text{C}$; $PUE_{fc} = 1,05$, $PUE_{base} = 1,20$.
