@@ -140,10 +140,10 @@ Para procesar de forma masiva los datos meteorol\'ogicos de 39 localidades geogr
     \item \textbf{Descarga:} Obtenci\'on de las temperaturas hist\'oricas horarias (2023--2025) mediante la API de Open-Meteo.
     \item \textbf{Estructuraci\'on:} Conversi\'on de columnas a snake\_case y formateo del tiempo a Timestamp mediante pandas en \texttt{data\_fetcher\_global.py}.
     \item \textbf{Carga inicial:} Ingesta de datos a Google BigQuery mediante \texttt{upload\_data\_centers\_bq.py} en el dataset \texttt{data\_center\_research} del proyecto \texttt{project-5ca89b0c-e364-4245-a61}.
-    \item \textbf{Ingesta incremental:} Script \texttt{daily\_weather\_etl.py} que consulta de manera diaria el clima del d\'ia anterior de las 6 ciudades clave y lo sube a la tabla.
+    \item \textbf{Ingesta incremental:} Script \texttt{daily\_weather\_etl.py} que consulta de manera diaria el clima del d\'ia anterior de las 39 localidades del dataset y lo sube a la tabla.
 \end{enumerate}
 
-Para asegurar la idempotencia del ETL en el Sandbox de GCP (que restringe el uso de DML \texttt{DELETE}), el script realiza una comprobaci\'on \texttt{SELECT COUNT(1)} de la fecha del d\'ia. Si el conteo es mayor que cero, salta la inserci\'on previniendo registros duplicados \cite{google2023}.
+Para asegurar la idempotencia del ETL ante posibles re-ejecuciones, el script ejecuta una sentencia DML \texttt{DELETE} para limpiar los registros existentes de la fecha destino en BigQuery antes de cargar los nuevos datos \cite{google2023}.
 
 \section{Esquema de base de datos en BigQuery}\label{sec:esquema_bigquery}
 Los datos se estructuraron bajo dos tablas en BigQuery \cite{google2023}:
