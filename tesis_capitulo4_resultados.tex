@@ -158,10 +158,10 @@ La eficiencia econ\'omica ($\eta_{\text{economica}}$) de la transici\'on de CRAC
 \begin{equation}
 OPEX_{\text{IG}} - OPEX_{\text{R}} = 486.097 - 220.953 = 265.144 \text{ USD}
 \end{equation}
-Las tarifas el\'ectricas industriales de Chile ($\approx 0,176\text{ USD/kWh}$) duplican a las de las regiones n\'ordicas ($\approx 0,08 - 0,10\text{ USD/kWh}$), lo que hace que la viabilidad comercial en el Cono Sur dependa de contratos preferenciales de compra de energ\'ia limpia (PPAs), la priorizaci\'on de la reducci\'on de huella h\'idrica (cero consumo en Free Cooling seco) y la reducci\'on de latencia de red.
+Las tarifas el\'ectricas industriales de Chile ($\approx 0,176\text{ USD/kWh}$) duplican a las de las regiones n\'ordicas ($\approx 0,08 - 0,10\text{ USD/kWh}$), lo que hace que la viabilidad comercial en el Cono Sur dependa de contratos preferenciales de compra de energ\'ia limpia (PPAs), la priorizaci\'on de la reducci\'on de huella h\'idrica (cero consumo en Free Cooling seco) y la reducci\'on de latencia de red \cite{bnef2024}.
 
 \section{Optimizaci\'on Predictiva con BigQuery ML y Vertex AI}
-El modelo de series de tiempo \texttt{ARIMA\_PLUS} en BigQuery ML gener\'o un pron\'ostico horariode temperatura de $24\text{ horas}$ para el d\'ia $2026-06-21$ (Tabla~\ref{tab:forecast_tesis}).
+El modelo de series de tiempo \texttt{ARIMA\_PLUS} en BigQuery ML gener\'o un pron\'ostico horariode temperatura de $24\text{ horas}$ para el d\'ia $2026-06-21$ \cite{box2015}, \cite{google2023} (Tabla~\ref{tab:forecast_tesis}).
 
 \begin{table}[htbp]
 \caption{Resultados del Pron\'ostico de Temperatura (2026-06-21)}
@@ -186,5 +186,5 @@ Quebec, Canad\'a & $18,72$ & $20,51$ & $2,09$ \\
 Este pron\'ostico se emplea en el sistema BMS para:
 \begin{itemize}
     \item \textbf{Control de Caudal Proactivo:} Modula preventivamente la velocidad de los ventiladores y el caudal secundario en el condensador del termosif\'on para mitigar la inercia t\'ermica del bucle de cambio de fase.
-    \item \textbf{Planificaci\'on Din\'amica de Tareas (IA):} Si el pron\'ostico muestra temperaturas cercanas al umbral de diseño ($25,0^\circ\text{C}$), se pueden migrar din\'amicamente cargas computacionales de IA hacia locaciones m\'as fr\'ias (ej. migrar tareas de Quebec a Isla Gordon) para evitar el encendido de chillers mec\'anicos y proteger los chips Blackwell.
+    \item \textbf{Planificaci\'on Din\'amica de Tareas (IA):} Si el pron\'ostico muestra temperaturas cercanas al umbral de diseño ($25,0^\circ\text{C}$), se pueden migrar din\'amicamente cargas computacionales de IA hacia locaciones m\'as fr\'ias (ej. migrar tareas de Quebec a Isla Gordon) para evitar el encendido de chillers mec\'anicos y proteger los chips Blackwell \cite{google2014}, \cite{bhardwaj2021}.
 \end{itemize}

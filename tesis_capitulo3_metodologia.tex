@@ -135,7 +135,7 @@ En la inmersi\'on bif\'asica (Fig.~\ref{fig:immersion_diagram}), los servidores 
 
 
 \section{Pipeline de Datos e Ingesta en GCP}
-Para procesar de forma masiva los datos meteorol\'ogicos de 39 localidades geogr\'aficas ($26.280\text{ horas}$ por ubicaci\'on, totalizando $1.025.856$ registros de temperatura), se dise\~n\'o un flujo de trabajo ETL (Extract, Translate, Load) automatizado:
+Para procesar de forma masiva los datos meteorol\'ogicos de 39 localidades geogr\'aficas ($26.280\text{ horas}$ por ubicaci\'on, totalizando $1.025.856$ registros de temperatura), se dise\~n\'o \cite{masnet2020} un flujo de trabajo ETL (Extract, Translate, Load) automatizado:
 \begin{enumerate}
     \item \textbf{Descarga:} Obtenci\'on de las temperaturas hist\'oricas horarias (2023--2025) mediante la API de Open-Meteo.
     \item \textbf{Estructuraci\'on:} Conversi\'on de columnas a snake\_case y formateo del tiempo a Timestamp mediante pandas en \texttt{data\_fetcher\_global.py}.
