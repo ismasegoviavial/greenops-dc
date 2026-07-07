@@ -1,10 +1,10 @@
 \chapter{Resultados de la simulaci\'on y discusi\'on termoecon\'omica}
 \label{chap:resultados}
 
-Este cap\'itulo presenta el an\'alisis cuantitativo de los resultados obtenidos a partir de la simulaci\'on de tres a\~nos completos ($2023-2025$, equivalentes a $26.280\text{ horas}$) del comportamiento de enfriamiento de un rack de Inteligencia Artificial de alta densidad ($100\text{ kW}$) en seis ubicaciones globales estrat\'egicas.
+Este cap\'itulo presenta el an\'alisis cuantitativo de los resultados obtenidos a partir de la simulaci\'on de tres a\~nos completos ($2023-2025$, equivalentes a $26.280\text{ horas}$) del comportamiento de enfriamiento de un rack de Inteligencia Artificial de alta densidad ($100\text{ kW}$) en seis ubicaciones globales estrat\'egicas \cite{masnet2020}.
 
 \section{An\'alisis del potencial de free cooling (FCP \%)}
-La efectividad del Free Cooling se mide mediante el porcentaje de Horas de Free Cooling (FCP, \emph{Free Cooling Percentage}), el cual representa la fracci\'on de tiempo en la cual el sistema disipa la totalidad de la carga t\'ermica de $100\text{ kW}$ de manera puramente pasiva (sin compresi\'on de vapor mec\'anica).
+La efectividad del Free Cooling se mide mediante el porcentaje de Horas de Free Cooling (FCP, \emph{Free Cooling Percentage}), el cual representa la fracci\'on de tiempo en la cual el sistema disipa la totalidad de la carga t\'ermica de $100\text{ kW}$ de manera puramente pasiva (sin compresi\'on de vapor mec\'anica) \cite{greengrid2008}.
 \begin{equation}
 FCP = \left( \frac{\sum_{h=1}^{H} \mathbb{I}(T_{ext, h} < T_{cr})}{H} \right) \cdot 100
 \end{equation}
@@ -82,12 +82,12 @@ Colchane, Chile & $14.887\text{ h } (56,6\%)$ & $26.280\text{ h } (100,0\%)$ & $
 \label{fig:pue_curves}
 \end{figure}
 
-Los resultados revelan que la zona austral de Chile (\textbf{Isla Gordon}) exhibe un potencial t\'ermico superior al de los centros tradicionales del hemisferio norte, superando a Lule\aa\ en un $30,0\%$ absoluto de horas de enfriamiento libre en la configuraci\'on RDHx, debido a la alta estabilidad clim\'atica patag\'onica. 
+Los resultados revelan que la zona austral de Chile (\textbf{Isla Gordon}) exhibe un potencial t\'ermico superior al de los centros tradicionales del hemisferio norte, superando a Lule\aa\ en un $30,0\%$ absoluto de horas de enfriamiento libre en la configuraci\'on RDHx, debido a la alta estabilidad clim\'atica patag\'onica \cite{masnet2020}. 
 
-Por su parte, \textbf{Colchane}, ubicado en el altiplano, compensa la radiaci\'on solar diurna con bajas temperaturas nocturnas extremas, logrando un $100\%$ de FCP en D2C e Inmersi\'on.
+Por su parte, \textbf{Colchane}, ubicado en el altiplano, compensa la radiaci\'on solar diurna con bajas temperaturas nocturnas extremas, logrando un $100\%$ de FCP en D2C e Inmersi\'on \cite{bnef2024}.
 
 \section{Evaluaci\'on termoecon\'omica (OPEX acumulado)}
-El costo de operaci\'on de energ\'ia ($OPEX$) se deriva del consumo del rack de TI y de la infraestructura de enfriamiento asociada, integrando el PUE din\'amico obtenido hora a hora:
+El costo de operaci\'on de energ\'ia ($OPEX$) se deriva del consumo del rack de TI y de la infraestructura de enfriamiento asociada, integrando el PUE din\'amico obtenido hora a hora \cite{greengrid2008}:
 \begin{equation}
 OPEX = \sum_{h=1}^{H} \left( P_{IT} \cdot PUE_h \cdot \text{Tarifa}_{local} \right)
 \end{equation}
@@ -152,9 +152,9 @@ Colchane & USD 833.310 & USD 602.770 & USD 544.952 & USD 486.103 & USD 472.209 \
 \end{figure}
 
 \section{El trade-off termoecon\'omico: clima vs. tarifa}
-El an\'alisis econ\'omico expone una paradoja crucial para la geolocalizaci\'on de data centers: la alta eficiencia t\'ermica de Chile se ve contrarrestada por sus tarifas energ\'eticas industriales.
+El an\'alisis econ\'omico expone una paradoja crucial para la geolocalizaci\'on de data centers: la alta eficiencia t\'ermica de Chile se ve contrarrestada por sus tarifas energ\'eticas industriales \cite{bnef2024}.
 
-La eficiencia econ\'omica ($\eta_{\text{economica}}$) de la transici\'on de CRAC a D2C es equivalente en Isla Gordon e Islandia ($41,7\%$), dado el $100\%$ de Free Cooling logrado en ambas. Sin embargo, el diferencial de costo nominal absoluto es significativo:
+La eficiencia econ\'omica ($\eta_{\text{economica}}$) de la transici\'on de CRAC a D2C es equivalente en Isla Gordon e Islandia ($41,7\%$), dado el $100\%$ de Free Cooling logrado en ambas. Sin embargo, el diferencial de costo nominal absoluto es significativo \cite{greenberg2006}:
 \begin{equation}
 OPEX_{\text{IG}} - OPEX_{\text{R}} = 486.097 - 220.953 = 265.144 \text{ USD}
 \end{equation}
