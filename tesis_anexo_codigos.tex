@@ -1,4 +1,4 @@
-\chapter{Anexo: C\'odigos Fuente de la Plataforma GreenOps DC}
+\chapter{Anexo: c\'odigos fuente de la plataforma GreenOps DC}
 \label{chap:anexo_codigos}
 
 Este anexo recopila las implementaciones de c\'odigo fuente clave desarrolladas para el funcionamiento operativo, simulaci\'on termodin\'amica y gesti\'on de datos de la plataforma \textbf{GreenOps DC}.
@@ -205,7 +205,7 @@ async def upload_inventory(file: UploadFile = File(...)):
 
 \newpage
 
-\section{Motor de Simulaci\'on de Termodin\'amica de Fluidos (Javascript)}
+\section{Motor de simulaci\'on de termodin\'amica de fluidos (JavaScript)}
 El siguiente bloque de c\'odigo Javascript corre en el cliente del simulador, calculando din\'amicamente la f\'isica de fluidos (fugas directas de Scope 1, consumo de agua de chillers evaporativos, costos OPEX y variaci\'on de temperaturas de silicio Tj):
 
 \begin{lstlisting}[language=Java]
@@ -272,7 +272,7 @@ const carbon_saved_yr = indirect_saved - direct_leakage_emissions;
 
 \newpage
 
-\section{Modelamiento Predictivo ARIMA (SQL - BigQuery ML)}
+\section{Modelamiento predictivo ARIMA (SQL - BigQuery ML)}
 La siguiente consulta SQL es utilizada para entrenar el modelo de series de tiempo de temperatura exterior horaria directamente dentro de Google BigQuery:
 
 \begin{lstlisting}[language=SQL]

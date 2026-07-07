@@ -1,31 +1,31 @@
-\chapter{Introducci\'on y Estado del Arte: El Muro T\'ermico de la IA y el Consumo Energ\'etico}
+\chapter{Introducci\'on y estado del arte: el muro t\'ermico de la IA y el consumo energ\'etico}
 \label{chap:introduccion}
 
 Desde la publicaci\'on original de este trabajo, el ecosistema de los centros de datos hiperescala ha sufrido una metamorfosis radical impulsada por la democratizaci\'on de la Inteligencia Artificial Generativa y los Grandes Modelos de Lenguaje (LLMs). Esta revoluci\'on algor\'itmica ha generado una disrupci\'on sin precedentes en el consumo el\'ectrico global.
 
-\section{El Impacto Energ\'etico de la Inteligencia Artificial a Nivel Global}
+\section{El impacto energ\'etico de la inteligencia artificial a nivel global}
 Durante el a\~no 2024, el consumo el\'ectrico mundial de los Data Centers se estim\'o en aproximadamente 415~TWh (representando el 1,5\% de la demanda global). En 2025, esta demanda experiment\'o un alza interanual extraordinaria del 17\%, alcanzando los 448~TWh. Este crecimiento es desproporcionadamente mayor al crecimiento del 3\% de la demanda el\'ectrica civil a nivel mundial [1], [2].
 
 Se proyecta que la demanda el\'ectrica de los Data Centers se duplicar\'a para el a\~no 2030, alcanzando un volumen cr\'itico de 945~TWh [1]. De este volumen, la cuota atribuible exclusivamente al procesamiento de IA se triplicar\'a. Se estima que los procesos de entrenamiento e inferencia de IA representar\'an m\'as de la mitad del uso el\'ectrico total en los Data Centers para el fin de esta d\'ecada.
 
-\section{El ``Muro T\'ermico'' y la Obsolescencia del Enfriamiento por Aire}
+\section{El ``muro t\'ermico'' y la obsolescencia del enfriamiento por aire}
 El principal desaf\'io f\'isico en esta nueva era se denomina el \textbf{Muro T\'ermico} (\emph{The Thermal Wall}). Mientras que hist\'oricamente un rack de servidores t\'ipico disipaba entre 4~kW y 10~kW, la adopci\'on de aceleradores modernos de IA (como las plataformas NVIDIA Blackwell) ha elevado el \emph{Thermal Design Power} (TDP) a rangos entre 1.000~W y 1.400~W por chip individual.
 
 Como consecuencia directa, las densidades por rack en centros de hiperescala superan habitualmente los 70~kW a 100~kW. A estas densidades, el enfriamiento tradicional mediante aire presurizado en salas (CRAC) ha alcanzado sus l\'imites termodin\'amicos y f\'isicos, resultando incapaz de remover tales densidades t\'ermicas sin incurrir en un estrangulamiento t\'ermico (\emph{thermal throttling}) o un consumo energ\'etico de ventilaci\'on prohibitivo.
 
-\section{Tecnolog\'ias Modernas de Enfriamiento por Cambio de Fase}
+\section{Tecnolog\'ias modernas de enfriamiento por cambio de fase}
 Para vencer el Muro T\'ermico, la industria global est\'a virando hacia soluciones l\'iquidas basadas en sistemas de cambio de fase (bif\'asicos):
 
-\subsection{Enfriamiento por Inmersi\'on Bif\'asica}
+\subsection{Enfriamiento por inmersi\'on bif\'asica}
 Consiste en sumergir la totalidad de los servidores del rack en un tanque sellado que contiene un fluido diel\'ectrico especialmente dise\~nado. El calor de los chips hace que el fluido diel\'ectrico hierva y pase a fase gaseosa (vapor). El vapor asciende hasta una bobina condensadora (enfriada por agua de un circuito secundario), se condensa y vuelve a caer como l\'iquido en un ciclo continuo.
 
-\subsection{Enfriamiento Directo al Chip Bif\'asico (Direct-to-Chip, D2C)}
+\subsection{Enfriamiento directo al chip bif\'asico (Direct-to-Chip, D2C)}
 Placas fr\'ias herm\'eticas (\emph{cold plates}) se instalan directamente sobre las GPUs/CPUs. El fluido refrigerante se evapora parcialmente dentro de la micro-estructura de la placa fr\'ia, absorbiendo calor mediante cambio de fase latente de forma localizada y eficiente.
 
-\subsection{Circuitos de Termosif\'on}
+\subsection{Circuitos de termosif\'on}
 La investigaci\'on en termosifones ha escalado debido a su alta confiabilidad. Dado que la circulaci\'on es impulsada por la gravedad y los cambios de densidad de fase, los termosifones minimizan o eliminan las piezas m\'oviles (bombas mec\'anicas), reduciendo las tasas de falla.
 
-\section{Optimizaci\'on Din\'amica y Control Predictivo en la Nube}
+\section{Optimizaci\'on din\'amica y control predictivo en la nube}
 Una vez instalados los sistemas bif\'asicos, el c\'alculo est\'atico del PUE se vuelve obsoleto en la operaci\'on diaria. La carga de los modelos de IA y el clima exterior fluct\'uan constantemente. Si conectamos sensores de temperatura del l\'iquido diel\'ectrico y del aire exterior hacia un Data Lake como \textbf{Google BigQuery}, es posible entrenar modelos predictivos (ej. usando \textbf{Vertex AI}). 
 
 El modelo puede predecir el clima y ajustar din\'amicamente las v\'alculas del condensador, la velocidad de los ventiladores y la velocidad de bombeo, reduciendo el consumo de enfriamiento en tiempo real.

@@ -1,9 +1,9 @@
-\chapter{Resultados de la Simulaci\'on y Discusi\'on Termoecon\'omica}
+\chapter{Resultados de la simulaci\'on y discusi\'on termoecon\'omica}
 \label{chap:resultados}
 
 Este cap\'itulo presenta el an\'alisis cuantitativo de los resultados obtenidos a partir de la simulaci\'on de tres a\~nos completos ($2023-2025$, equivalentes a $26.280\text{ horas}$) del comportamiento de enfriamiento de un rack de Inteligencia Artificial de alta densidad ($100\text{ kW}$) en seis ubicaciones globales estrat\'egicas.
 
-\section{An\'alisis del Potencial de Free Cooling (FCP \%)}
+\section{An\'alisis del potencial de free cooling (FCP \%)}
 La efectividad del Free Cooling se mide mediante el porcentaje de Horas de Free Cooling (FCP, \emph{Free Cooling Percentage}), el cual representa la fracci\'on de tiempo en la cual el sistema disipa la totalidad de la carga t\'ermica de $100\text{ kW}$ de manera puramente pasiva (sin compresi\'on de vapor mec\'anica).
 \begin{equation}
 FCP = \left( \frac{\sum_{h=1}^{H} \mathbb{I}(T_{ext, h} < T_{cr})}{H} \right) \cdot 100
@@ -86,7 +86,7 @@ Los resultados revelan que la zona austral de Chile (\textbf{Isla Gordon}) exhib
 
 Por su parte, \textbf{Colchane}, ubicado en el altiplano, compensa la radiaci\'on solar diurna con bajas temperaturas nocturnas extremas, logrando un $100\%$ de FCP en D2C e Inmersi\'on.
 
-\section{Evaluaci\'on Termoecon\'omica (OPEX Acumulado)}
+\section{Evaluaci\'on termoecon\'omica (OPEX acumulado)}
 El costo de operaci\'on de energ\'ia ($OPEX$) se deriva del consumo del rack de TI y de la infraestructura de enfriamiento asociada, integrando el PUE din\'amico obtenido hora a hora:
 \begin{equation}
 OPEX = \sum_{h=1}^{H} \left( P_{IT} \cdot PUE_h \cdot \text{Tarifa}_{local} \right)
@@ -151,7 +151,7 @@ Colchane & USD 833.310 & USD 602.770 & USD 544.952 & USD 486.103 & USD 472.209 \
 \label{fig:opex_bar_chart}
 \end{figure}
 
-\section{El Trade-off Termoecon\'omico: Clima vs. Tarifa}
+\section{El trade-off termoecon\'omico: clima vs. tarifa}
 El an\'alisis econ\'omico expone una paradoja crucial para la geolocalizaci\'on de data centers: la alta eficiencia t\'ermica de Chile se ve contrarrestada por sus tarifas energ\'eticas industriales.
 
 La eficiencia econ\'omica ($\eta_{\text{economica}}$) de la transici\'on de CRAC a D2C es equivalente en Isla Gordon e Islandia ($41,7\%$), dado el $100\%$ de Free Cooling logrado en ambas. Sin embargo, el diferencial de costo nominal absoluto es significativo:
@@ -160,7 +160,7 @@ OPEX_{\text{IG}} - OPEX_{\text{R}} = 486.097 - 220.953 = 265.144 \text{ USD}
 \end{equation}
 Las tarifas el\'ectricas industriales de Chile ($\approx 0,176\text{ USD/kWh}$) duplican a las de las regiones n\'ordicas ($\approx 0,08 - 0,10\text{ USD/kWh}$), lo que hace que la viabilidad comercial en el Cono Sur dependa de contratos preferenciales de compra de energ\'ia limpia (PPAs), la priorizaci\'on de la reducci\'on de huella h\'idrica (cero consumo en Free Cooling seco) y la reducci\'on de latencia de red \cite{bnef2024}.
 
-\section{Optimizaci\'on Predictiva con BigQuery ML y Vertex AI}
+\section{Optimizaci\'on predictiva con BigQuery ML y Vertex AI}
 El modelo de series de tiempo \texttt{ARIMA\_PLUS} en BigQuery ML gener\'o un pron\'ostico horariode temperatura de $24\text{ horas}$ para el d\'ia $2026-06-21$ \cite{box2015}, \cite{google2023} (Tabla~\ref{tab:forecast_tesis}).
 
 \begin{table}[htbp]
