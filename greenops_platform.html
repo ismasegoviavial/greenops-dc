@@ -1471,6 +1471,108 @@ def schedule_blackwell_workload(job_specs):
             }, 500);
         }
 
+        // Global parsed BIM cache for interactive testing
+        let parsedBIMData = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('file-ifc');
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    // Update label in UI
+                    const p = document.querySelector('#panel-discovery-bim p');
+                    if (p) {
+                        p.innerHTML = `<span style="color: var(--primary-color); font-weight: bold;"><i class="fa-solid fa-file-circle-check"></i> Archivo cargado:</span> ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const text = evt.target.result;
+                        if (file.name.endsWith('.xml') || file.name.endsWith('.gbxml')) {
+                            try {
+                                const parser = new DOMParser();
+                                const xmlDoc = parser.parseFromString(text, "text/xml");
+                                
+                                // Parse equipment/racks
+                                const equipments = xmlDoc.getElementsByTagName("Equipment");
+                                const racks = [];
+                                
+                                for (let i = 0; i < equipments.length; i++) {
+                                    const eq = equipments[i];
+                                    const rackId = eq.getAttribute('id') || ("Rack-" + i);
+                                    
+                                    // Parse power load
+                                    const powerEl = eq.getElementsByTagName('PowerLoad')[0];
+                                    const powerVal = powerEl ? powerEl.getAttribute('value') : "5.00";
+                                    
+                                    // Parse temp
+                                    const tempEl = eq.getElementsByTagName('Temperature')[0];
+                                    const tempVal = tempEl ? tempEl.textContent : "72°F";
+                                    
+                                    // Parse IP
+                                    const ipEl = eq.getElementsByTagName('PduIp')[0];
+                                    const ipVal = ipEl ? ipEl.textContent : "192.168.1.1";
+                                    
+                                    // Parse Status
+                                    const statusEl = eq.getElementsByTagName('Status')[0];
+                                    const statusVal = statusEl ? statusEl.textContent : "normal";
+                                    
+                                    racks.push({
+                                        id: rackId,
+                                        power: powerVal,
+                                        temp: tempVal,
+                                        ip: ipVal,
+                                        status: statusVal
+                                    });
+                                }
+                                
+                                // Parse Chillers
+                                const chillers = [];
+                                const chillerEls = xmlDoc.getElementsByTagName("Chiller");
+                                for (let i = 0; i < chillerEls.length; i++) {
+                                    const nameEl = chillerEls[i].getElementsByTagName('Name')[0];
+                                    const statusEl = chillerEls[i].getElementsByTagName('Status')[0];
+                                    chillers.push({
+                                        name: nameEl ? nameEl.textContent : "Chiller " + i,
+                                        status: statusEl ? statusEl.textContent : "Running"
+                                    });
+                                }
+                                
+                                // Parse Pumps
+                                const pumps = [];
+                                const pumpEls = xmlDoc.getElementsByTagName("Pump");
+                                for (let i = 0; i < pumpEls.length; i++) {
+                                    const nameEl = pumpEls[i].getElementsByTagName('Name')[0];
+                                    const statusEl = pumpEls[i].getElementsByTagName('Status')[0];
+                                    pumps.push({
+                                        name: nameEl ? nameEl.textContent : "Pump " + i,
+                                        status: statusEl ? statusEl.textContent : "Running"
+                                    });
+                                }
+                                
+                                parsedBIMData = {
+                                    filename: file.name,
+                                    racks: racks,
+                                    chillers: chillers,
+                                    pumps: pumps
+                                };
+                                pushLog("Archivo BIM/gbXML cargado correctamente: " + racks.length + " racks detectados.", "info");
+                            } catch(err) {
+                                pushLog("Error al parsear el archivo gbXML: " + err.message, "danger");
+                                parsedBIMData = null;
+                            }
+                        } else {
+                            parsedBIMData = null;
+                            pushLog("Archivo '" + file.name + "' seleccionado. Se utilizará la topología por defecto.", "warning");
+                        }
+                    };
+                    reader.readAsText(file);
+                });
+            }
+        });
+
         // Auto-Discovery JS Controllers
         function switchDiscoveryMethod(method) {
             // Hide all panels
@@ -1743,6 +1845,95 @@ def schedule_blackwell_workload(job_specs):
                                 </div>
                             `;
                         } else if (type === 'bim') {
+                            if (parsedBIMData) {
+                                // Draw the dynamic 100 racks SVG!
+                                let racksSvg = '';
+                                const rows = ['A', 'B', 'C', 'D', 'E'];
+                                parsedBIMData.racks.forEach((rack, index) => {
+                                    const rowIdx = Math.floor(index / 20);
+                                    const colIdx = index % 20;
+                                    const x = 20 + colIdx * 12;
+                                    const y = 35 + rowIdx * 25;
+                                    
+                                    const fill = rack.status === 'critical' ? '#d50000' : 
+                                                 rack.status === 'warning' ? '#ffd600' : '#00c853';
+                                                 
+                                    racksSvg += `<rect id="bim-rack-${rack.id}" x="${x}" y="${y}" width="9" height="7" fill="${fill}" class="rack-cell" style="cursor:pointer;" onclick="selectFloorRack('${rack.id}', '${rack.power}', '${rack.temp}', '${rack.ip}', '${rack.status}', 'bim-rack-${rack.id}')"/>`;
+                                });
+                                
+                                rows.forEach((row, i) => {
+                                    const y = 35 + i * 25 + 6;
+                                    racksSvg += `<text x="10" y="${y}" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila ${row}</text>`;
+                                });
+                                
+                                summaryEl.innerHTML = `
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
+                                        <div><strong>Modelo BIM Leído:</strong> ${parsedBIMData.filename}</div>
+                                        <div><strong>Formato:</strong> gbXML / Building Energy Model</div>
+                                        <div><strong>Racks Parseados:</strong> ${parsedBIMData.racks.length}</div>
+                                        <div><strong>Chillers Centrales:</strong> ${parsedBIMData.chillers.length} unidades</div>
+                                        <div><strong>Bombas Detectadas:</strong> ${parsedBIMData.pumps.length} unidades</div>
+                                        <div><strong>Estado del Grafo:</strong> <span class="badge green">Cargado dinámicamente</span></div>
+                                    </div>
+                                    <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                                        <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-map"></i> Distribución de Planta Real cargada desde gbXML (100 Racks)</h4>
+                                        <div style="display: flex; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
+                                            <!-- Left: Floor Plan SVG -->
+                                            <div style="flex: 2; min-width: 250px;">
+                                                <svg viewBox="0 0 320 220" style="width: 100%; height: auto; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                                    <defs>
+                                                        <pattern id="floor-tile-bim-dynamic" width="10" height="10" patternUnits="userSpaceOnUse">
+                                                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+                                                        </pattern>
+                                                    </defs>
+                                                    <rect width="320" height="220" fill="url(#floor-tile-bim-dynamic)" rx="4"/>
+                                                    
+                                                    <!-- AC Units (Green) -->
+                                                    <rect x="30" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                    <text x="50" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-6</text>
+                                                    
+                                                    <rect x="90" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                    <text x="110" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-5</text>
+                                                    
+                                                    <rect x="150" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                    <text x="170" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-4</text>
+                                                    
+                                                    <!-- Pipes Overlay -->
+                                                    <line x1="20" y1="20" x2="20" y2="180" stroke="#00e5ff" stroke-width="1.5" opacity="0.6"/>
+                                                    <line x1="20" y1="180" x2="280" y2="180" stroke="#00e5ff" stroke-width="1.5" opacity="0.6"/>
+                                                    
+                                                    <!-- Render Racks -->
+                                                    ${racksSvg}
+                                                    
+                                                    <!-- Legend Group -->
+                                                    <g transform="translate(270, 32)">
+                                                        <rect x="0" y="0" width="8" height="6" fill="#d50000" rx="1"/>
+                                                        <text x="12" y="5" fill="rgba(255,255,255,0.7)" font-size="5">Crit</text>
+                                                        
+                                                        <rect x="0" y="10" width="8" height="6" fill="#ffd600" rx="1"/>
+                                                        <text x="12" y="15" fill="rgba(255,255,255,0.7)" font-size="5">Warn</text>
+                                                        
+                                                        <rect x="0" y="20" width="8" height="6" fill="#00c853" rx="1"/>
+                                                        <text x="12" y="25" fill="rgba(255,255,255,0.7)" font-size="5">Norm</text>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            
+                                            <!-- Right: Inspector Panel -->
+                                            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; font-size: 12px; display: flex; flex-direction: column; justify-content: center; min-width: 140px;" id="bim-floor-inspector-panel">
+                                                <h5 style="color: var(--primary-color); margin-bottom: 8px; font-size: 13px;"><i class="fa-solid fa-info-circle"></i> Inspección: <span id="inspect-rack-id">${parsedBIMData.racks[0].id}</span></h5>
+                                                <div style="margin-bottom: 5px;"><strong>Potencia:</strong> <span id="inspect-rack-power">${parsedBIMData.racks[0].power}</span> kW</div>
+                                                <div style="margin-bottom: 5px;"><strong>Temperatura:</strong> <span id="inspect-rack-temp">${parsedBIMData.racks[0].temp}</span></div>
+                                                <div style="margin-bottom: 5px;"><strong>PDU IP:</strong> <span id="inspect-rack-ip">${parsedBIMData.racks[0].ip}</span></div>
+                                                <div style="margin-top: 10px; padding: 5px; background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.3); border-radius: 3px; color: #69f0ae; font-size: 10px;" id="inspect-rack-status">
+                                                    <i class="fa-solid fa-circle-check"></i> Estado Normal: Eficiente
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                                return;
+                            }
                             summaryEl.innerHTML = `
                                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
                                     <div><strong>Modelo BIM Leído:</strong> datacenter_asbuilt.ifc</div>
