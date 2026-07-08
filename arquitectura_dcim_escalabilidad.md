@@ -183,13 +183,69 @@ Si un data center incorpora un tipo de enfriamiento no contemplado originalmente
 
 ---
 
-## 4. Estrategia para el Documento de la Tesis
+## 4. Requisitos para la Implementación Real en Producción
+
+Para llevar estas tres opciones de auto-descubrimiento desde el prototipo actual de simulación hacia una infraestructura en producción real, se requieren las siguientes tecnologías, librerías y accesos físicos:
+
+### A. Para la Sincronización Real con DCIM (Opción 1)
+* **Conectividad de Red:** El servidor de GreenOps DC (ej. corriendo en GCP) necesita un canal de comunicación privado y seguro hacia el servidor DCIM del data center local. Esto se resuelve mediante una **VPN IPsec** o **Google Cloud Interconnect**.
+* **Acceso y Autorización:** Se requiere que el administrador del DCIM genere un **API Access Token** (usualmente un Bearer token JWT) con permisos de solo lectura para los endpoints de activos y telemetría.
+* **Librería en Python:** En el backend de FastAPI de GreenOps, se utiliza la librería estándar **`requests`** o un cliente HTTP asíncrono como **`httpx`** para realizar peticiones periódicas (polling) o recibir Webhooks del DCIM ante cambios de inventario:
+  ```python
+  import httpx
+  async def fetch_dcim_topology():
+      headers = {"Authorization": "Bearer JWT_SECRET_TOKEN"}
+      async with httpx.AsyncClient() as client:
+          response = await client.get("https://dcim.empresa.com/api/v2/topology", headers=headers)
+          return response.json()
+  ```
+
+### B. Para el Procesamiento de Modelos BIM / IFC Real (Opción 2)
+* **Pipeline de Ingesta:** Un servicio de carga de archivos en el backend que reciba los planos en frío en formato `.ifc` o `.gbxml` y los almacene en un bucket de almacenamiento temporal (como Google Cloud Storage).
+* **Librerías de Parser Térmico en Python:**
+  * **`IfcOpenShell`:** Es la librería de código abierto estándar de la industria en Python para parsear y manipular archivos IFC (BIM). Permite extraer propiedades estructurales de las tuberías y equipos térmicos.
+  * **`lxml` o `xml.etree.ElementTree`:** Si el plano se entrega en el estándar gbXML (un esquema XML especializado en balances energéticos de edificios).
+* **Ejemplo de Código de Parseo Real (IFC):**
+  ```python
+  import ifcopenshell
+  def extract_cooling_elements(ifc_file_path):
+      model = ifcopenshell.open(ifc_file_path)
+      # Filtrar todos los dispositivos de intercambio de energía (chillers, intercambiadores)
+      energy_devices = model.by_type("IfcEnergyConversionDevice")
+      for device in energy_devices:
+          print(f"Dispositivo detectado: {device.Name}, Tipo IFC: {device.is_a()}")
+          # Aquí se extraen las conexiones de entrada/salida (puertos) para armar el grafo
+  ```
+
+### C. Para el Escaneo de Red Activo Real (Opción 3)
+* **Acceso Físico a la LAN de Control:** El Gateway de GreenOps debe estar físicamente conectado o ruteado hacia la **red local de administración de infraestructura (Management LAN)**, que es una red aislada de internet donde residen las direcciones IP fijas de las PDUs, los PLCs Modbus y los chillers.
+* **Protocolos e Infraestructura de Red:**
+  * **Comunidad SNMP:** Conocer la "community string" (por ejemplo, `public` para SNMPv2c) o contar con credenciales de usuario y llaves de cifrado para SNMPv3 (estándar de alta seguridad).
+* **Librerías de Escaneo en Python:**
+  * **`scapy` o `nmap` (vía `python-nmap`):** Para realizar el barrido de hosts activos (Ping Sweep) e identificar qué IPs están respondiendo en los puertos estándar de SNMP (161) y Modbus (502).
+  * **`pysnmp`:** Librería de Python para interrogar a las PDUs y descubrir sus OIDs específicos para lectura de potencia eléctrica.
+  * **`pyModbusTCP` o `pymodbus`:** Librería de Python para abrir sockets Modbus TCP directos con los PLCs de climatización y leer/escribir registros de temperatura y velocidad de bombas.
+  * **Ejemplo de Lectura Real Modbus:**
+    ```python
+    from pyModbusTCP.client import ModbusClient
+    def read_plc_temperature(ip_address):
+        client = ModbusClient(host=ip_address, port=502, auto_open=True, auto_close=True)
+        # Leer el registro analógico 40001 (temperatura del agua de retorno)
+        regs = client.read_holding_registers(0, 1)
+        if regs:
+            return regs[0] / 10.0 # El registro suele almacenar la temp multiplicada por 10 (ej: 225 = 22.5°C)
+        return None
+    ```
+
+---
+
+## 5. Estrategia para el Documento de la Tesis
 
 Para incorporar estas ideas de forma académica en tu tesis, te sugiero agregarlas en los siguientes apartados:
 
 ### En el Capítulo 3 (Metodología):
 * **Sección 3.3 (Arquitectura del simulador):** Describe cómo se pasa de un modelo fijo a un motor basado en grafos dinámicos utilizando la topología declarativa en YAML. Explica que esto asegura la replicabilidad del software en centros de datos con configuraciones híbridas (por ejemplo, salas que combinan racks convencionales y racks de alta densidad con cambio de fase).
-* **Sección 3.4 (Esquema de integración):** Añade un subapartado titulado *"Integración y Adquisición de Datos a nivel de DCIM y DMS"*, describiendo el uso de Modbus/BACnet para telemetría y control de actuadores en lazo cerrado.
+* **Sección 3.4 (Esquema de integración):** Añade un subapartado titulado *"Integración y Adquisición de Datos a nivel de DCIM y DMS"*, describiendo el uso de Modbus/BACnet para telemetría y control de actuadores en lazo cerrado y los requisitos de auto-descubrimiento (pysnmp, IfcOpenShell, etc.).
 
 ### En el Capítulo 5 (Conclusiones y Trabajo Futuro):
 * **Sección 5.2 (Líneas de investigación futura):**
