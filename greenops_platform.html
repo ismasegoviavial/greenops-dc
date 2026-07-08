@@ -785,8 +785,8 @@
                 <span>Proactive Forecast</span>
             </div>
             <div class="nav-item" id="nav-api" onclick="switchView('api')">
-                <i class="fa-solid fa-code"></i>
-                <span>API Integration</span>
+                <i class="fa-solid fa-circle-nodes"></i>
+                <span>Autodiscovery & API</span>
             </div>
         </div>
 
@@ -1239,6 +1239,96 @@
 
         <!-- VIEW 5: API INTEGRATION HUB -->
         <div class="view-content" id="view-api">
+            <!-- AUTO-DISCOVERY HUB -->
+            <div class="glass-card" style="margin-bottom: 25px;">
+                <h3 class="card-title" style="margin-bottom: 15px;"><i class="fa-solid fa-circle-nodes"></i> Módulo de Autoconfiguración y Descubrimiento</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+                    En lugar de ingresar manualmente la topología de la sala y los bucles de enfriamiento, configure uno de los métodos de auto-descubrimiento para mapear de manera automática la infraestructura existente.
+                </p>
+                
+                <!-- Selector de Métodos -->
+                <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button class="btn" id="btn-discovery-dcim" onclick="switchDiscoveryMethod('dcim')" style="background: var(--primary-color); color: var(--bg-dark);">Opción 1: API de DCIM</button>
+                    <button class="btn btn-outline" id="btn-discovery-bim" onclick="switchDiscoveryMethod('bim')">Opción 2: Importar BIM / IFC</button>
+                    <button class="btn btn-outline" id="btn-discovery-scan" onclick="switchDiscoveryMethod('scan')">Opción 3: Escaneo de Red</button>
+                </div>
+                
+                <!-- Método 1: DCIM -->
+                <div id="panel-discovery-dcim" class="discovery-panel" style="display: block;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px;">Proveedor DCIM / BMS</label>
+                            <select id="dcim-provider" style="width: 100%; padding: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);">
+                                <option value="schneider">Schneider Electric EcoStruxure</option>
+                                <option value="sunbird">Sunbird Power IQ / dcTrack</option>
+                                <option value="nlyte">Nlyte Software</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px;">Dirección Endpoint de API</label>
+                            <input type="text" id="dcim-endpoint" value="https://dcim.santiago-centro.internal/api/v2" style="width: 100%; padding: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);">
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px;">API Access Token</label>
+                            <input type="password" value="••••••••••••••••••••••••••••••••" style="width: 100%; padding: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);">
+                        </div>
+                    </div>
+                    <button class="btn" style="background: var(--primary-color); color: var(--bg-dark);" onclick="runDiscovery('dcim')"><i class="fa-solid fa-rotate"></i> Conectar y Sincronizar</button>
+                </div>
+                
+                <!-- Método 2: BIM -->
+                <div id="panel-discovery-bim" class="discovery-panel" style="display: none;">
+                    <div style="border: 2px dashed rgba(255,255,255,0.15); padding: 30px; border-radius: 6px; text-align: center; margin-bottom: 15px; background: rgba(0,0,0,0.1);">
+                        <i class="fa-solid fa-file-invoice" style="font-size: 36px; color: var(--primary-color); margin-bottom: 10px;"></i>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">Arrastra tu archivo BIM o plano CAD aquí</p>
+                        <span style="font-size: 11px; color: rgba(255,255,255,0.3);">Formatos soportados: .ifc, .gbxml, .json topology (Max 50MB)</span>
+                        <input type="file" id="file-ifc" style="display: none;">
+                        <br>
+                        <button class="btn btn-outline" style="margin-top: 15px; font-size: 12px; padding: 6px 12px;" onclick="document.getElementById('file-ifc').click()">Seleccionar Archivo</button>
+                    </div>
+                    <button class="btn" style="background: var(--primary-color); color: var(--bg-dark);" onclick="runDiscovery('bim')"><i class="fa-solid fa-upload"></i> Procesar Plano de Ingeniería</button>
+                </div>
+                
+                <!-- Método 3: SCAN -->
+                <div id="panel-discovery-scan" class="discovery-panel" style="display: none;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px;">Rango de Red Local (CIDR)</label>
+                            <input type="text" id="scan-range" value="10.100.1.0/24" style="width: 100%; padding: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px;">SNMP Community String</label>
+                            <input type="text" id="scan-community" value="public" style="width: 100%; padding: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);">
+                        </div>
+                    </div>
+                    <button class="btn" style="background: var(--primary-color); color: var(--bg-dark);" onclick="runDiscovery('scan')"><i class="fa-solid fa-tower-broadcast"></i> Iniciar Escaneo de Red</button>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div id="discovery-progress" style="display: none; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px;">
+                        <span>Ejecutando proceso de auto-descubrimiento...</span>
+                        <span id="discovery-progress-pct">0%</span>
+                    </div>
+                    <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 15px;">
+                        <div id="discovery-bar" style="width: 0%; height: 100%; background: var(--primary-color); transition: width 0.3s;"></div>
+                    </div>
+                    <div id="discovery-steps" style="display: flex; flex-direction: column; gap: 5px;"></div>
+                </div>
+                
+                <!-- Success Result -->
+                <div id="discovery-success" style="display: none; margin-top: 20px; padding: 15px; background: rgba(0, 230, 118, 0.05); border-radius: 4px; border: 1px solid rgba(0, 230, 118, 0.2);">
+                    <div style="display: flex; align-items: center; gap: 10px; color: var(--accent-green); margin-bottom: 10px; font-weight: 500;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 20px;"></i>
+                        <span>¡Auto-Descubrimiento Completado con Éxito!</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 13px;">
+                        GreenOps DC ha leído la topología física, instanciado las clases de transferencia de calor y vinculado la telemetría viva para este sitio:
+                    </p>
+                    <div id="discovery-summary"></div>
+                </div>
+            </div>
+
             <div class="glass-card" style="margin-bottom: 25px;">
                 <h3 class="card-title" style="margin-bottom: 15px;">Documentación de API e Integraciones Activas</h3>
                 <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
@@ -1332,7 +1422,7 @@ def schedule_blackwell_workload(job_specs):
                 'saas': 'Feasibility Studio – SaaS Site Selector',
                 'twin': 'Digital Twin Telemetry – Asset Control',
                 'forecast': 'Proactive Forecast – Vertex AI & BigQuery ML',
-                'api': 'API Integration Hub'
+                'api': 'Auto-Discovery & API Integration Hub'
             };
             document.getElementById('view-title-text').innerText = titleMap[tabId];
             
@@ -1378,6 +1468,119 @@ def schedule_blackwell_workload(job_specs):
             setTimeout(() => {
                 alert(document.getElementById('api-status-text').innerText);
             }, 500);
+        }
+
+        // Auto-Discovery JS Controllers
+        function switchDiscoveryMethod(method) {
+            // Hide all panels
+            document.querySelectorAll('.discovery-panel').forEach(p => p.style.display = 'none');
+            // Show selected panel
+            document.getElementById('panel-discovery-' + method).style.display = 'block';
+            
+            // Remove active styles from buttons
+            document.querySelectorAll('#view-api .btn').forEach(btn => {
+                if (btn.id.startsWith('btn-discovery-')) {
+                    btn.classList.add('btn-outline');
+                    btn.style.background = 'none';
+                    btn.style.color = 'var(--text-primary)';
+                }
+            });
+            
+            // Active button style
+            const actBtn = document.getElementById('btn-discovery-' + method);
+            actBtn.classList.remove('btn-outline');
+            actBtn.style.background = 'var(--primary-color)';
+            actBtn.style.color = 'var(--bg-dark)';
+        }
+
+        function runDiscovery(type) {
+            const progressDiv = document.getElementById('discovery-progress');
+            const successDiv = document.getElementById('discovery-success');
+            const progressSteps = document.getElementById('discovery-steps');
+            const progressBar = document.getElementById('discovery-bar');
+            const progressPct = document.getElementById('discovery-progress-pct');
+            
+            progressDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+            progressBar.style.width = '0%';
+            progressPct.innerText = '0%';
+            progressSteps.innerHTML = '';
+            
+            const steps = [
+                "Estableciendo canal seguro y autenticando con la fuente...",
+                "Leyendo jerarquía física y acoplamientos térmicos (BIM/DAG)...",
+                "Vinculando registros Modbus/TCP y OIDs SNMP de PDUs...",
+                "Instanciando clases termodinámicas de intercambio de fase..."
+            ];
+            
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    const stepEl = document.createElement('div');
+                    stepEl.style.fontSize = '12px';
+                    stepEl.style.color = 'var(--text-secondary)';
+                    stepEl.style.marginBottom = '5px';
+                    stepEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: var(--primary-color); margin-right: 8px;"></i> ${steps[currentStep]}`;
+                    progressSteps.appendChild(stepEl);
+                    
+                    if (currentStep > 0) {
+                        const prev = progressSteps.children[currentStep - 1];
+                        prev.innerHTML = `<i class="fa-solid fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> ${steps[currentStep - 1].replace('...', '')} - OK`;
+                        prev.style.color = 'var(--text-primary)';
+                    }
+                    
+                    const pct = Math.round(((currentStep + 1) / steps.length) * 100);
+                    progressBar.style.width = pct + '%';
+                    progressPct.innerText = pct + '%';
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                    const prev = progressSteps.children[steps.length - 1];
+                    prev.innerHTML = `<i class="fa-solid fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> ${steps[steps.length - 1].replace('...', '')} - OK`;
+                    prev.style.color = 'var(--text-primary)';
+                    
+                    setTimeout(() => {
+                        progressDiv.style.display = 'none';
+                        successDiv.style.display = 'block';
+                        
+                        const summaryEl = document.getElementById('discovery-summary');
+                        if (type === 'dcim') {
+                            summaryEl.innerHTML = `
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
+                                    <div><strong>Data Center:</strong> Santiago-Centro-01</div>
+                                    <div><strong>Proveedor DCIM:</strong> Schneider EcoStruxure API</div>
+                                    <div><strong>Racks Descubiertos:</strong> 39 (Fila A-E)</div>
+                                    <div><strong>Sensores Vinculados:</strong> 78 (Temperatura entrada/salida)</div>
+                                    <div><strong>Loops de Enfriamiento:</strong> 3 (D2C, Agua, Condensadora)</div>
+                                    <div><strong>Estado de Conexión:</strong> <span class="badge green">Sincronizado</span></div>
+                                </div>
+                            `;
+                        } else if (type === 'bim') {
+                            summaryEl.innerHTML = `
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
+                                    <div><strong>Modelo BIM Leído:</strong> datacenter_asbuilt.ifc</div>
+                                    <div><strong>Formato de Ingeniería:</strong> gbXML / IFC 4.0</div>
+                                    <div><strong>Nodos Hidráulicos:</strong> 112 tuberías y válvulas bypass</div>
+                                    <div><strong>Intercambiadores de Calor:</strong> 4 cambiadores de placas</div>
+                                    <div><strong>Chillers Centrales:</strong> 2 unidades enfriadoras</div>
+                                    <div><strong>Estado del Grafo:</strong> <span class="badge green">Modelo Construido</span></div>
+                                </div>
+                            `;
+                        } else {
+                            summaryEl.innerHTML = `
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
+                                    <div><strong>Subred Escaneada:</strong> 10.100.1.0/24</div>
+                                    <div><strong>Protocolo de Red:</strong> SNMP v2c / Redfish SSDP</div>
+                                    <div><strong>Activos Descubiertos:</strong> 42 dispositivos en red</div>
+                                    <div><strong>PDUs Inteligentes:</strong> 39 PDUs mapeadas</div>
+                                    <div><strong>Controladores BMS:</strong> 3 PLCs Modbus vinculados</div>
+                                    <div><strong>Estado del Escaneo:</strong> <span class="badge green">Completado</span></div>
+                                </div>
+                            `;
+                        }
+                    }, 500);
+                }
+            }, 1000);
         }
 
         // Live IoT telemetry updater
