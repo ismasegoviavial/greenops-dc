@@ -28,30 +28,53 @@ graph TD
    * **Modbus/TCP y BACnet/IP:** Para interactuar directamente con el sistema de control del edificio (DMS/BMS). Permite escribir consignas como el ajuste de la velocidad de las bombas de agua helada o la velocidad de ventiladores de la unidad RDHx.
    * **SNMP y Redfish API:** Para comunicarse con el hardware de TI y sistemas DCIM, leyendo el consumo real de las PDUs de los racks y las temperaturas de los procesadores (CPUs/GPUs).
 
-### Conexión con la Configuración Específica (Mapeo de Telemetría)
-Para conectar los protocolos genéricos con el plano del data center, el archivo de topología de configuración incluye un bloque de **mapeo de direcciones y registros** en cada elemento. Esto asocia las variables físicas con sus fuentes de telemetría reales:
+---
 
-```yaml
-# Fragmento del archivo de configuración del Data Center
-racks:
-  - id: "rack_ia_01"
-    row: "A"
-    max_power_kw: 100.0
-    telemetry_mapping:
-      power_draw:
-        protocol: "snmp"
-        host: "10.100.2.11"
-        community: "public"
-        oid: "1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.1" # OID del sensor de PDU APC
-        update_interval_sec: 10
-      temp_inlet:
-        protocol: "modbus_tcp"
-        host: "10.100.5.50"
-        port: 502
-        register_address: 30002 # Registro del sensor Modbus de entrada del rack
-        data_type: "float32"
+### Proceso de Conexión Paso a Paso: Del Diagrama Físico al Gemelo Digital
+La empresa del data center no necesita escribir código. El proceso se realiza mediante una interfaz gráfica y un pipeline automatizado:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Operador as Operador de DC
+    participant Portal as Portal Web GreenOps
+    participant Parser as Motor de Ingesta (Parser)
+    participant BQ as BigQuery Registry
+    participant DMS as Controlador Físico (BMS/DCIM)
+
+    Operador->>Portal: Dibuja/Sube Diagrama de Ingeniería (As-Built)
+    Portal->>Portal: Compila topología visual a archivo JSON/YAML
+    Portal->>Parser: Envía JSON/YAML de Topología
+    Parser->>BQ: Registra metadatos de sensores e IP del BMS
+    Parser->>DMS: Suscribe listeners a direcciones Modbus/SNMP configuradas
+    DMS-->>Parser: Envía telemetría en tiempo real (Temp, Watts)
+    Parser->>Parser: Alimenta modelo del Gemelo Digital e-NTU
 ```
-El motor de ingesta lee estas definiciones al inicializar el sistema y suscribe hilos de escucha específicos que actualizan las variables del Gemelo Digital automáticamente, manteniendo la lógica matemática aislada de los detalles de red física.
+
+#### Formato de Entrega del Archivo de Conexión
+La configuración se entrega en un formato estructurado **JSON/YAML** generado por el portal de diseño de GreenOps:
+
+```json
+{
+  "datacenter_id": "santiago-centro-01",
+  "gateway_ip": "10.100.1.10",
+  "telemetry_sources": [
+    {
+      "sensor_id": "sens_temp_rack_A1",
+      "protocol": "modbus_tcp",
+      "register": 30002,
+      "scale_factor": 0.1,
+      "unit": "celsius"
+    },
+    {
+      "sensor_id": "sens_pdu_rack_A1",
+      "protocol": "snmp",
+      "oid": "1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.1",
+      "unit": "watts"
+    }
+  ]
+}
+```
 
 ---
 
@@ -77,63 +100,54 @@ flowchart LR
 * **Mapeo de Sensores Térmicos:** Cada rack reporta su temperatura de entrada y salida de aire al DCIM.
 * **Algoritmo de Colocación (Scheduler):** 
   $$\text{Score}_{\text{Rack}} = f(T_{\text{entrada}}, \text{Capacidad Cooling Disponible}, \text{PUE}_{\text{Local}})$$
-  Las tareas pesadas (entrenamiento de redes neuronales) se agrupan en servidores ubicados en racks con tecnologías de enfriamiento líquido directo (D2C) o inmersión, mientras que los racks tradicionales refrigerados por aire se reservan para tareas transitorias o de baja potencia, minimizando la activación de chillers mecánicos.
+  Las tareas pesadas (entrenamiento de raíces neuronales) se agrupan en servidores ubicados en racks con tecnologías de enfriamiento líquido directo (D2C) o inmersión, mientras que los racks tradicionales refrigerados por aire se reservan para tareas transitorias o de baja potencia, minimizando la activación de chillers mecánicos.
 
 ---
 
 ## 3. Escalabilidad mediante Diseño Modular Declarativo (Desafío 3)
 
-Para evitar reescribir el software para cada data center nuevo, el sistema debe diseñarse bajo el principio de **"Configuración sobre Código"**.
+Para evitar reescribir el software para cada data center nuevo, el sistema se diseña bajo el principio de **"Configuración sobre Código"**.
 
 ### Modelo de Datos Declarativo (YAML/JSON Schema)
 La arquitectura y los flujos del data center son entregados por la empresa operadora mediante un archivo de configuración que refleja el diagrama de ingeniería (*as-built*). 
 
-#### Manejo de Topologías Complejas (Grafos de Enfriamiento)
-Muchos centros de datos no tienen un balance térmico simple, sino que integran **ciclos adicionales (bucles secundarios/terciarios), válvulas de derivación (bypass), y múltiples intercambiadores en serie o paralelo**. Para modelar esto sin reescribir el código, la configuración del data center se representa como un **Grafo Acíclico de Redes de Enfriamiento (Cooling Directed Graph)**:
+#### Cómo el Grafo reconoce Ciclos Adicionales y Configuraciones Únicas
+El motor de simulación no tiene una topología "dura" o precargada en su código. En su lugar, el software representa el data center como un **Grafo Dirigido (Directed Graph)** de calor y fluidos. El resolvedor matemático recorre el grafo utilizando **Ordenamiento Topológico (Topological Sort)** y resuelve los balances de energía elemento a elemento:
+
+1. **Reconocimiento de Bucles Adicionales (Cambiadores de Placas como Puentes):**
+   * Un intercambiador de calor (Plate Heat Exchanger - HX) se declara con dos lados: lado caliente (inlet/outlet del bucle A) y lado frío (inlet/outlet del bucle B).
+   * Cuando el algoritmo del grafo llega al HX, aplica la ecuación de transferencia $\dot{Q} = \epsilon \dot{C}_{min} (T_{in,hot} - T_{in,cold})$.
+   * Esto calcula cuánta energía térmica pasa del Bucle Secundario al Bucle Terciario, recalculando la temperatura de salida de ambos bucles automáticamente.
+2. **Reconocimiento de Válvulas Mezcladoras y de Derivación (Bypass):**
+   * Un nodo de tipo `three_way_valve` actúa como un **divisor (splitter)** que divide el flujo másico ($\dot{m}_{total} \to \dot{m}_{bypass} + \dot{m}_{chiller}$).
+   * Un nodo de tipo `mixing_junction` actúa como un **mezclador**, aplicando la conservación de masa y energía para determinar la temperatura resultante:
+     $$T_{mezclado} = \frac{\dot{m}_1 T_1 + \dot{m}_2 T_2}{\dot{m}_1 + \dot{m}_2}$$
+   * Con esta matemática de grafos, el resolvedor puede calcular infinitas variaciones de tuberías, sin importar el orden o número de válvulas y ciclos de cada data center.
 
 ```yaml
-datacenter:
-  name: "Santiago-Centro-01"
-  region: "Sudamérica"
-  tarifa_electricidad: 0.176
-  
-  # Declaración de componentes como nodos del grafo
-  cooling_network:
-    nodes:
-      - id: "chiller_01"
-        type: "chiller_water_cooled"
-        capacity_kw: 500
-        cop: 4.5
-        
-      - id: "valve_bypass_01"
-        type: "three_way_valve"
-        parameters:
-          default_bypass_ratio: 0.2 # 20% de bypass en condiciones estándar
-          
-      - id: "rack_loop_hx"
-        type: "plate_heat_exchanger"
-        parameters:
-          UA: 8500 # W/K (Coeficiente global de transferencia)
-          
-    # Definición de conexiones (tuberías y flujo del refrigerante)
-    edges:
-      - from: "chiller_01"
-        to: "valve_bypass_01"
-        loop: "primary_loop"
-      - from: "valve_bypass_01"
-        to: "rack_loop_hx"
-        loop: "primary_loop_regulated"
-      - from: "rack_loop_hx"
-        to: "chiller_01"
-        loop: "primary_return"
+# Ejemplo de Grafo con 3 bucles (D2C Dieléctrico -> Agua Helada -> Condensadora)
+cooling_network:
+  nodes:
+    - id: "bucle_dielectrico"
+      type: "loop"
+      fluid: "Novec 7100"
+    - id: "intercambiador_placas_01"
+      type: "heat_exchanger"
+      hot_side_in: "bucle_dielectrico"
+      cold_side_in: "bucle_agua_helada"
+    - id: "bucle_agua_helada"
+      type: "loop"
+      fluid: "agua"
+    - id: "chiller_central"
+      type: "chiller"
+      inlet: "bucle_agua_helada"
+      outlet: "bucle_condensadora"
 ```
-
-El motor del software resuelve este grafo utilizando un resolvedor de balance de masa y energía (similar a las leyes de Kirchhoff para circuitos hidráulicos) calculando las caídas de presión y de temperatura a través de cada nodo de forma secuencial.
 
 ---
 
 ### Instanciación de Clases y Extensibilidad (Soporte de Nuevas Tecnologías)
-Si un data center incorpora un tipo de enfriamiento no contemplado originalmente (por ejemplo, enfriamiento evaporativo directo o disipación geotérmica), el sistema no se rompe debido al uso del **Patrón de Diseño Fábrica (Factory Pattern)** y el **Polimorfismo**:
+Si un data center incorpora un tipo de enfriamiento no contemplado originalmente, el sistema no se rompe debido al uso del **Patrón de Diseño Fábrica (Factory Pattern)** y el **Polimorfismo**:
 
 1. **Interfaz Común:** Todas las tecnologías de enfriamiento deben heredar de una clase base común y cumplir con su interfaz:
    ```python
@@ -148,13 +162,10 @@ Si un data center incorpora un tipo de enfriamiento no contemplado originalmente
            """Calcula la energía parásita (ventiladores, bombas)."""
            pass
    ```
-2. **Creación del Nuevo Módulo:** Si la empresa tiene una tecnología patentada nueva, un desarrollador solo debe crear la subclase correspondiente:
-   ```python
-   class EvaporativeCoolingModel(BaseCoolingModel):
-       # Implementación matemática propia del enfriamiento evaporativo
-       ...
-   ```
-3. **Inyección en el Motor:** Al registrar la nueva clase en la fábrica de modelos, el motor del software leerá el parámetro `type: "Evaporative"` en el archivo YAML de la empresa e instanciará la clase correcta en tiempo de ejecución de manera transparente.
+2. **Creación del Nuevo Módulo:**
+   Cuando hablamos de un **"desarrollador"**, en la ingeniería moderna no nos limitamos exclusivamente a una **persona física (humana)**.
+   * **Agente Programador de IA:** Gracias al diseño modular y estricto cumplimiento de la interfaz `BaseCoolingModel`, un **Agente de IA de Código** (como el LLM que diseña este sistema) puede leer la descripción matemática de una patente o tecnología nueva de enfriamiento (ej. enfriamiento por adsorción) y escribir de manera autónoma la clase en Python correspondiente, inyectándola al repositorio sin intervención humana directa.
+   * **Desarrollador Humano:** O bien un ingeniero de la empresa del data center puede extender la clase de forma aislada sin tener que entender el resto de la base de código.
 
 ---
 
