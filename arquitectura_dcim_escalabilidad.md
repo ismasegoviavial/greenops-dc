@@ -30,8 +30,19 @@ graph TD
 
 ---
 
-### Proceso de Conexión Paso a Paso: Del Diagrama Físico al Gemelo Digital
-La empresa del data center no necesita escribir código. El proceso se realiza mediante una interfaz gráfica y un pipeline automatizado:
+### Integración Inteligente: Auto-Descubrimiento y Lectura Directa (Evitar la Replicación)
+Para evitar la carga manual de datos, GreenOps DC implementa tres métodos de **auto-descubrimiento** para conectarse directamente a las bases de datos de diseño y diagramas existentes del data center:
+
+1. **Conexión Directa a APIs de DCIM/BMS (Schneider, Sunbird, Nlyte):**
+   * Las plataformas DCIM modernas exponen APIs REST que contienen el árbol completo de relaciones espaciales y conexiones eléctricas. 
+   * GreenOps DC consulta endpoints como `/api/v2/topology/assets` para extraer la jerarquía (Sala $\to$ Pasillo $\to$ Rack $\to$ Servidor) y mapear qué sensores de temperatura y PDUs están físicamente asociados a cada elemento del grafo térmico de forma automática.
+2. **Ingesta de Modelos de Diseño BIM / CAD (Estándares IFC y gbXML):**
+   * El data center ya cuenta con su diseño de ingeniería en herramientas de modelado 3D (Autodesk Revit, Bentley, OpenBIM). Estos planos se exportan en formato abierto **IFC (Industry Foundation Classes)** o **gbXML (Green Building XML)**.
+   * El parser de GreenOps lee estos archivos e interpreta las clases de flujo (por ejemplo, `IfcFlowSegment` como tuberías, `IfcEnergyConversionDevice` como chillers/intercambiadores y `IfcFlowMovingDevice` como bombas), construyendo el grafo térmico del bucle de enfriamiento automáticamente y sin intervención manual.
+3. **Escaneo de Red Activo (SNMP & SSDP Discovery):**
+   * GreenOps DC realiza un barrido de red local buscando dispositivos que expongan puertos SNMP y Redfish. Identifica las PDUs inteligentes y los controladores de chillers de forma autónoma, autogenerando el mapa de telemetría física.
+
+### Proceso de Conexión Paso a Paso: Del Sistema Existente al Gemelo Digital
 
 ```mermaid
 sequenceDiagram
@@ -39,12 +50,15 @@ sequenceDiagram
     actor Operador as Operador de DC
     participant Portal as Portal Web GreenOps
     participant Parser as Motor de Ingesta (Parser)
+    participant DCIM as DCIM Existente / Modelo IFC
     participant BQ as BigQuery Registry
     participant DMS as Controlador Físico (BMS/DCIM)
 
-    Operador->>Portal: Dibuja/Sube Diagrama de Ingeniería (As-Built)
-    Portal->>Portal: Compila topología visual a archivo JSON/YAML
-    Portal->>Parser: Envía JSON/YAML de Topología
+    Operador->>Portal: Configura credenciales de API del DCIM o sube archivo IFC/gbXML
+    Portal->>Parser: Solicita mapeo automático
+    Parser->>DCIM: Consulta API de topología de activos o parsea archivo IFC
+    DCIM-->>Parser: Retorna diagrama de red/tubos y lista de sensores
+    Parser->>Parser: Traduce topología al Grafo Térmico de GreenOps
     Parser->>BQ: Registra metadatos de sensores e IP del BMS
     Parser->>DMS: Suscribe listeners a direcciones Modbus/SNMP configuradas
     DMS-->>Parser: Envía telemetría en tiempo real (Temp, Watts)
