@@ -1548,108 +1548,282 @@ def schedule_blackwell_workload(job_specs):
                         if (type === 'dcim') {
                             const providerVal = document.getElementById('dcim-provider').value;
                             const providerName = providerVal === 'schneider' ? 'Schneider EcoStruxure API' : 
-                                                 providerVal === 'sunbird' ? 'Sunbird Power IQ API' : 
+                                                 providerVal === 'sunbird' ? 'Sunbird Power IQ / dcTrack API' : 
                                                  providerVal === 'nlyte' ? 'Nlyte Software API' : 'Conector Personalizado (Custom JSON)';
                             
                             summaryEl.innerHTML = `
                                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
                                     <div><strong>Data Center:</strong> Santiago-Centro-01</div>
                                     <div><strong>Proveedor Ingesta:</strong> ${providerName}</div>
-                                    <div><strong>Racks Descubiertos:</strong> 39 (Fila A-E)</div>
+                                    <div><strong>Racks Mapeados:</strong> 39 (Fila A-E / 1-8)</div>
                                     <div><strong>Sensores Vinculados:</strong> 78 (Temperatura entrada/salida)</div>
-                                    <div><strong>Loops de Enfriamiento:</strong> 3 (D2C, Agua, Condensadora)</div>
                                     <div><strong>Estado de Conexión:</strong> <span class="badge green">Sincronizado</span></div>
+                                    <div><strong>Último Escaneo:</strong> En tiempo real</div>
                                 </div>
                                 <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                                    <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-diagram-project"></i> Diagrama Térmico/Hidráulico Autogenerado</h4>
-                                    <style>
-                                        @keyframes flow { to { stroke-dashoffset: -20; } }
-                                        .flow-line-blue { stroke: #00e5ff; stroke-width: 2; stroke-dasharray: 6, 4; animation: flow 1.5s linear infinite; fill: none; }
-                                        .flow-line-red { stroke: #ff3d00; stroke-width: 2; stroke-dasharray: 6, 4; animation: flow 1.5s linear infinite; fill: none; }
-                                        .flow-node { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.2); stroke-width: 1.5; transition: 0.3s; }
-                                        .flow-node:hover { stroke: var(--primary-color); fill: rgba(0, 229, 255, 0.05); }
-                                    </style>
-                                    <svg viewBox="0 0 500 120" style="width: 100%; height: auto; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 10px;">
-                                        <!-- Lines -->
-                                        <path d="M 60 40 L 150 40" class="flow-line-blue" />
-                                        <path d="M 210 40 L 300 40" class="flow-line-blue" />
-                                        <path d="M 360 40 L 440 40" class="flow-line-blue" />
-                                        <path d="M 440 80 L 60 80" class="flow-line-red" />
-                                        <path d="M 60 80 L 60 40" class="flow-line-blue" />
+                                    <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-map"></i> Mapa de Distribución y Salud de la Sala (Health Map)</h4>
+                                    <div style="display: flex; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
+                                        <!-- Left: Floor Plan SVG -->
+                                        <div style="flex: 2; min-width: 250px;">
+                                            <svg viewBox="0 0 320 220" style="width: 100%; height: auto; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                                <defs>
+                                                    <pattern id="floor-tile" width="10" height="10" patternUnits="userSpaceOnUse">
+                                                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+                                                    </pattern>
+                                                </defs>
+                                                <rect width="320" height="220" fill="url(#floor-tile)" rx="4"/>
+                                                
+                                                <!-- AC Units (Green) -->
+                                                <rect x="30" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="50" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-6</text>
+                                                
+                                                <rect x="90" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="110" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-5</text>
+                                                
+                                                <rect x="150" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="170" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-4</text>
+                                                
+                                                <rect x="30" y="198" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="50" y="207" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-7</text>
+                                                
+                                                <rect x="90" y="198" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="110" y="207" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-8</text>
+
+                                                <!-- Cable Tray Overlay Mesh (IT Tray) -->
+                                                <line x1="15" y1="30" x2="305" y2="30" stroke="#00e5ff" stroke-width="0.5" opacity="0.3" stroke-dasharray="2, 2"/>
+                                                <line x1="15" y1="150" x2="305" y2="150" stroke="#00e5ff" stroke-width="0.5" opacity="0.3" stroke-dasharray="2, 2"/>
+                                                <line x1="15" y1="90" x2="305" y2="90" stroke="#00e5ff" stroke-width="0.5" opacity="0.3" stroke-dasharray="2, 2"/>
+
+                                                <!-- Racks -->
+                                                <!-- Row 1 -->
+                                                <g>
+                                                    <rect id="floor-rack-1A" x="25" y="32" width="14" height="10" fill="#d50000" stroke="#0288d1" stroke-width="1.5" style="cursor:pointer;" onclick="selectFloorRack('1A', '0.754', '75°F (23.8°C)', '192.168.43.224', 'critical', 'floor-rack-1A')"/>
+                                                    <rect id="floor-rack-1B" x="25" y="44" width="14" height="10" fill="#ffd600" style="cursor:pointer;" onclick="selectFloorRack('1B', '0.620', '71°F (21.7°C)', '192.168.43.225', 'warning', 'floor-rack-1B')"/>
+                                                    <rect id="floor-rack-1C" x="25" y="56" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('1C', '0.790', '78°F (25.5°C)', '192.168.43.226', 'critical', 'floor-rack-1C')"/>
+                                                    <rect id="floor-rack-1D" x="25" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1D', '0.450', '67°F (19.4°C)', '192.168.43.227', 'normal', 'floor-rack-1D')"/>
+                                                    <rect id="floor-rack-1E" x="25" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1E', '0.480', '68°F (20.0°C)', '192.168.43.228', 'normal', 'floor-rack-1E')"/>
+                                                    <rect id="floor-rack-1F" x="25" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1F', '0.510', '68°F (20.0°C)', '192.168.43.229', 'normal', 'floor-rack-1F')"/>
+                                                    <rect id="floor-rack-1G" x="25" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1G', '0.420', '66°F (18.9°C)', '192.168.43.230', 'normal', 'floor-rack-1G')"/>
+                                                    <rect id="floor-rack-1H" x="25" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1H', '0.390', '65°F (18.3°C)', '192.168.43.231', 'normal', 'floor-rack-1H')"/>
+                                                    <text x="32" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 1</text>
+                                                </g>
+                                                
+                                                <!-- Row 2 -->
+                                                <g>
+                                                    <rect id="floor-rack-2A" x="50" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2A', '0.320', '64°F (17.8°C)', '192.168.44.10', 'normal', 'floor-rack-2A')"/>
+                                                    <rect id="floor-rack-2B" x="50" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2B', '0.350', '65°F (18.3°C)', '192.168.44.11', 'normal', 'floor-rack-2B')"/>
+                                                    <rect id="floor-rack-2C" x="50" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2C', '0.410', '66°F (18.9°C)', '192.168.44.12', 'normal', 'floor-rack-2C')"/>
+                                                    <rect id="floor-rack-2D" x="50" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2D', '0.380', '66°F (18.9°C)', '192.168.44.13', 'normal', 'floor-rack-2D')"/>
+                                                    <rect id="floor-rack-2E" x="50" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2E', '0.420', '67°F (19.4°C)', '192.168.44.14', 'normal', 'floor-rack-2E')"/>
+                                                    <rect id="floor-rack-2F" x="50" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2F', '0.390', '66°F (18.9°C)', '192.168.44.15', 'normal', 'floor-rack-2F')"/>
+                                                    <rect id="floor-rack-2G" x="50" y="104" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('2G', '0.780', '79°F (26.1°C)', '192.168.44.16', 'critical', 'floor-rack-2G')"/>
+                                                    <rect id="floor-rack-2H" x="50" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2H', '0.340', '65°F (18.3°C)', '192.168.44.17', 'normal', 'floor-rack-2H')"/>
+                                                    <text x="57" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 2</text>
+                                                </g>
+
+                                                <!-- Row 3 -->
+                                                <g>
+                                                    <rect id="floor-rack-3A" x="75" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3A', '0.310', '64°F (17.8°C)', '192.168.45.10', 'normal', 'floor-rack-3A')"/>
+                                                    <rect id="floor-rack-3B" x="75" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3B', '0.290', '63°F (17.2°C)', '192.168.45.11', 'normal', 'floor-rack-3B')"/>
+                                                    <rect id="floor-rack-3C" x="75" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3C', '0.340', '65°F (18.3°C)', '192.168.45.12', 'normal', 'floor-rack-3C')"/>
+                                                    <rect id="floor-rack-3D" x="75" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3D', '0.360', '65°F (18.3°C)', '192.168.45.13', 'normal', 'floor-rack-3D')"/>
+                                                    <rect id="floor-rack-3E" x="75" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3E', '0.380', '66°F (18.9°C)', '192.168.45.14', 'normal', 'floor-rack-3E')"/>
+                                                    <rect id="floor-rack-3F" x="75" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3F', '0.320', '64°F (17.8°C)', '192.168.45.15', 'normal', 'floor-rack-3F')"/>
+                                                    <rect id="floor-rack-3G" x="75" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3G', '0.300', '64°F (17.8°C)', '192.168.45.16', 'normal', 'floor-rack-3G')"/>
+                                                    <rect id="floor-rack-3H" x="75" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('3H', '0.290', '63°F (17.2°C)', '192.168.45.17', 'normal', 'floor-rack-3H')"/>
+                                                    <text x="82" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 3</text>
+                                                </g>
+
+                                                <!-- Row 4 -->
+                                                <g>
+                                                    <rect id="floor-rack-4A" x="100" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4A', '0.280', '63°F (17.2°C)', '192.168.46.10', 'normal', 'floor-rack-4A')"/>
+                                                    <rect id="floor-rack-4B" x="100" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4B', '0.310', '64°F (17.8°C)', '192.168.46.11', 'normal', 'floor-rack-4B')"/>
+                                                    <rect id="floor-rack-4C" x="100" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4C', '0.330', '65°F (18.3°C)', '192.168.46.12', 'normal', 'floor-rack-4C')"/>
+                                                    <rect id="floor-rack-4D" x="100" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4D', '0.300', '64°F (17.8°C)', '192.168.46.13', 'normal', 'floor-rack-4D')"/>
+                                                    <rect id="floor-rack-4E" x="100" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4E', '0.320', '64°F (17.8°C)', '192.168.46.14', 'normal', 'floor-rack-4E')"/>
+                                                    <rect id="floor-rack-4F" x="100" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4F', '0.290', '63°F (17.2°C)', '192.168.46.15', 'normal', 'floor-rack-4F')"/>
+                                                    <rect id="floor-rack-4G" x="100" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4G', '0.310', '64°F (17.8°C)', '192.168.46.16', 'normal', 'floor-rack-4G')"/>
+                                                    <rect id="floor-rack-4H" x="100" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('4H', '0.280', '63°F (17.2°C)', '192.168.46.17', 'normal', 'floor-rack-4H')"/>
+                                                    <text x="107" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 4</text>
+                                                </g>
+
+                                                <!-- Row A (Central) -->
+                                                <g>
+                                                    <rect id="floor-rack-AA" x="135" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AA', '0.450', '67°F (19.4°C)', '192.168.47.10', 'normal', 'floor-rack-AA')"/>
+                                                    <rect id="floor-rack-AB" x="135" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AB', '0.410', '66°F (18.9°C)', '192.168.47.11', 'normal', 'floor-rack-AB')"/>
+                                                    <rect id="floor-rack-AC" x="135" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AC', '0.430', '67°F (19.4°C)', '192.168.47.12', 'normal', 'floor-rack-AC')"/>
+                                                    <rect id="floor-rack-AD" x="135" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AD', '0.470', '68°F (20.0°C)', '192.168.47.13', 'normal', 'floor-rack-AD')"/>
+                                                    <rect id="floor-rack-AE" x="135" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AE', '0.420', '67°F (19.4°C)', '192.168.47.14', 'normal', 'floor-rack-AE')"/>
+                                                    <rect id="floor-rack-AF" x="135" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AF', '0.490', '68°F (20.0°C)', '192.168.47.15', 'normal', 'floor-rack-AF')"/>
+                                                    <rect id="floor-rack-AG" x="135" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AG', '0.440', '67°F (19.4°C)', '192.168.47.16', 'normal', 'floor-rack-AG')"/>
+                                                    <rect id="floor-rack-AH" x="135" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AH', '0.410', '66°F (18.9°C)', '192.168.47.17', 'normal', 'floor-rack-AH')"/>
+                                                    <rect id="floor-rack-AI" x="135" y="128" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AI', '0.460', '67°F (19.4°C)', '192.168.47.18', 'normal', 'floor-rack-AI')"/>
+                                                    <rect id="floor-rack-AJ" x="135" y="140" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AJ', '0.380', '66°F (18.9°C)', '192.168.47.19', 'normal', 'floor-rack-AJ')"/>
+                                                    <text x="142" y="158" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila A</text>
+                                                </g>
+
+                                                <!-- Row 5 -->
+                                                <g>
+                                                    <rect id="floor-rack-5A" x="170" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('5A', '0.340', '65°F (18.3°C)', '192.168.48.10', 'normal', 'floor-rack-5A')"/>
+                                                    <rect id="floor-rack-5B" x="170" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('5B', '0.380', '66°F (18.9°C)', '192.168.48.11', 'normal', 'floor-rack-5B')"/>
+                                                    <rect id="floor-rack-5C" x="170" y="56" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('5C', '0.785', '78°F (25.5°C)', '192.168.48.12', 'critical', 'floor-rack-5C')"/>
+                                                    <rect id="floor-rack-5D" x="170" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('5D', '0.410', '66°F (18.9°C)', '192.168.48.13', 'normal', 'floor-rack-5D')"/>
+                                                    <rect id="floor-rack-5E" x="170" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('5E', '0.430', '67°F (19.4°C)', '192.168.48.14', 'normal', 'floor-rack-5E')"/>
+                                                    <rect id="floor-rack-5F" x="170" y="92" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('5F', '0.799', '80°F (26.7°C)', '192.168.48.15', 'critical', 'floor-rack-5F')"/>
+                                                    <rect id="floor-rack-5G" x="170" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('5G', '0.380', '66°F (18.9°C)', '192.168.48.16', 'normal', 'floor-rack-5G')"/>
+                                                    <rect id="floor-rack-5H" x="170" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('5H', '0.360', '65°F (18.3°C)', '192.168.48.17', 'normal', 'floor-rack-5H')"/>
+                                                    <text x="177" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 5</text>
+                                                </g>
+
+                                                <!-- Row 6 -->
+                                                <g>
+                                                    <rect id="floor-rack-6A" x="195" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6A', '0.320', '64°F (17.8°C)', '192.168.49.10', 'normal', 'floor-rack-6A')"/>
+                                                    <rect id="floor-rack-6B" x="195" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6B', '0.300', '64°F (17.8°C)', '192.168.49.11', 'normal', 'floor-rack-6B')"/>
+                                                    <rect id="floor-rack-6C" x="195" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6C', '0.310', '64°F (17.8°C)', '192.168.49.12', 'normal', 'floor-rack-6C')"/>
+                                                    <rect id="floor-rack-6D" x="195" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6D', '0.340', '65°F (18.3°C)', '192.168.49.13', 'normal', 'floor-rack-6D')"/>
+                                                    <rect id="floor-rack-6E" x="195" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6E', '0.350', '65°F (18.3°C)', '192.168.49.14', 'normal', 'floor-rack-6E')"/>
+                                                    <rect id="floor-rack-6F" x="195" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6F', '0.330', '65°F (18.3°C)', '192.168.49.15', 'normal', 'floor-rack-6F')"/>
+                                                    <rect id="floor-rack-6G" x="195" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6G', '0.310', '64°F (17.8°C)', '192.168.49.16', 'normal', 'floor-rack-6G')"/>
+                                                    <rect id="floor-rack-6H" x="195" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('6H', '0.320', '64°F (17.8°C)', '192.168.49.17', 'normal', 'floor-rack-6H')"/>
+                                                    <text x="202" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 6</text>
+                                                </g>
+
+                                                <!-- Row 7 -->
+                                                <g>
+                                                    <rect id="floor-rack-7A" x="220" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7A', '0.350', '65°F (18.3°C)', '192.168.50.10', 'normal', 'floor-rack-7A')"/>
+                                                    <rect id="floor-rack-7B" x="220" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7B', '0.320', '64°F (17.8°C)', '192.168.50.11', 'normal', 'floor-rack-7B')"/>
+                                                    <rect id="floor-rack-7C" x="220" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7C', '0.340', '65°F (18.3°C)', '192.168.50.12', 'normal', 'floor-rack-7C')"/>
+                                                    <rect id="floor-rack-7D" x="220" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7D', '0.380', '66°F (18.9°C)', '192.168.50.13', 'normal', 'floor-rack-7D')"/>
+                                                    <rect id="floor-rack-7E" x="220" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7E', '0.390', '66°F (18.9°C)', '192.168.50.14', 'normal', 'floor-rack-7E')"/>
+                                                    <rect id="floor-rack-7F" x="220" y="92" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7F', '0.370', '66°F (18.9°C)', '192.168.50.15', 'normal', 'floor-rack-7F')"/>
+                                                    <rect id="floor-rack-7G" x="220" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7G', '0.350', '65°F (18.3°C)', '192.168.50.16', 'normal', 'floor-rack-7G')"/>
+                                                    <rect id="floor-rack-7H" x="220" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('7H', '0.340', '65°F (18.3°C)', '192.168.50.17', 'normal', 'floor-rack-7H')"/>
+                                                    <rect id="floor-rack-7J" x="220" y="128" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('7J', '0.790', '79°F (26.1°C)', '192.168.50.18', 'critical', 'floor-rack-7J')"/>
+                                                    <text x="227" y="146" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 7</text>
+                                                </g>
+
+                                                <!-- Row 8 -->
+                                                <g>
+                                                    <rect id="floor-rack-8A" x="245" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8A', '0.360', '66°F (18.9°C)', '192.168.51.10', 'normal', 'floor-rack-8A')"/>
+                                                    <rect id="floor-rack-8B" x="245" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8B', '0.310', '64°F (17.8°C)', '192.168.51.11', 'normal', 'floor-rack-8B')"/>
+                                                    <rect id="floor-rack-8C" x="245" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8C', '0.330', '65°F (18.3°C)', '192.168.51.12', 'normal', 'floor-rack-8C')"/>
+                                                    <rect id="floor-rack-8D" x="245" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8D', '0.350', '65°F (18.3°C)', '192.168.51.13', 'normal', 'floor-rack-8D')"/>
+                                                    <rect id="floor-rack-8E" x="245" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8E', '0.320', '64°F (17.8°C)', '192.168.51.14', 'normal', 'floor-rack-8E')"/>
+                                                    <rect id="floor-rack-8F" x="245" y="92" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('8F', '0.782', '78°F (25.5°C)', '192.168.51.15', 'critical', 'floor-rack-8F')"/>
+                                                    <rect id="floor-rack-8G" x="245" y="104" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8G', '0.310', '64°F (17.8°C)', '192.168.51.16', 'normal', 'floor-rack-8G')"/>
+                                                    <rect id="floor-rack-8H" x="245" y="116" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('8H', '0.300', '64°F (17.8°C)', '192.168.51.17', 'normal', 'floor-rack-8H')"/>
+                                                    <text x="252" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 8</text>
+                                                </g>
+
+                                                <!-- Legend Group -->
+                                                <g transform="translate(270, 32)">
+                                                    <rect x="0" y="0" width="8" height="6" fill="#d50000" rx="1"/>
+                                                    <text x="12" y="5" fill="rgba(255,255,255,0.7)" font-size="5">Crit</text>
+                                                    
+                                                    <rect x="0" y="10" width="8" height="6" fill="#ffd600" rx="1"/>
+                                                    <text x="12" y="15" fill="rgba(255,255,255,0.7)" font-size="5">Warn</text>
+                                                    
+                                                    <rect x="0" y="20" width="8" height="6" fill="#00c853" rx="1"/>
+                                                    <text x="12" y="25" fill="rgba(255,255,255,0.7)" font-size="5">Norm</text>
+                                                </g>
+                                            </svg>
+                                        </div>
                                         
-                                        <!-- Chiller Node -->
-                                        <rect x="20" y="25" width="45" height="65" rx="4" class="flow-node" />
-                                        <text x="42" y="60" fill="var(--text-primary)" font-size="8" text-anchor="middle" font-weight="bold">Chiller</text>
-                                        
-                                        <!-- Pump Node -->
-                                        <circle cx="180" cy="40" r="18" class="flow-node" />
-                                        <text x="180" y="43" fill="var(--text-primary)" font-size="8" text-anchor="middle">Bomba</text>
-                                        
-                                        <!-- HX Node -->
-                                        <rect x="300" y="20" width="60" height="40" rx="4" class="flow-node" />
-                                        <text x="330" y="44" fill="var(--text-primary)" font-size="8" text-anchor="middle">Plate HX</text>
-                                        
-                                        <!-- Racks Node -->
-                                        <rect x="420" y="20" width="60" height="70" rx="4" class="flow-node" />
-                                        <text x="450" y="52" fill="var(--text-primary)" font-size="8" text-anchor="middle" font-weight="bold">Racks IA</text>
-                                        <text x="450" y="64" fill="var(--accent-green)" font-size="7" text-anchor="middle">39 Nodos</text>
-                                    </svg>
+                                        <!-- Right: Inspector Panel -->
+                                        <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; font-size: 12px; display: flex; flex-direction: column; justify-content: center; min-width: 140px;" id="floor-inspector-panel">
+                                            <h5 style="color: var(--primary-color); margin-bottom: 8px; font-size: 13px;"><i class="fa-solid fa-info-circle"></i> Inspección: <span id="inspect-rack-id">1A</span></h5>
+                                            <div style="margin-bottom: 5px;"><strong>Potencia:</strong> <span id="inspect-rack-power">0.754</span> kW</div>
+                                            <div style="margin-bottom: 5px;"><strong>Temperatura:</strong> <span id="inspect-rack-temp">75°F (23.8°C)</span></div>
+                                            <div style="margin-bottom: 5px;"><strong>PDU IP:</strong> <span id="inspect-rack-ip">192.168.43.224</span></div>
+                                            <div style="margin-top: 10px; padding: 5px; background: rgba(213,0,0,0.1); border: 1px solid rgba(213,0,0,0.3); border-radius: 3px; color: #ff5252; font-size: 10px;" id="inspect-rack-status">
+                                                <i class="fa-solid fa-triangle-exclamation"></i> Alerta Crítica: Temperatura alta
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
                         } else if (type === 'bim') {
                             summaryEl.innerHTML = `
                                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; margin-top:10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
                                     <div><strong>Modelo BIM Leído:</strong> datacenter_asbuilt.ifc</div>
-                                    <div><strong>Formato de Ingeniería:</strong> gbXML / IFC 4.0</div>
+                                    <div><strong>Formato de Ingeniería:</strong> gbXML / IFC 4.0 Layout Parser</div>
                                     <div><strong>Nodos Hidráulicos:</strong> 112 tuberías y válvulas bypass</div>
-                                    <div><strong>Intercambiadores de Calor:</strong> 4 cambiadores de placas</div>
                                     <div><strong>Chillers Centrales:</strong> 2 unidades en redundancia</div>
                                     <div><strong>Estado del Grafo:</strong> <span class="badge green">Modelo Construido</span></div>
+                                    <div><strong>Racks Parseados:</strong> 39 en cuadrícula física</div>
                                 </div>
                                 <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                                    <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-diagram-project"></i> Grafo de Red de Enfriamiento (Derivaciones / Bypass)</h4>
-                                    <style>
-                                        @keyframes flow { to { stroke-dashoffset: -20; } }
-                                        .flow-line-blue { stroke: #00e5ff; stroke-width: 2; stroke-dasharray: 6, 4; animation: flow 1.5s linear infinite; fill: none; }
-                                        .flow-line-bypass { stroke: #ffb300; stroke-width: 2; stroke-dasharray: 6, 4; animation: flow 2.5s linear infinite; fill: none; }
-                                        .flow-line-red { stroke: #ff3d00; stroke-width: 2; stroke-dasharray: 6, 4; animation: flow 1.5s linear infinite; fill: none; }
-                                        .flow-node { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.2); stroke-width: 1.5; transition: 0.3s; }
-                                        .flow-node:hover { stroke: var(--primary-color); fill: rgba(0, 229, 255, 0.05); }
-                                    </style>
-                                    <svg viewBox="0 0 500 130" style="width: 100%; height: auto; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 10px;">
-                                        <!-- Parallel Chillers loop -->
-                                        <path d="M 60 40 L 90 20 L 150 20 L 180 40" class="flow-line-blue" />
-                                        <path d="M 60 40 L 90 60 L 150 60 L 180 40" class="flow-line-blue" />
+                                    <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-map"></i> Distribución de Planta Extraída del Plano BIM</h4>
+                                    <div style="display: flex; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
+                                        <!-- Left: Floor Plan SVG -->
+                                        <div style="flex: 2; min-width: 250px;">
+                                            <svg viewBox="0 0 320 220" style="width: 100%; height: auto; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                                <defs>
+                                                    <pattern id="floor-tile-bim" width="10" height="10" patternUnits="userSpaceOnUse">
+                                                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+                                                    </pattern>
+                                                </defs>
+                                                <rect width="320" height="220" fill="url(#floor-tile-bim)" rx="4"/>
+                                                
+                                                <!-- AC Units (Green) -->
+                                                <rect x="30" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="50" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-6</text>
+                                                
+                                                <rect x="90" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="110" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-5</text>
+                                                
+                                                <rect x="150" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="170" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-4</text>
+                                                
+                                                <!-- BIM Pipes (Overlay blue lines for chilled water pipelines) -->
+                                                <line x1="20" y1="20" x2="20" y2="180" stroke="#00e5ff" stroke-width="1.5" opacity="0.6"/>
+                                                <line x1="20" y1="180" x2="280" y2="180" stroke="#00e5ff" stroke-width="1.5" opacity="0.6"/>
+                                                <line x1="280" y1="180" x2="280" y2="20" stroke="#ff3d00" stroke-width="1.5" opacity="0.6"/>
+
+                                                <!-- Racks -->
+                                                <!-- Row 1 -->
+                                                <g>
+                                                    <rect id="bim-rack-1A" x="25" y="32" width="14" height="10" fill="#d50000" stroke="#0288d1" stroke-width="1.5" style="cursor:pointer;" onclick="selectFloorRack('1A', '0.754', '75°F (23.8°C)', '192.168.43.224', 'critical', 'bim-rack-1A')"/>
+                                                    <rect id="bim-rack-1B" x="25" y="44" width="14" height="10" fill="#ffd600" style="cursor:pointer;" onclick="selectFloorRack('1B', '0.620', '71°F (21.7°C)', '192.168.43.225', 'warning', 'bim-rack-1B')"/>
+                                                    <rect id="bim-rack-1C" x="25" y="56" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('1C', '0.790', '78°F (25.5°C)', '192.168.43.226', 'critical', 'bim-rack-1C')"/>
+                                                    <rect id="bim-rack-1D" x="25" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1D', '0.450', '67°F (19.4°C)', '192.168.43.227', 'normal', 'bim-rack-1D')"/>
+                                                    <rect id="bim-rack-1E" x="25" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1E', '0.480', '68°F (20.0°C)', '192.168.43.228', 'normal', 'bim-rack-1E')"/>
+                                                    <text x="32" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 1</text>
+                                                </g>
+                                                
+                                                <!-- Row 2 -->
+                                                <g>
+                                                    <rect id="bim-rack-2A" x="50" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2A', '0.320', '64°F (17.8°C)', '192.168.44.10', 'normal', 'bim-rack-2A')"/>
+                                                    <rect id="bim-rack-2B" x="50" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2B', '0.350', '65°F (18.3°C)', '192.168.44.11', 'normal', 'bim-rack-2B')"/>
+                                                    <rect id="bim-rack-2C" x="50" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2C', '0.410', '66°F (18.9°C)', '192.168.44.12', 'normal', 'bim-rack-2C')"/>
+                                                    <rect id="bim-rack-2D" x="50" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2D', '0.380', '66°F (18.9°C)', '192.168.44.13', 'normal', 'bim-rack-2D')"/>
+                                                    <rect id="bim-rack-2E" x="50" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2E', '0.420', '67°F (19.4°C)', '192.168.44.14', 'normal', 'bim-rack-2E')"/>
+                                                    <text x="57" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 2</text>
+                                                </g>
+
+                                                <!-- Row A (Central) -->
+                                                <g>
+                                                    <rect id="bim-rack-AA" x="135" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AA', '0.450', '67°F (19.4°C)', '192.168.47.10', 'normal', 'bim-rack-AA')"/>
+                                                    <rect id="bim-rack-AB" x="135" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AB', '0.410', '66°F (18.9°C)', '192.168.47.11', 'normal', 'bim-rack-AB')"/>
+                                                    <rect id="bim-rack-AC" x="135" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AC', '0.430', '67°F (19.4°C)', '192.168.47.12', 'normal', 'bim-rack-AC')"/>
+                                                    <rect id="bim-rack-AD" x="135" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AD', '0.470', '68°F (20.0°C)', '192.168.47.13', 'normal', 'bim-rack-AD')"/>
+                                                    <rect id="bim-rack-AE" x="135" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AE', '0.420', '67°F (19.4°C)', '192.168.47.14', 'normal', 'bim-rack-AE')"/>
+                                                    <text x="142" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila A</text>
+                                                </g>
+                                            </svg>
+                                        </div>
                                         
-                                        <!-- Main loop with bypass -->
-                                        <path d="M 180 40 L 220 40" class="flow-line-blue" />
-                                        <path d="M 220 40 L 280 40" class="flow-line-blue" /> <!-- Normal path -->
-                                        <path d="M 220 40 L 220 90 L 320 90 L 320 60" class="flow-line-bypass" /> <!-- Bypass loop -->
-                                        
-                                        <path d="M 340 40 L 420 40" class="flow-line-blue" />
-                                        <path d="M 420 80 L 30 80" class="flow-line-red" />
-                                        <path d="M 30 80 L 30 40" class="flow-line-blue" />
-                                        
-                                        <!-- Nodes -->
-                                        <rect x="90" y="5" width="60" height="25" rx="3" class="flow-node" />
-                                        <text x="120" y="20" fill="var(--text-primary)" font-size="7" text-anchor="middle">Chiller A</text>
-                                        
-                                        <rect x="90" y="45" width="60" height="25" rx="3" class="flow-node" />
-                                        <text x="120" y="60" fill="var(--text-primary)" font-size="7" text-anchor="middle">Chiller B</text>
-                                        
-                                        <!-- 3-Way Valve (Bypass) -->
-                                        <polygon points="210,35 230,35 220,45" class="flow-node" style="fill: var(--primary-color);" />
-                                        <text x="220" y="28" fill="var(--text-primary)" font-size="6" text-anchor="middle">Válvula</text>
-                                        
-                                        <!-- HX Node -->
-                                        <rect x="280" y="20" width="60" height="40" rx="4" class="flow-node" />
-                                        <text x="310" y="44" fill="var(--text-primary)" font-size="8" text-anchor="middle">Plate HX</text>
-                                        
-                                        <!-- Racks Node -->
-                                        <rect x="410" y="20" width="65" height="70" rx="4" class="flow-node" />
-                                        <text x="442" y="52" fill="var(--text-primary)" font-size="8" text-anchor="middle" font-weight="bold">Racks loop</text>
-                                        <text x="442" y="64" fill="var(--accent-green)" font-size="7" text-anchor="middle">112 Válvulas</text>
-                                    </svg>
+                                        <!-- Right: Inspector Panel -->
+                                        <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; font-size: 12px; display: flex; flex-direction: column; justify-content: center; min-width: 140px;" id="bim-floor-inspector-panel">
+                                            <h5 style="color: var(--primary-color); margin-bottom: 8px; font-size: 13px;"><i class="fa-solid fa-info-circle"></i> Inspección: <span id="inspect-rack-id">1A</span></h5>
+                                            <div style="margin-bottom: 5px;"><strong>Potencia:</strong> <span id="inspect-rack-power">0.754</span> kW</div>
+                                            <div style="margin-bottom: 5px;"><strong>Temperatura:</strong> <span id="inspect-rack-temp">75°F (23.8°C)</span></div>
+                                            <div style="margin-bottom: 5px;"><strong>PDU IP:</strong> <span id="inspect-rack-ip">192.168.43.224</span></div>
+                                            <div style="margin-top: 10px; padding: 5px; background: rgba(213,0,0,0.1); border: 1px solid rgba(213,0,0,0.3); border-radius: 3px; color: #ff5252; font-size: 10px;" id="inspect-rack-status">
+                                                <i class="fa-solid fa-triangle-exclamation"></i> Alerta Crítica: Temperatura alta
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
                         } else {
@@ -1659,51 +1833,132 @@ def schedule_blackwell_workload(job_specs):
                                     <div><strong>Protocolo de Red:</strong> SNMP v2c / Redfish SSDP</div>
                                     <div><strong>Activos Descubiertos:</strong> 42 dispositivos en red</div>
                                     <div><strong>PDUs Inteligentes:</strong> 39 PDUs mapeadas</div>
-                                    <div><strong>Controladores BMS:</strong> 3 PLCs Modbus vinculados</div>
                                     <div><strong>Estado del Escaneo:</strong> <span class="badge green">Completado</span></div>
+                                    <div><strong>Racks Descubiertos:</strong> 39 en filas de pasillos</div>
                                 </div>
                                 <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                                    <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-network-wired"></i> Topología de Red de Sensores Descubierta</h4>
-                                    <style>
-                                        .net-line { stroke: rgba(0, 229, 255, 0.4); stroke-width: 1.5; stroke-dasharray: 4, 3; }
-                                        .net-node-center { fill: var(--primary-color); stroke: var(--bg-dark); stroke-width: 2; }
-                                        .net-node-device { fill: rgba(255,255,255,0.1); stroke: rgba(255,255,255,0.4); stroke-width: 1; transition: 0.3s; }
-                                        .net-node-device:hover { fill: var(--primary-color); stroke: var(--bg-dark); }
-                                    </style>
-                                    <svg viewBox="0 0 500 120" style="width: 100%; height: auto; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 10px;">
-                                        <!-- Lines from Gateway -->
-                                        <line x1="250" y1="60" x2="100" y2="30" class="net-line" />
-                                        <line x1="250" y1="60" x2="100" y2="90" class="net-line" />
-                                        <line x1="250" y1="60" x2="400" y2="30" class="net-line" />
-                                        <line x1="250" y1="60" x2="400" y2="90" class="net-line" />
+                                    <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-map"></i> Distribución de Planta Descubierta Activamente</h4>
+                                    <div style="display: flex; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
+                                        <!-- Left: Floor Plan SVG -->
+                                        <div style="flex: 2; min-width: 250px;">
+                                            <svg viewBox="0 0 320 220" style="width: 100%; height: auto; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                                <defs>
+                                                    <pattern id="floor-tile-scan" width="10" height="10" patternUnits="userSpaceOnUse">
+                                                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+                                                    </pattern>
+                                                </defs>
+                                                <rect width="320" height="220" fill="url(#floor-tile-scan)" rx="4"/>
+                                                
+                                                <!-- AC Units (Green) -->
+                                                <rect x="30" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="50" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-6</text>
+                                                
+                                                <rect x="90" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="110" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-5</text>
+                                                
+                                                <rect x="150" y="8" width="40" height="14" fill="#00c853" rx="2" stroke="rgba(0,0,0,0.3)"/>
+                                                <text x="170" y="17" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">AC-4</text>
+
+                                                <!-- Racks -->
+                                                <!-- Row 1 -->
+                                                <g>
+                                                    <rect id="scan-rack-1A" x="25" y="32" width="14" height="10" fill="#d50000" stroke="#0288d1" stroke-width="1.5" style="cursor:pointer;" onclick="selectFloorRack('1A', '0.754', '75°F (23.8°C)', '192.168.43.224', 'critical', 'scan-rack-1A')"/>
+                                                    <rect id="scan-rack-1B" x="25" y="44" width="14" height="10" fill="#ffd600" style="cursor:pointer;" onclick="selectFloorRack('1B', '0.620', '71°F (21.7°C)', '192.168.43.225', 'warning', 'scan-rack-1B')"/>
+                                                    <rect id="scan-rack-1C" x="25" y="56" width="14" height="10" fill="#d50000" style="cursor:pointer;" onclick="selectFloorRack('1C', '0.790', '78°F (25.5°C)', '192.168.43.226', 'critical', 'scan-rack-1C')"/>
+                                                    <rect id="scan-rack-1D" x="25" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1D', '0.450', '67°F (19.4°C)', '192.168.43.227', 'normal', 'scan-rack-1D')"/>
+                                                    <rect id="scan-rack-1E" x="25" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('1E', '0.480', '68°F (20.0°C)', '192.168.43.228', 'normal', 'scan-rack-1E')"/>
+                                                    <text x="32" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 1</text>
+                                                </g>
+                                                
+                                                <!-- Row 2 -->
+                                                <g>
+                                                    <rect id="scan-rack-2A" x="50" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2A', '0.320', '64°F (17.8°C)', '192.168.44.10', 'normal', 'scan-rack-2A')"/>
+                                                    <rect id="scan-rack-2B" x="50" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2B', '0.350', '65°F (18.3°C)', '192.168.44.11', 'normal', 'scan-rack-2B')"/>
+                                                    <rect id="scan-rack-2C" x="50" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2C', '0.410', '66°F (18.9°C)', '192.168.44.12', 'normal', 'scan-rack-2C')"/>
+                                                    <rect id="scan-rack-2D" x="50" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2D', '0.380', '66°F (18.9°C)', '192.168.44.13', 'normal', 'scan-rack-2D')"/>
+                                                    <rect id="scan-rack-2E" x="50" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('2E', '0.420', '67°F (19.4°C)', '192.168.44.14', 'normal', 'scan-rack-2E')"/>
+                                                    <text x="57" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila 2</text>
+                                                </g>
+
+                                                <!-- Row A (Central) -->
+                                                <g>
+                                                    <rect id="scan-rack-AA" x="135" y="32" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AA', '0.450', '67°F (19.4°C)', '192.168.47.10', 'normal', 'scan-rack-AA')"/>
+                                                    <rect id="scan-rack-AB" x="135" y="44" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AB', '0.410', '66°F (18.9°C)', '192.168.47.11', 'normal', 'scan-rack-AB')"/>
+                                                    <rect id="scan-rack-AC" x="135" y="56" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AC', '0.430', '67°F (19.4°C)', '192.168.47.12', 'normal', 'scan-rack-AC')"/>
+                                                    <rect id="scan-rack-AD" x="135" y="68" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AD', '0.470', '68°F (20.0°C)', '192.168.47.13', 'normal', 'scan-rack-AD')"/>
+                                                    <rect id="scan-rack-AE" x="135" y="80" width="14" height="10" fill="#00c853" style="cursor:pointer;" onclick="selectFloorRack('AE', '0.420', '67°F (19.4°C)', '192.168.47.14', 'normal', 'scan-rack-AE')"/>
+                                                    <text x="142" y="134" fill="rgba(255,255,255,0.4)" font-size="5" text-anchor="middle">Fila A</text>
+                                                </g>
+                                            </svg>
+                                        </div>
                                         
-                                        <!-- Gateway / Gateway controller -->
-                                        <circle cx="250" cy="60" r="22" class="net-node-center" />
-                                        <text x="250" y="63" fill="var(--bg-dark)" font-size="8" text-anchor="middle" font-weight="bold">Gateway</text>
-                                        
-                                        <!-- Discovered Devices -->
-                                        <!-- Group 1: Modbus PLCs -->
-                                        <rect x="60" y="15" width="80" height="30" rx="3" class="net-node-device" />
-                                        <text x="100" y="33" fill="var(--text-primary)" font-size="8" text-anchor="middle">3x Modbus PLCs</text>
-                                        
-                                        <!-- Group 2: SNMP PDUs -->
-                                        <rect x="60" y="75" width="80" height="30" rx="3" class="net-node-device" />
-                                        <text x="100" y="93" fill="var(--text-primary)" font-size="8" text-anchor="middle">39x SNMP PDUs</text>
-                                        
-                                        <!-- Group 3: Server IPMI/Redfish -->
-                                        <rect x="360" y="15" width="80" height="30" rx="3" class="net-node-device" />
-                                        <text x="400" y="33" fill="var(--text-primary)" font-size="8" text-anchor="middle">Redfish Nodes</text>
-                                        
-                                        <!-- Group 4: DCIM Synced -->
-                                        <rect x="360" y="75" width="80" height="30" rx="3" class="net-node-device" />
-                                        <text x="400" y="93" fill="var(--text-primary)" font-size="8" text-anchor="middle">Sensores Sala</text>
-                                    </svg>
+                                        <!-- Right: Inspector Panel -->
+                                        <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; font-size: 12px; display: flex; flex-direction: column; justify-content: center; min-width: 140px;" id="scan-floor-inspector-panel">
+                                            <h5 style="color: var(--primary-color); margin-bottom: 8px; font-size: 13px;"><i class="fa-solid fa-info-circle"></i> Inspección: <span id="inspect-rack-id">1A</span></h5>
+                                            <div style="margin-bottom: 5px;"><strong>Potencia:</strong> <span id="inspect-rack-power">0.754</span> kW</div>
+                                            <div style="margin-bottom: 5px;"><strong>Temperatura:</strong> <span id="inspect-rack-temp">75°F (23.8°C)</span></div>
+                                            <div style="margin-bottom: 5px;"><strong>PDU IP:</strong> <span id="inspect-rack-ip">192.168.43.224</span></div>
+                                            <div style="margin-top: 10px; padding: 5px; background: rgba(213,0,0,0.1); border: 1px solid rgba(213,0,0,0.3); border-radius: 3px; color: #ff5252; font-size: 10px;" id="inspect-rack-status">
+                                                <i class="fa-solid fa-triangle-exclamation"></i> Alerta Crítica: Temperatura alta
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
                         }
                     }, 500);
                 }
             }, 1000);
+        }
+
+        // Live Floor Plan Interaction Controller
+        function selectFloorRack(id, power, temp, ip, status, rectId) {
+            // Update textual info
+            const inspectId = document.getElementById('inspect-rack-id');
+            const inspectPower = document.getElementById('inspect-rack-power');
+            const inspectTemp = document.getElementById('inspect-rack-temp');
+            const inspectIp = document.getElementById('inspect-rack-ip');
+            const inspectStatus = document.getElementById('inspect-rack-status');
+            
+            if (inspectId) inspectId.innerText = id;
+            if (inspectPower) inspectPower.innerText = power;
+            if (inspectTemp) inspectTemp.innerText = temp;
+            if (inspectIp) inspectIp.innerText = ip;
+            
+            // Remove selection highlight from all other rects
+            document.querySelectorAll('.rack-cell').forEach(rect => {
+                rect.removeAttribute('stroke');
+                rect.removeAttribute('stroke-width');
+            });
+            
+            // Highlight selected rect
+            const rectEl = document.getElementById(rectId);
+            if (rectEl) {
+                rectEl.setAttribute('stroke', '#ffffff');
+                rectEl.setAttribute('stroke-width', '1.5');
+            }
+            
+            if (inspectStatus) {
+                if (status === 'critical') {
+                    inspectStatus.style.display = 'block';
+                    inspectStatus.style.background = 'rgba(213,0,0,0.1)';
+                    inspectStatus.style.borderColor = 'rgba(213,0,0,0.3)';
+                    inspectStatus.style.color = '#ff5252';
+                    inspectStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Alerta Crítica: Temperatura alta';
+                } else if (status === 'warning') {
+                    inspectStatus.style.display = 'block';
+                    inspectStatus.style.background = 'rgba(255,214,0,0.1)';
+                    inspectStatus.style.borderColor = 'rgba(255,214,0,0.3)';
+                    inspectStatus.style.color = '#ffd600';
+                    inspectStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Advertencia: Carga elevada';
+                } else {
+                    inspectStatus.style.display = 'block';
+                    inspectStatus.style.background = 'rgba(0,200,83,0.1)';
+                    inspectStatus.style.borderColor = 'rgba(0,200,83,0.3)';
+                    inspectStatus.style.color = '#69f0ae';
+                    inspectStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Estado Normal: Eficiente';
+                }
+            }
         }
 
         // Live IoT telemetry updater
