@@ -68,3 +68,21 @@ graph TD
   * Habilitar permisos de escritura segura en el BMS a través del protocolo Modbus TCP / BACnet.
   * Establecer límites físicos de seguridad (*guardrails* por hardware): si la temperatura de un chip supera los 65°C o la presión del refrigerante sube de 1.8 bar, el control de la IA se desactiva instantáneamente y el sistema vuelve al control clásico del fabricante.
 * **Entregable:** Operación autónoma del data center con optimización de PUE en tiempo real.
+
+---
+
+## 4. Presupuesto de Inversión (12 Meses - Fase Semilla & Piloto)
+
+Para desarrollar el MVP comercial, realizar la integración de protocolos de campo y completar el primer piloto en vivo en un data center real, se proyecta un requerimiento de financiamiento de **$260,000 USD** para un periodo de **12 meses**.
+
+### Desglose del Presupuesto
+
+| Categoría | Detalle | Costo Mensual | Costo Anual (USD) |
+| :--- | :--- | :--- | :--- |
+| **Recursos Humanos (Equipo Core)** | 1 Tech Lead (Full-stack IoT), 1 Data Scientist (IA/Termodinámica), 1 DevOps / Integrador Edge, 1 Product Manager / CEO. | $15,300 | $183,600 |
+| **Consultorías & Asesorías** | Consultor Senior HVAC (Data Centers), Auditoría de Ciberseguridad OT (crítico para permisos), Asesoría Legal y Patentes. | - | $23,000 |
+| **Infraestructura & SaaS** | Servidores en nube (GCP Vertex AI, BigQuery), licencias de software, y Hardware Edge para instalación física en planta (PCs Industriales). | $1,500 + Equipos | $22,000 |
+| **Gastos Operativos & Marketing** | Visitas de campo a plantas de clientes, viajes comerciales, material de ventas para inversionistas y grandes cuentas. | - | $8,000 |
+| **Fondo de Reserva (Contingencias)** | 10% de desviación sobre imprevistos de hardware o retrasos en auditorías de clientes. | - | $23,400 |
+| **TOTAL INVERSIÓN SEMILLA** | | | **$260,000 USD** |
+
