@@ -967,6 +967,18 @@
                             <label for="saas-water-price">Costo de Agua (USD / m³)</label>
                             <input type="number" id="saas-water-price" value="1.50" step="0.10" oninput="runSaaSSimulation()">
                         </div>
+                        <div class="input-group">
+                            <label for="saas-occupancy">Tasa de Ocupación Promedio (%)</label>
+                            <input type="number" id="saas-occupancy" value="80" min="10" max="100" step="5" oninput="runSaaSSimulation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="saas-capex">CAPEX Inversión Inicial (USD)</label>
+                            <input type="number" id="saas-capex" value="250000" step="10000" oninput="runSaaSSimulation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="saas-opex-maint">Mantenimiento OPEX Anual (USD)</label>
+                            <input type="number" id="saas-opex-maint" value="15000" step="1000" oninput="runSaaSSimulation()">
+                        </div>
                     </div>
                 </div>
 
@@ -2490,6 +2502,10 @@ def schedule_blackwell_workload(job_specs):
             const chiller_cop = parseFloat(document.getElementById('saas-chiller-cop').value) || 3.5;
             const fan_kw = parseFloat(document.getElementById('saas-fan-kw').value) || 15;
             const pump_kw = parseFloat(document.getElementById('saas-pump-kw').value) || 5;
+            
+            // Retrofit operational & financial inputs
+            const occupancy = (parseFloat(document.getElementById('saas-occupancy').value) || 80) / 100;
+            const opex_maint = parseFloat(document.getElementById('saas-opex-maint').value) || 15000;
 
             const locData = GLOBAL_COOLING_DATA[locName];
             if (!locData) return;
@@ -2523,10 +2539,17 @@ def schedule_blackwell_workload(job_specs):
                 pue_base = pue_fc + (1.1 / chiller_cop);
             }
 
+            // Auto-update CAPEX input field if not focused to provide sensible default
+            const capexInput = document.getElementById('saas-capex');
+            if (capexInput && document.activeElement !== capexInput) {
+                capexInput.value = capex_per_rack * numRacks;
+            }
+
             const avg_pue = (fcp / 100) * pue_fc + (1 - fcp / 100) * ((pue_fc + pue_base) / 2);
             document.getElementById('saas-res-pue').innerText = avg_pue.toFixed(3);
 
-            const it_power = density * numRacks;
+            // Apply occupancy rate to IT Power
+            const it_power = density * numRacks * occupancy;
             const energy_it_yr = it_power * 8760;
 
             const energy_sys_yr = energy_it_yr * avg_pue;
@@ -2534,17 +2557,19 @@ def schedule_blackwell_workload(job_specs):
 
             const energy_saved_yr = energy_baseline_yr - energy_sys_yr;
             const annual_opex_savings = energy_saved_yr * tariff;
-            const annual_opex = energy_sys_yr * tariff;
+            
+            // Net savings = energy bill reduction - annual maintenance cost
+            const net_annual_savings = annual_opex_savings - opex_maint;
+            
+            const total_capex = parseFloat(document.getElementById('saas-capex').value) || (capex_per_rack * numRacks);
 
-            const total_capex = capex_per_rack * numRacks;
-
-            const payback = annual_opex_savings > 0 ? (total_capex / annual_opex_savings) : Infinity;
+            const payback = net_annual_savings > 0 ? (total_capex / net_annual_savings) : Infinity;
             document.getElementById('saas-res-payback').innerText = payback === Infinity ? "N/A" : payback.toFixed(1) + " Años";
 
             const discount_rate = 0.08;
             let npv = -total_capex;
             for (let t = 1; t <= lifetime; t++) {
-                npv += annual_opex_savings / Math.pow(1 + discount_rate, t);
+                npv += net_annual_savings / Math.pow(1 + discount_rate, t);
             }
 
             let grid_factor = 0.35;
