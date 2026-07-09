@@ -2557,6 +2557,7 @@ def schedule_blackwell_workload(job_specs):
 
             const energy_saved_yr = energy_baseline_yr - energy_sys_yr;
             const annual_opex_savings = energy_saved_yr * tariff;
+            const annual_opex = energy_sys_yr * tariff;
             
             // Net savings = energy bill reduction - annual maintenance cost
             const net_annual_savings = annual_opex_savings - opex_maint;
