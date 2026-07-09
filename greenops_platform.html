@@ -1954,21 +1954,21 @@ def schedule_blackwell_workload(job_specs):
                                                         <rect x="0" y="0" width="60" height="120" fill="rgba(255,255,255,0.05)" rx="4" stroke="rgba(255,255,255,0.1)"/>
                                                         <text x="30" y="15" fill="#fff" font-size="7" font-weight="bold" text-anchor="middle">RACKS DE TI</text>
                                                         <rect x="10" y="30" width="40" height="15" fill="#ffd600" rx="1"/>
-                                                        <text x="30" y="40" fill="#000" font-size="5" text-anchor="middle">Carga: 105.4 kW</text>
+                                                        <text id="loop-it-load" x="30" y="40" fill="#000" font-size="5" text-anchor="middle">Carga: 105.4 kW</text>
                                                         
                                                         <rect x="10" y="55" width="40" height="15" fill="#00c853" rx="1"/>
-                                                        <text x="30" y="65" fill="#fff" font-size="5" text-anchor="middle">Chip: 54.2°C</text>
+                                                        <text id="loop-chip-temp" x="30" y="65" fill="#fff" font-size="5" text-anchor="middle">Chip: 54.2°C</text>
                                                         
                                                         <rect x="10" y="80" width="40" height="15" fill="#d50000" rx="1"/>
-                                                        <text x="30" y="90" fill="#fff" font-size="5" text-anchor="middle">PUE: 1.031</text>
+                                                        <text id="loop-pue" x="30" y="90" fill="#fff" font-size="5" text-anchor="middle">PUE: 1.031</text>
                                                     </g>
                                                     
                                                     <!-- Primary Loop Pipes (Chilled Water) -->
                                                     <path d="M 170 50 L 110 50 L 110 90 L 70 90" fill="none" stroke="#00e5ff" stroke-width="2"/>
-                                                    <text x="120" y="44" fill="#00e5ff" font-size="6">CHW Flow: 8.4°C</text>
+                                                    <text id="loop-chw-flow" x="120" y="44" fill="#00e5ff" font-size="6">CHW Flow: 8.4°C</text>
                                                     
                                                     <path d="M 70 120 L 110 120 L 110 140 L 170 140" fill="none" stroke="#ff3d00" stroke-width="2"/>
-                                                    <text x="120" y="152" fill="#ff3d00" font-size="6">CHW Return: 12.6°C</text>
+                                                    <text id="loop-chw-return" x="120" y="152" fill="#ff3d00" font-size="6">CHW Return: 12.6°C</text>
                                                     
                                                     <!-- Primary Pump -->
                                                     <circle cx="130" cy="140" r="8" fill="#1e1e24" stroke="#ff3d00" stroke-width="1.5"/>
@@ -1991,10 +1991,10 @@ def schedule_blackwell_workload(job_specs):
                                                     
                                                     <!-- Secondary Loop Pipes (Condenser Water) -->
                                                     <path d="M 270 90 L 330 90 L 330 50 L 370 50" fill="none" stroke="#ff3d00" stroke-width="2"/>
-                                                    <text x="290" y="44" fill="#ff3d00" font-size="6">CW Flow: 32.1°C</text>
+                                                    <text id="loop-cw-flow" x="290" y="44" fill="#ff3d00" font-size="6">CW Flow: 32.1°C</text>
                                                     
                                                     <path d="M 370 140 L 330 140 L 330 120 L 270 120" fill="none" stroke="#00e5ff" stroke-width="2"/>
-                                                    <text x="290" y="152" fill="#00e5ff" font-size="6">CW Return: 26.5°C</text>
+                                                    <text id="loop-cw-return" x="290" y="152" fill="#00e5ff" font-size="6">CW Return: 26.5°C</text>
                                                     
                                                     <!-- Condenser Pump -->
                                                     <circle cx="310" cy="140" r="8" fill="#1e1e24" stroke="#00e5ff" stroke-width="1.5"/>
@@ -2007,12 +2007,12 @@ def schedule_blackwell_workload(job_specs):
                                                         
                                                         <ellipse cx="30" cy="35" rx="15" ry="4" fill="none" stroke="#00e5ff" stroke-width="1"/>
                                                         <line x1="30" y1="31" x2="30" y2="39" stroke="#00e5ff"/>
-                                                        <text x="30" y="48" fill="#ffd600" font-size="5" text-anchor="middle">Fan: 85% RPM</text>
+                                                        <text id="loop-fan-rpm" x="30" y="48" fill="#ffd600" font-size="5" text-anchor="middle">Fan: 85% RPM</text>
                                                         
                                                         <path d="M 15 65 L 20 75 M 30 65 L 30 75 M 45 65 L 40 75" stroke="#00e5ff" stroke-width="0.5" stroke-dasharray="1,2"/>
                                                         
                                                         <path d="M 50 110 L 35 110" fill="none" stroke="#00c853" stroke-width="1" marker-end="url(#arrow)"/>
-                                                        <text x="30" y="102" fill="#00c853" font-size="5" text-anchor="middle">T Ext: 11.2°C</text>
+                                                        <text id="loop-ext-temp" x="30" y="102" fill="#00c853" font-size="5" text-anchor="middle">T Ext: 11.2°C</text>
                                                     </g>
                                                 </svg>
                                             </div>
@@ -2285,6 +2285,45 @@ def schedule_blackwell_workload(job_specs):
             }
         }
 
+        // Update loop diagram SVG nodes dynamically based on active telemetry
+        function updateSvgLoopDiagram(itLoad, extTemp, Tj, instantPue, flow) {
+            const loopItLoad = document.getElementById('loop-it-load');
+            if (loopItLoad) loopItLoad.textContent = "Carga: " + itLoad.toFixed(1) + " kW";
+            
+            const loopChipTemp = document.getElementById('loop-chip-temp');
+            if (loopChipTemp) loopChipTemp.textContent = "Chip: " + Tj.toFixed(1) + "°C";
+            
+            const loopPue = document.getElementById('loop-pue');
+            if (loopPue) loopPue.textContent = "PUE: " + instantPue.toFixed(3);
+            
+            const loopExtTemp = document.getElementById('loop-ext-temp');
+            if (loopExtTemp) loopExtTemp.textContent = "T Ext: " + extTemp.toFixed(1) + "°C";
+            
+            // Calculate thermodynamics
+            const chwFlow = 8.0 + (extTemp > 25 ? (extTemp - 25) * 0.1 : 0);
+            const chwReturn = chwFlow + (itLoad / 25.0);
+            const cwReturn = extTemp + 5.0;
+            const cwFlow = cwReturn + (itLoad / 30.0);
+            
+            const loopChwFlow = document.getElementById('loop-chw-flow');
+            if (loopChwFlow) loopChwFlow.textContent = "CHW Flow: " + chwFlow.toFixed(1) + "°C";
+            
+            const loopChwReturn = document.getElementById('loop-chw-return');
+            if (loopChwReturn) loopChwReturn.textContent = "CHW Return: " + chwReturn.toFixed(1) + "°C";
+            
+            const loopCwFlow = document.getElementById('loop-cw-flow');
+            if (loopCwFlow) loopCwFlow.textContent = "CW Flow: " + cwFlow.toFixed(1) + "°C";
+            
+            const loopCwReturn = document.getElementById('loop-cw-return');
+            if (loopCwReturn) loopCwReturn.textContent = "CW Return: " + cwReturn.toFixed(1) + "°C";
+            
+            const loopFanRpm = document.getElementById('loop-fan-rpm');
+            if (loopFanRpm) {
+                const rpm = extTemp > 15 ? Math.min(100, 50 + (extTemp - 15) * 5) : 30;
+                loopFanRpm.textContent = "Fan: " + Math.round(rpm) + "% RPM";
+            }
+        }
+
         // Live IoT telemetry updater
         let iotTimer = null;
         function toggleIoTConnection() {
@@ -2326,7 +2365,10 @@ def schedule_blackwell_workload(job_specs):
                             chartLabels.shift();
                             const d = new Date();
                             chartLabels.push(d.toLocaleTimeString());
-                            if (twinLineChart) twinLineChart.update();
+                             if (twinLineChart) twinLineChart.update();
+                             
+                             // Update SVG P&ID diagram if visible
+                             updateSvgLoopDiagram(data.it_load_kw, data.external_temp_c, data.chip_temp_c, data.pue_instantaneous, data.flow_rate_ls);
                         })
                         .catch(err => {
                             pushLog("ERROR DE INGESTA: Sin respuesta de FastAPI. Verifica que fastapi_server.py esté corriendo.", "critical");
@@ -2750,6 +2792,9 @@ def schedule_blackwell_workload(job_specs):
             if (twinLineChart) {
                 twinLineChart.update();
             }
+            
+            // Update SVG P&ID diagram if visible
+            updateSvgLoopDiagram(itLoad, extTemp, Tj, instantPue, flow);
         }
 
         let lastAlarmState = "";
