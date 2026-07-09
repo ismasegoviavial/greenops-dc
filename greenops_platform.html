@@ -1876,8 +1876,16 @@ def schedule_blackwell_workload(job_specs):
                                         <div><strong>Estado del Grafo:</strong> <span class="badge green">Cargado dinámicamente</span></div>
                                     </div>
                                     <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                                        <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-map"></i> Distribución de Planta Real cargada desde gbXML (100 Racks)</h4>
-                                        <div style="display: flex; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                                            <h4 style="font-size: 13px; color: var(--primary-color); margin: 0;"><i class="fa-solid fa-network-wired"></i> Esquema de Climatización & Planta</h4>
+                                            <div style="display: flex; gap: 5px;">
+                                                <button class="btn" style="padding: 4px 10px; font-size: 11px; background: var(--primary-color); color: var(--bg-dark);" id="toggle-bim-floor" onclick="switchBimSubView('floor')"><i class="fa-solid fa-map"></i> Plano de Planta (100 Racks)</button>
+                                                <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px; background: none; color: var(--text-primary);" id="toggle-bim-loop" onclick="switchBimSubView('loop')"><i class="fa-solid fa-diagram-project"></i> Circuito Hidráulico Completo</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Sub-view 1: Floor Plan Grid (Dynamic 100 Racks) -->
+                                        <div id="bim-subview-floor" style="display: flex; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
                                             <!-- Left: Floor Plan SVG -->
                                             <div style="flex: 2; min-width: 250px;">
                                                 <svg viewBox="0 0 320 220" style="width: 100%; height: auto; background: rgba(0,0,0,0.2); border-radius: 4px;">
@@ -1927,6 +1935,99 @@ def schedule_blackwell_workload(job_specs):
                                                 <div style="margin-bottom: 5px;"><strong>PDU IP:</strong> <span id="inspect-rack-ip">${parsedBIMData.racks[0].ip}</span></div>
                                                 <div style="margin-top: 10px; padding: 5px; background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.3); border-radius: 3px; color: #69f0ae; font-size: 10px;" id="inspect-rack-status">
                                                     <i class="fa-solid fa-circle-check"></i> Estado Normal: Eficiente
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Sub-view 2: Complete Loop Diagram (CHW + Chiller + CW + Towers) -->
+                                        <div id="bim-subview-loop" style="display: none; gap: 15px; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 15px; flex-wrap: wrap;">
+                                            <div style="flex: 3; min-width: 250px;">
+                                                <svg viewBox="0 0 450 200" style="width: 100%; height: auto; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                                    <defs>
+                                                        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00c853"/>
+                                                        </marker>
+                                                    </defs>
+                                                    
+                                                    <!-- Left: Server Racks (Heat Generation) -->
+                                                    <g transform="translate(10, 30)">
+                                                        <rect x="0" y="0" width="60" height="120" fill="rgba(255,255,255,0.05)" rx="4" stroke="rgba(255,255,255,0.1)"/>
+                                                        <text x="30" y="15" fill="#fff" font-size="7" font-weight="bold" text-anchor="middle">RACKS DE TI</text>
+                                                        <rect x="10" y="30" width="40" height="15" fill="#ffd600" rx="1"/>
+                                                        <text x="30" y="40" fill="#000" font-size="5" text-anchor="middle">Carga: 105.4 kW</text>
+                                                        
+                                                        <rect x="10" y="55" width="40" height="15" fill="#00c853" rx="1"/>
+                                                        <text x="30" y="65" fill="#fff" font-size="5" text-anchor="middle">Chip: 54.2°C</text>
+                                                        
+                                                        <rect x="10" y="80" width="40" height="15" fill="#d50000" rx="1"/>
+                                                        <text x="30" y="90" fill="#fff" font-size="5" text-anchor="middle">PUE: 1.031</text>
+                                                    </g>
+                                                    
+                                                    <!-- Primary Loop Pipes (Chilled Water) -->
+                                                    <path d="M 170 50 L 110 50 L 110 90 L 70 90" fill="none" stroke="#00e5ff" stroke-width="2"/>
+                                                    <text x="120" y="44" fill="#00e5ff" font-size="6">CHW Flow: 8.4°C</text>
+                                                    
+                                                    <path d="M 70 120 L 110 120 L 110 140 L 170 140" fill="none" stroke="#ff3d00" stroke-width="2"/>
+                                                    <text x="120" y="152" fill="#ff3d00" font-size="6">CHW Return: 12.6°C</text>
+                                                    
+                                                    <!-- Primary Pump -->
+                                                    <circle cx="130" cy="140" r="8" fill="#1e1e24" stroke="#ff3d00" stroke-width="1.5"/>
+                                                    <text x="130" y="142" fill="#fff" font-size="5" font-weight="bold" text-anchor="middle">PUP</text>
+                                                    
+                                                    <!-- Middle: Chiller (Heat Transfer) -->
+                                                    <g transform="translate(180, 40)">
+                                                        <rect x="0" y="0" width="90" height="110" fill="rgba(0,188,212,0.1)" rx="4" stroke="rgba(0,188,212,0.3)" stroke-width="1.5"/>
+                                                        <text x="45" y="15" fill="#00e5ff" font-size="8" font-weight="bold" text-anchor="middle">CHILLER CENTRAL</text>
+                                                        
+                                                        <rect x="5" y="30" width="38" height="70" fill="rgba(0,229,255,0.15)" rx="2"/>
+                                                        <text x="24" y="68" fill="#00e5ff" font-size="6" text-anchor="middle">Evaporador</text>
+                                                        
+                                                        <rect x="47" y="30" width="38" height="70" fill="rgba(255,61,0,0.15)" rx="2"/>
+                                                        <text x="66" y="68" fill="#ff3d00" font-size="6" text-anchor="middle">Condensador</text>
+                                                        
+                                                        <circle cx="45" cy="50" r="6" fill="#fff"/>
+                                                        <text x="45" y="52" fill="#000" font-size="6" font-weight="bold" text-anchor="middle">C</text>
+                                                    </g>
+                                                    
+                                                    <!-- Secondary Loop Pipes (Condenser Water) -->
+                                                    <path d="M 270 90 L 330 90 L 330 50 L 370 50" fill="none" stroke="#ff3d00" stroke-width="2"/>
+                                                    <text x="290" y="44" fill="#ff3d00" font-size="6">CW Flow: 32.1°C</text>
+                                                    
+                                                    <path d="M 370 140 L 330 140 L 330 120 L 270 120" fill="none" stroke="#00e5ff" stroke-width="2"/>
+                                                    <text x="290" y="152" fill="#00e5ff" font-size="6">CW Return: 26.5°C</text>
+                                                    
+                                                    <!-- Condenser Pump -->
+                                                    <circle cx="310" cy="140" r="8" fill="#1e1e24" stroke="#00e5ff" stroke-width="1.5"/>
+                                                    <text x="310" y="142" fill="#fff" font-size="5" font-weight="bold" text-anchor="middle">CWP</text>
+                                                    
+                                                    <!-- Right: Cooling Tower (Heat Rejection) -->
+                                                    <g transform="translate(380, 30)">
+                                                        <rect x="0" y="0" width="60" height="120" fill="rgba(255,255,255,0.05)" rx="4" stroke="rgba(255,255,255,0.1)"/>
+                                                        <text x="30" y="15" fill="#fff" font-size="6" font-weight="bold" text-anchor="middle">TORRE EXT</text>
+                                                        
+                                                        <ellipse cx="30" cy="35" rx="15" ry="4" fill="none" stroke="#00e5ff" stroke-width="1"/>
+                                                        <line x1="30" y1="31" x2="30" y2="39" stroke="#00e5ff"/>
+                                                        <text x="30" y="48" fill="#ffd600" font-size="5" text-anchor="middle">Fan: 85% RPM</text>
+                                                        
+                                                        <path d="M 15 65 L 20 75 M 30 65 L 30 75 M 45 65 L 40 75" stroke="#00e5ff" stroke-width="0.5" stroke-dasharray="1,2"/>
+                                                        
+                                                        <path d="M 50 110 L 35 110" fill="none" stroke="#00c853" stroke-width="1" marker-end="url(#arrow)"/>
+                                                        <text x="30" y="102" fill="#00c853" font-size="5" text-anchor="middle">T Ext: 11.2°C</text>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            
+                                            <!-- Right: Thermodynamic Twin Summary -->
+                                            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; font-size: 11px; display: flex; flex-direction: column; justify-content: center; min-width: 140px;">
+                                                <h5 style="color: var(--primary-color); margin-bottom: 8px; font-size: 12px;"><i class="fa-solid fa-snowflake"></i> Ciclo de Climatización</h5>
+                                                <div style="margin-bottom: 4px;"><strong>Lazo Evaporador (CHW):</strong></div>
+                                                <div style="margin-bottom: 4px; padding-left: 5px; color: #00e5ff;">Flow: 8.4 °C | Ret: 12.6 °C</div>
+                                                <div style="margin-bottom: 6px;"><strong>Lazo Condensador (CW):</strong></div>
+                                                <div style="margin-bottom: 6px; padding-left: 5px; color: #ff9100;">Flow: 32.1 °C | Ret: 26.5 °C</div>
+                                                <div style="margin-bottom: 4px;"><strong>Torres Activas:</strong> 2 / 2</div>
+                                                <div style="margin-bottom: 4px;"><strong>Flujo de Bombas:</strong> 1.1 L/s</div>
+                                                <div style="margin-top: 10px; padding: 5px; background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.3); border-radius: 3px; color: #69f0ae; font-size: 9px;">
+                                                    <i class="fa-solid fa-shield-halved"></i> Balance Térmico Cerrado
                                                 </div>
                                             </div>
                                         </div>
@@ -2148,6 +2249,38 @@ def schedule_blackwell_workload(job_specs):
                     inspectStatus.style.borderColor = 'rgba(0,200,83,0.3)';
                     inspectStatus.style.color = '#69f0ae';
                     inspectStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Estado Normal: Eficiente';
+                }
+            }
+        }
+
+        // Switch between Floor Plan and Complete Termohydraulic loop schematics
+        function switchBimSubView(view) {
+            const floorDiv = document.getElementById('bim-subview-floor');
+            const loopDiv = document.getElementById('bim-subview-loop');
+            const btnFloor = document.getElementById('toggle-bim-floor');
+            const btnLoop = document.getElementById('toggle-bim-loop');
+            
+            if (view === 'floor') {
+                if (floorDiv) floorDiv.style.display = 'flex';
+                if (loopDiv) loopDiv.style.display = 'none';
+                if (btnFloor) {
+                    btnFloor.style.background = 'var(--primary-color)';
+                    btnFloor.style.color = 'var(--bg-dark)';
+                }
+                if (btnLoop) {
+                    btnLoop.style.background = 'none';
+                    btnLoop.style.color = 'var(--text-primary)';
+                }
+            } else {
+                if (floorDiv) floorDiv.style.display = 'none';
+                if (loopDiv) loopDiv.style.display = 'flex';
+                if (btnFloor) {
+                    btnFloor.style.background = 'none';
+                    btnFloor.style.color = 'var(--text-primary)';
+                }
+                if (btnLoop) {
+                    btnLoop.style.background = 'var(--primary-color)';
+                    btnLoop.style.color = 'var(--bg-dark)';
                 }
             }
         }
