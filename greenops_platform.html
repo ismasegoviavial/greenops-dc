@@ -1495,8 +1495,8 @@ def schedule_blackwell_workload(job_specs):
                                 const parser = new DOMParser();
                                 const xmlDoc = parser.parseFromString(text, "text/xml");
                                 
-                                // Parse equipment/racks
-                                const equipments = xmlDoc.getElementsByTagName("Equipment");
+                                // Parse equipment/racks namespace-agnostically
+                                const equipments = xmlDoc.getElementsByTagNameNS("*", "Equipment");
                                 const racks = [];
                                 
                                 for (let i = 0; i < equipments.length; i++) {
@@ -1504,19 +1504,19 @@ def schedule_blackwell_workload(job_specs):
                                     const rackId = eq.getAttribute('id') || ("Rack-" + i);
                                     
                                     // Parse power load
-                                    const powerEl = eq.getElementsByTagName('PowerLoad')[0];
+                                    const powerEl = eq.getElementsByTagNameNS("*", "PowerLoad")[0];
                                     const powerVal = powerEl ? powerEl.getAttribute('value') : "5.00";
                                     
                                     // Parse temp
-                                    const tempEl = eq.getElementsByTagName('Temperature')[0];
+                                    const tempEl = eq.getElementsByTagNameNS("*", "Temperature")[0];
                                     const tempVal = tempEl ? tempEl.textContent : "72°F";
                                     
                                     // Parse IP
-                                    const ipEl = eq.getElementsByTagName('PduIp')[0];
+                                    const ipEl = eq.getElementsByTagNameNS("*", "PduIp")[0];
                                     const ipVal = ipEl ? ipEl.textContent : "192.168.1.1";
                                     
                                     // Parse Status
-                                    const statusEl = eq.getElementsByTagName('Status')[0];
+                                    const statusEl = eq.getElementsByTagNameNS("*", "Status")[0];
                                     const statusVal = statusEl ? statusEl.textContent : "normal";
                                     
                                     racks.push({
@@ -1530,10 +1530,10 @@ def schedule_blackwell_workload(job_specs):
                                 
                                 // Parse Chillers
                                 const chillers = [];
-                                const chillerEls = xmlDoc.getElementsByTagName("Chiller");
+                                const chillerEls = xmlDoc.getElementsByTagNameNS("*", "Chiller");
                                 for (let i = 0; i < chillerEls.length; i++) {
-                                    const nameEl = chillerEls[i].getElementsByTagName('Name')[0];
-                                    const statusEl = chillerEls[i].getElementsByTagName('Status')[0];
+                                    const nameEl = chillerEls[i].getElementsByTagNameNS("*", "Name")[0];
+                                    const statusEl = chillerEls[i].getElementsByTagNameNS("*", "Status")[0];
                                     chillers.push({
                                         name: nameEl ? nameEl.textContent : "Chiller " + i,
                                         status: statusEl ? statusEl.textContent : "Running"
@@ -1542,10 +1542,10 @@ def schedule_blackwell_workload(job_specs):
                                 
                                 // Parse Pumps
                                 const pumps = [];
-                                const pumpEls = xmlDoc.getElementsByTagName("Pump");
+                                const pumpEls = xmlDoc.getElementsByTagNameNS("*", "Pump");
                                 for (let i = 0; i < pumpEls.length; i++) {
-                                    const nameEl = pumpEls[i].getElementsByTagName('Name')[0];
-                                    const statusEl = pumpEls[i].getElementsByTagName('Status')[0];
+                                    const nameEl = pumpEls[i].getElementsByTagNameNS("*", "Name")[0];
+                                    const statusEl = pumpEls[i].getElementsByTagNameNS("*", "Status")[0];
                                     pumps.push({
                                         name: nameEl ? nameEl.textContent : "Pump " + i,
                                         status: statusEl ? statusEl.textContent : "Running"
