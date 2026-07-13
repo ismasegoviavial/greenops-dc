@@ -31,10 +31,10 @@ El principal obst\'aculo f\'isico en esta expansi\'on es el denominado \textbf{M
 
 Este art\'iculo analiza de forma integral la viabilidad de la tecnolog\'ia de termosif\'on bif\'asico, desarrollada originalmente para racks de baja potencia en 2022, escalada a las demandas cr\'iticas de 100~kW de 2026. Se eval\'ua el comportamiento t\'ermico y el costo operativo (OPEX) en diversas latitudes para resolver si la descentralizaci\'on geogr\'afica hacia zonas de fr\'io extremo en el hemisferio sur constituye una alternativa competitiva frente a los centros tradicionales de Europa y Norteam\'erica.
 
-\section{Modelamiento Matem\'atico y Ecuaciones Gobernantes}
+\section{Modelamiento matem\'atico y ecuaciones gobernantes}
 La f\'isica de la disipaci\'on t\'ermica distingue dos mecanismos de absorci\'on de energ\'ia: el calor sensible y el calor latente.
 
-\subsection{Balance de Calor Sensible (Enfriamiento Monof\'asico por Aire)}
+\subsection{Balance de calor sensible (enfriamiento monof\'asico por aire)}
 En un sistema enfriado por aire, el calor sensible ($\dot{Q}$) disipado por el flujo se rige por:
 \begin{equation}
 \dot{Q} = \dot{m} \cdot C_p \cdot \Delta T
@@ -47,7 +47,7 @@ Para un rack de 100~kW ($\dot{Q} = 100.000\text{ W}$), despejando el caudal volu
 \end{equation}
 Este caudal volum\'etrico equivale a generar velocidades de viento huracanadas dentro del servidor, haciendo inviable el enfriamiento por aire.
 
-\subsection{Balance de Calor Latente (Ebullici\'on Bif\'asica)}
+\subsection{Balance de calor latente (ebullici\'on bif\'asica)}
 Al emplear el cambio de fase del fluido diel\'ectrico, el calor absorbido depende de la entalp\'ia de vaporizaci\'on ($h_{fg}$):
 \begin{equation}
 \dot{Q} = \dot{m} \cdot h_{fg}
@@ -58,7 +58,7 @@ Para un fluido diel\'ectrico t\'ipico como el 3M Novec 7100 ($h_{fg} \approx 112
 \end{equation}
 El cambio de fase permite una reducci\'on del caudal volum\'etrico requerido de aproximadamente \textbf{9.200 veces} frente al aire, eliminando la necesidad de bombeo mec\'anico activo o ventiladores de gran potencia.
 
-\subsection{M\'etodo \texorpdfstring{$\epsilon$}{epsilon}-NTU para Cambio de Fase}
+\subsection{M\'etodo \texorpdfstring{$\epsilon$}{epsilon}-NTU para cambio de fase}
 La efectividad del intercambiador de calor ($\epsilon$) en condiciones de cambio de fase se analiza mediante el m\'etodo $\epsilon$-NTU. Dado que la capacitancia t\'ermica efectiva del fluido en ebullici\'on/condensaci\'on tiende a infinito ($C_{max} \to \infty$), la relaci\'on de capacitancias se reduce a:
 \begin{equation}
 C_r = \frac{C_{min}}{C_{max}} \to 0
@@ -73,10 +73,10 @@ NTU = \frac{U \cdot A}{C_{min}}
 \end{equation}
 Siendo $U$ el coeficiente global de transferencia de calor ($\text{W}/(\text{m}^2\cdot\text{K})$), $A$ el \'area de transferencia ($\text{m}^2$) y $C_{min}$ la capacitancia t\'ermica del fluido monof\'asico externo.
 
-\section{Metodolog\'ia Experimental y Configuraci\'on de Simulaci\'on}
+\section{Metodolog\'ia experimental y configuraci\'on de la simulaci\'on}
 El modelo din\'amico eval\'ua el rendimiento t\'ermico y econ\'omico de un rack de 100~kW operando continuamente ($8.760\text{ horas/a\~no}$) durante el trienio 2023--2025 (26.280~horas).
 
-\subsection{L\'imites de Temperatura y Algoritmo de PUE}
+\subsection{L\'imites de temperatura y algoritmo de PUE}
 Se definieron tres l\'imites de temperatura cr\'itica ($T_{cr}$) para la transici\'on hacia el modo de enfriamiento pasivo (Free Cooling total):
 \begin{itemize}
     \item \textbf{RDHx Baseline:} $T_{cr} = 10,0^\circ\text{C}$ (requiere aire exterior muy fr\'io para mantener el bucle de agua secundaria).
@@ -102,12 +102,12 @@ Los coeficientes de PUE utilizados son:
     \item CRAC (L\'inea de control): $PUE_{base} = PUE_{fc} = 1,80$
 \end{itemize}
 
-\section{Resultados y Discusi\'on}
+\section{Resultados y discusi\'on}
 
-\subsection{Comportamiento T\'ermico Ambiental}
+\subsection{Comportamiento t\'ermico ambiental}
 El comportamiento horario de las temperaturas exteriores se proces\'o para evaluar la idoneidad clim\'atica. Isla Gordon (Chile) y Reykjavik (Islandia) presentaron condiciones consistentes de Free Cooling trienal total en configuraciones bif\'asicas.
 
-\subsection{Porcentaje de Horas de Free Cooling (FCP \%)}
+\subsection{Porcentaje de horas de free cooling (FCP \%)}
 La Tabla~\ref{tab:fcp} resume la efectividad clim\'atica (FCP \%) para una selecci\'on de localidades clave del estudio global de 39 puntos.
 
 \begin{table}[htbp]
@@ -128,7 +128,7 @@ Quebec, Canad\'a & 57,8\% & 72,2\% & 96,9\% & 100,0\% \\
 \end{tabular}
 \end{table}
 
-\subsection{An\'alisis Termoecon\'omico (OPEX a 3 A\~nos)}
+\subsection{An\'alisis termoecon\'omico (OPEX a 3 a\~nos)}
 El costo total de la energ\'ia el\'ectrica consumida por el rack de 100~kW (OPEX acumulado en USD nominales) se detalla en la Tabla~\ref{tab:opex}.
 
 \begin{table}[htbp]
@@ -149,7 +149,7 @@ Colchane & 0,1760 & 833.311 & 602.771 & 486.103 & 472.209 \\
 \end{tabular}
 \end{table}
 
-\subsection{Discusi\'on del Trade-off Clim\'atico-Tarifario}
+\subsection{Discusi\'on del trade-off clim\'atico-tarifario}
 Al evaluar la tasa de eficiencia econ\'omica ($\eta_{\text{economica}}$) de la transici\'on a D2C frente a un sistema CRAC:
 \begin{equation}
 \eta_{\text{economica}} = 1 - \frac{OPEX_{D2C}}{OPEX_{CRAC}}
@@ -158,7 +158,7 @@ En Isla Gordon (Chile), $\eta_{\text{economica}} = 1 - (486.098 / 833.311) \appr
 
 Sin embargo, en t\'erminos nominales brutos, la desventaja de la alta tarifa el\'ectrica de Chile (0,176~USD/kWh) desplaza la rentabilidad neta en favor de Islandia (USD 284.202 en D2C), destacando la necesidad de negociar contratos PPA verdes para reducir la tarifa industrial chilena a valores competitivos.
 
-\subsection{Aprendizaje Autom\'atico para Control Proactivo (BigQuery ML y Vertex AI)}
+\subsection{Aprendizaje autom\'atico para control proactivo (BigQuery ML y Vertex AI)}
 Para mitigar el riesgo de estrangulamiento t\'ermico ante picos meteorol\'ogicos imprevistos, se entrenaron 6 modelos de series de tiempo \texttt{ARIMA\_PLUS} en paralelo directamente en Google BigQuery ML, registr\'andose en el Vertex AI Model Registry.
 
 El modelo genera predicciones con un intervalo de confianza del 95\%. La Tabla~\ref{tab:forecast} muestra el pron\'ostico de temperaturas para el d\'ia 2026-06-21.

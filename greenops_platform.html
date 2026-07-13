@@ -899,23 +899,23 @@
         <div class="nav-menu">
             <div class="nav-item active" id="nav-overview" onclick="switchView('overview')">
                 <i class="fa-solid fa-chart-line"></i>
-                <span>Overview</span>
+                <span>Vista general</span>
             </div>
             <div class="nav-item" id="nav-saas" onclick="switchView('saas')">
                 <i class="fa-solid fa-earth-americas"></i>
-                <span>Feasibility Studio</span>
+                <span>Estudio de viabilidad</span>
             </div>
             <div class="nav-item" id="nav-twin" onclick="switchView('twin')">
                 <i class="fa-solid fa-server"></i>
-                <span>Digital Twin</span>
+                <span>Gemelo digital</span>
             </div>
             <div class="nav-item" id="nav-forecast" onclick="switchView('forecast')">
                 <i class="fa-solid fa-cloud-sun-rain"></i>
-                <span>Proactive Forecast</span>
+                <span>Pronóstico proactivo</span>
             </div>
             <div class="nav-item" id="nav-api" onclick="switchView('api')">
                 <i class="fa-solid fa-circle-nodes"></i>
-                <span>Autodiscovery & API</span>
+                <span>Autodescubrimiento y API</span>
             </div>
         </div>
 
@@ -935,7 +935,7 @@
                 <button class="hamburger-btn" id="sidebar-toggle-btn" onclick="toggleSidebar(event)">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <div class="header-title" id="view-title-text">Dashboard Overview</div>
+                <div class="header-title" id="view-title-text">Vista general del dashboard</div>
             </div>
             <div style="display: flex; align-items: center; gap: 20px;">
                 <button class="btn btn-outline" id="header-btn-tutorial" onclick="startTutorial()">
@@ -976,7 +976,7 @@
 
             <div class="grid-2-1">
                 <div class="glass-card">
-                    <h3 class="card-title" style="margin-bottom: 20px;">Monitoreo Global de Activos (Sedes Activas)</h3>
+                    <h3 class="card-title" style="margin-bottom: 20px;">Monitoreo global de activos (sedes activas)</h3>
                     <table>
                         <thead>
                             <tr>
@@ -1014,7 +1014,7 @@
                 </div>
 
                 <div class="glass-card">
-                    <h3 class="card-title" style="margin-bottom: 20px;">Alertas de Gestión de Activos</h3>
+                    <h3 class="card-title" style="margin-bottom: 20px;">Alertas de gestión de activos</h3>
                     <div class="telemetry-container" id="overview-alerts-container">
                         <div class="telemetry-row">
                             <span>Isla Gordon - D2C</span>
@@ -1038,30 +1038,30 @@
             <div class="grid-1-2">
                 <!-- Parámetros del simulador -->
                 <div class="glass-card" id="saas-parameters-card">
-                    <h3 class="card-title" style="margin-bottom: 20px;">Configuración de Viabilidad</h3>
+                    <h3 class="card-title" style="margin-bottom: 20px;">Configuración de viabilidad</h3>
                     
                     <div class="input-group">
-                        <label for="saas-location">Localidad del Proyecto (o clic en Globo 3D)</label>
+                        <label for="saas-location">Localidad del proyecto (o clic en globo 3D)</label>
                         <select id="saas-location" onchange="onSaaSLocationChange()"></select>
                     </div>
 
                     <div class="input-group">
-                        <label for="saas-system">Tecnología de Enfriamiento</label>
+                        <label for="saas-system">Tecnología de enfriamiento</label>
                         <select id="saas-system" onchange="runSaaSSimulation()"></select>
                     </div>
 
                     <div class="input-group">
-                        <label for="saas-racks">Cantidad de Racks</label>
+                        <label for="saas-racks">Cantidad de racks</label>
                         <input type="number" id="saas-racks" value="10" min="1" oninput="runSaaSSimulation()">
                     </div>
 
                     <div class="input-group">
-                        <label for="saas-density">Densidad por Rack (kW)</label>
+                        <label for="saas-density">Densidad por rack (kW)</label>
                         <input type="number" id="saas-density" value="100" min="5" max="150" oninput="runSaaSSimulation()">
                     </div>
 
                     <div class="input-group">
-                        <label for="saas-tariff">Tarifa Eléctrica (USD / kWh)</label>
+                        <label for="saas-tariff">Tarifa eléctrica (USD / kWh)</label>
                         <input type="number" id="saas-tariff" value="0.176" step="0.001" oninput="runSaaSSimulation()">
                     </div>
                     
@@ -1070,46 +1070,46 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="saas-lifetime">Vida Útil del Proyecto (Años)</label>
+                        <label for="saas-lifetime">Vida útil del proyecto (años)</label>
                         <input type="number" id="saas-lifetime" value="10" min="1" max="30" oninput="runSaaSSimulation()">
                     </div>
 
                     <!-- MÓDULO B: Parámetros de Hardware Avanzados (Retrofit) -->
                     <div class="collapsible-header" onclick="toggleCollapsible('saas-adv-config')">
-                        <span>Configuración de Hardware (Retrofit)</span>
+                        <span>Configuración de hardware (retrofit)</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                     <div class="collapsible-content" id="saas-adv-config">
                         <div class="input-group">
-                            <label for="saas-baseline-pue">PUE Baseline de Aire actual</label>
+                            <label for="saas-baseline-pue">PUE base de aire actual</label>
                             <input type="number" id="saas-baseline-pue" value="1.80" step="0.05" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-chiller-cop">COP del Chiller mecánico</label>
+                            <label for="saas-chiller-cop">COP del chiller mecánico</label>
                             <input type="number" id="saas-chiller-cop" value="3.5" step="0.1" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-fan-kw">Potencia Ventilador Dry Cooler (kW)</label>
+                            <label for="saas-fan-kw">Potencia de ventilador de dry cooler (kW)</label>
                             <input type="number" id="saas-fan-kw" value="15" step="1" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-pump-kw">Potencia Bomba de Agua (kW)</label>
+                            <label for="saas-pump-kw">Potencia de bomba de agua (kW)</label>
                             <input type="number" id="saas-pump-kw" value="5" step="0.5" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-water-price">Costo de Agua (USD / m³)</label>
+                            <label for="saas-water-price">Costo de agua (USD / m³)</label>
                             <input type="number" id="saas-water-price" value="1.50" step="0.10" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-occupancy">Tasa de Ocupación Promedio (%)</label>
+                            <label for="saas-occupancy">Tasa de ocupación promedio (%)</label>
                             <input type="number" id="saas-occupancy" value="80" min="10" max="100" step="5" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-capex">CAPEX Inversión Inicial (USD)</label>
+                            <label for="saas-capex">CAPEX de inversión inicial (USD)</label>
                             <input type="number" id="saas-capex" value="250000" step="10000" oninput="runSaaSSimulation()">
                         </div>
                         <div class="input-group">
-                            <label for="saas-opex-maint">Mantenimiento OPEX Anual (USD)</label>
+                            <label for="saas-opex-maint">Mantenimiento OPEX anual (USD)</label>
                             <input type="number" id="saas-opex-maint" value="15000" step="1000" oninput="runSaaSSimulation()">
                         </div>
                     </div>
@@ -1118,7 +1118,7 @@
                 <!-- Nodos Recomendados (Reemplazo del Globo 3D) -->
                 <div class="telemetry-container" style="display: flex; flex-direction: column; gap: 25px;">
                     <div class="glass-card" id="saas-nodes-card" style="padding: 20px;">
-                        <h3 class="card-title" style="font-size: 16px; margin-bottom: 15px;"><i class="fa-solid fa-map-location-dot"></i> Nodos de Enfriamiento Estratégicos (Tesis & SaaS)</h3>
+                        <h3 class="card-title" style="font-size: 16px; margin-bottom: 15px;"><i class="fa-solid fa-map-location-dot"></i> Nodos de enfriamiento estratégicos (tesis y SaaS)</h3>
                         <div class="nodes-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
                             <div class="node-card" onclick="selectStrategicNode('Isla Gordon, Chile')" id="node-gordon" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1198,7 +1198,7 @@
                     <!-- Gráficas de ROI y desglose económico -->
                     <div class="glass-card" id="saas-roi-card">
                         <div class="card-header-with-actions">
-                            <h3 class="card-title">Retorno de Inversión (ROI) y Carbono</h3>
+                            <h3 class="card-title">Retorno de inversión (ROI) y carbono</h3>
                         </div>
                         <div class="grid-2-1" style="margin-bottom: 0;">
                             <div class="telemetry-container">
@@ -1243,7 +1243,7 @@
                 <!-- Telemetría e Inputs en Tiempo Real -->
                 <div class="glass-card" id="twin-telemetry-card" style="display: flex; flex-direction: column; gap: 20px;">
                     <div class="card-header-with-actions" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <h3 class="card-title">Telemetría de Termosifón Direct-to-Chip</h3>
+                        <h3 class="card-title">Telemetría de termosifón Direct-to-Chip</h3>
                         <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                             <!-- Selector de Nodo Activo -->
                             <div style="display: flex; align-items: center; gap: 6px;">
@@ -1317,14 +1317,14 @@
                 <!-- Gráfico de Gemelo Digital e Logs -->
                 <div style="display: flex; flex-direction: column; gap: 25px;">
                     <div class="glass-card">
-                        <h3 class="card-title" style="margin-bottom: 15px;">Efectividad Térmica (Epsilon-NTU)</h3>
+                        <h3 class="card-title" style="margin-bottom: 15px;">Efectividad térmica (epsilon-NTU)</h3>
                         <div style="height: 180px; position: relative;">
                             <canvas id="twin-chart"></canvas>
                         </div>
                     </div>
 
                     <div class="glass-card" id="twin-logs-card" style="padding: 15px;">
-                        <h3 class="card-title" style="font-size: 15px; margin-bottom: 10px;"><i class="fa-solid fa-terminal"></i> Consola Operacional de Activos</h3>
+                        <h3 class="card-title" style="font-size: 15px; margin-bottom: 10px;"><i class="fa-solid fa-terminal"></i> Consola operacional de activos</h3>
                         <div class="log-console" id="twin-logs">
                             <div class="log-entry"><span class="log-timestamp">[10:00:00]</span> Gemelo digital iniciado. Fluidos dieléctricos cargados.</div>
                         </div>
@@ -1339,7 +1339,7 @@
                 <!-- Forecast Chart -->
                 <div class="glass-card" id="forecast-chart-card" style="display: flex; flex-direction: column; gap: 20px;">
                     <div class="card-header-with-actions">
-                        <h3 class="card-title">Previsión Meteorológica ARIMA_PLUS (24h)</h3>
+                        <h3 class="card-title">Previsión meteorológica ARIMA_PLUS (24h)</h3>
                         <div class="input-group" style="margin: 0; min-width: 200px;">
                             <select id="forecast-location" onchange="updateForecastView()"></select>
                         </div>
@@ -1351,7 +1351,7 @@
 
                 <!-- Planificación Proactiva -->
                 <div class="glass-card" style="display: flex; flex-direction: column; gap: 20px;">
-                    <h3 class="card-title">Plan de Enfriamiento Proactivo</h3>
+                    <h3 class="card-title">Plan de enfriamiento proactivo</h3>
                     
                     <div class="telemetry-container">
                         <div class="telemetry-row">
@@ -1386,7 +1386,7 @@
         <div class="view-content" id="view-api">
             <!-- AUTO-DISCOVERY HUB -->
             <div class="glass-card" style="margin-bottom: 25px;">
-                <h3 class="card-title" style="margin-bottom: 15px;"><i class="fa-solid fa-circle-nodes"></i> Módulo de Autoconfiguración y Descubrimiento</h3>
+                <h3 class="card-title" style="margin-bottom: 15px;"><i class="fa-solid fa-circle-nodes"></i> Módulo de autoconfiguración y descubrimiento</h3>
                 <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
                     En lugar de ingresar manualmente la topología de la sala y los bucles de enfriamiento, configure uno de los métodos de auto-descubrimiento para mapear de manera automática la infraestructura existente.
                 </p>
@@ -1476,7 +1476,7 @@
             </div>
 
             <div class="glass-card" style="margin-bottom: 25px;">
-                <h3 class="card-title" style="margin-bottom: 15px;">Documentación de API e Integraciones Activas</h3>
+                <h3 class="card-title" style="margin-bottom: 15px;">Documentación de API e integraciones activas</h3>
                 <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
                     La plataforma expone endpoints JSON listos para producción para integrar con software de reporte ESG (como <strong>ESGtrack AI</strong> o <strong>Salesforce Net Zero</strong>) y con sensores físicos locales.
                 </p>
@@ -1518,7 +1518,7 @@
 
             <!-- MÓDULO E: Orquestación Computacional de Cargas de Trabajo (Kubernetes) -->
             <div class="glass-card" style="margin-top: 25px;">
-                <h3 class="card-title" style="margin-bottom: 15px;"><i class="fa-solid fa-share-nodes"></i> Orquestador de Carga de Trabajo GreenOps (Concepto)</h3>
+                <h3 class="card-title" style="margin-bottom: 15px;"><i class="fa-solid fa-share-nodes"></i> Orquestador de carga de trabajo GreenOps (concepto)</h3>
                 <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
                     En producción, este conector se comunica directamente con el planificador de **Kubernetes (K8s Scheduler)** o **Slurm**. 
                     El agente inteligente intercepta las tareas de entrenamiento de IA de alta densidad, consulta el pronóstico ARIMA de Vertex AI, y migra físicamente los contenedores hacia el centro de datos que ofrezca el PUE más bajo o la energía verde más barata en ese momento.
@@ -1585,11 +1585,11 @@ def schedule_blackwell_workload(job_specs):
             document.getElementById('nav-' + tabId).classList.add('active');
             
             const titleMap = {
-                'overview': 'Dashboard Overview',
-                'saas': 'Feasibility Studio – SaaS Site Selector',
-                'twin': 'Digital Twin Telemetry – Asset Control',
-                'forecast': 'Proactive Forecast – Vertex AI & BigQuery ML',
-                'api': 'Auto-Discovery & API Integration Hub'
+                'overview': 'Vista general del dashboard',
+                'saas': 'Estudio de viabilidad – Selector de sitios SaaS',
+                'twin': 'Gemelo digital de telemetría – Control de activos',
+                'forecast': 'Pronóstico proactivo – Vertex AI y BigQuery ML',
+                'api': 'Centro de autodescubrimiento e integración de API'
             };
             document.getElementById('view-title-text').innerText = titleMap[tabId];
             
