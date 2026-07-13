@@ -735,7 +735,133 @@
             box-shadow: 0 0 25px rgba(0, 230, 118, 0.6) !important;
             border-color: var(--accent-green) !important;
             z-index: 1001 !important;
-            position: relative !important;
+        }
+
+        /* ---------------------------------------------------- */
+        /* RESPONSIVE DESIGN & MEDIA QUERIES                    */
+        /* ---------------------------------------------------- */
+        
+        .hamburger-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            margin-right: 15px;
+            z-index: 1010;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --sidebar-width: 260px;
+            }
+
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -260px;
+                height: 100%;
+                width: 260px;
+                z-index: 1005;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+                background: rgba(14, 17, 28, 0.98);
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .sidebar-backdrop.active {
+                display: block;
+            }
+
+            .hamburger-btn {
+                display: block;
+            }
+
+            .header-bar {
+                padding: 0 20px;
+            }
+
+            .view-content {
+                padding: 20px;
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-2-1, .grid-1-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-bar {
+                height: 70px;
+            }
+
+            .header-title {
+                font-size: 18px;
+            }
+
+            .status-badge {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+
+            #header-btn-tutorial {
+                display: none; /* Hide tutorial button on mobile to save space */
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-value {
+                font-size: 22px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            /* Scrollable wrappers for tables and diagrams to prevent layout breaks */
+            .table-responsive, .diagram-responsive {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Adjust strategic nodes grid inside Feasibility Studio */
+            .nodes-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Custom styling for bim views inside twin tab */
+            #bim-subview-floor, #bim-subview-loop {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
         }
     </style>
 </head>
@@ -759,6 +885,9 @@
             </div>
         </div>
     </div>
+
+    <!-- SIDEBAR BACKDROP -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebar()"></div>
 
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar-container">
@@ -801,9 +930,13 @@
         <div class="glow-1"></div>
         <div class="glow-2"></div>
 
-        <!-- HEADER -->
         <div class="header-bar">
-            <div class="header-title" id="view-title-text">Dashboard Overview</div>
+            <div style="display: flex; align-items: center;">
+                <button class="hamburger-btn" id="sidebar-toggle-btn" onclick="toggleSidebar(event)">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-title" id="view-title-text">Dashboard Overview</div>
+            </div>
             <div style="display: flex; align-items: center; gap: 20px;">
                 <button class="btn btn-outline" id="header-btn-tutorial" onclick="startTutorial()">
                     <i class="fa-solid fa-graduation-cap"></i> Tutorial
@@ -1407,6 +1540,26 @@ def schedule_blackwell_workload(job_specs):
 
     <!-- LOGICA DEL CLIENTE (JAVASCRIPT) -->
     <script>
+        // Sidebar mobile drawer toggling
+        function toggleSidebar(e) {
+            if (e) e.stopPropagation();
+            const sidebar = document.getElementById('sidebar-container');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if (sidebar && backdrop) {
+                sidebar.classList.toggle('open');
+                backdrop.classList.toggle('active');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar-container');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if (sidebar && backdrop && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                backdrop.classList.remove('active');
+            }
+        }
+
         // Collapsible section logic
         function toggleCollapsible(id) {
             const content = document.getElementById(id);
@@ -1421,6 +1574,7 @@ def schedule_blackwell_workload(job_specs):
 
         // Tab switching logic
         function switchView(tabId) {
+            closeSidebar();
             document.querySelectorAll('.view-content').forEach(view => {
                 view.classList.remove('active');
             });
