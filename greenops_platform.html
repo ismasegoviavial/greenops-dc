@@ -3645,6 +3645,7 @@ def schedule_blackwell_workload(job_specs):
 
         let globeGroup = null;
         let globeMarkers = [];
+        let cloudMesh = null;
         
         function init3DGlobe() {
             const container = document.getElementById('globe-canvas-container');
@@ -3662,12 +3663,13 @@ def schedule_blackwell_workload(job_specs):
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
             
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            // Realistic Earth Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
             scene.add(ambientLight);
             
-            const dirLight = new THREE.DirectionalLight(0x00e5ff, 0.8);
-            dirLight.position.set(5, 3, 5);
-            scene.add(dirLight);
+            const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            sunLight.position.set(5, 3, 5);
+            scene.add(sunLight);
             
             globeGroup = new THREE.Group();
             scene.add(globeGroup);
@@ -3675,19 +3677,52 @@ def schedule_blackwell_workload(job_specs):
             const earthRadius = 1.4;
             const earthGeom = new THREE.SphereGeometry(earthRadius, 32, 32);
             
-            const earthMat = new THREE.MeshBasicMaterial({
-                color: 0x050c1e,
-                transparent: true,
-                opacity: 0.85
-            });
-            const earthCore = new THREE.Mesh(earthGeom, earthMat);
-            globeGroup.add(earthCore);
+            // Texture Loader with CORS support
+            const loader = new THREE.TextureLoader();
+            loader.crossOrigin = 'anonymous';
             
+            // Load Earth Atmosphere Texture
+            const earthTexture = loader.load(
+                'https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/textures/planets/earth_atmos_2048.jpg',
+                () => { renderer.render(scene, camera); },
+                undefined,
+                (err) => { console.warn("Failed to load Earth texture", err); }
+            );
+
+            // Specular Map (shines on water)
+            const specularMap = loader.load(
+                'https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/textures/planets/earth_specular_2048.jpg'
+            );
+            
+            const earthMat = new THREE.MeshPhongMaterial({
+                map: earthTexture,
+                specularMap: specularMap,
+                specular: new THREE.Color(0x222222),
+                shininess: 25
+            });
+            const earthMesh = new THREE.Mesh(earthGeom, earthMat);
+            globeGroup.add(earthMesh);
+            
+            // Clouds Layer Mesh (slightly larger)
+            const cloudGeom = new THREE.SphereGeometry(earthRadius + 0.018, 32, 32);
+            const cloudTexture = loader.load(
+                'https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/textures/planets/earth_clouds_1024.png'
+            );
+            const cloudMat = new THREE.MeshPhongMaterial({
+                map: cloudTexture,
+                transparent: true,
+                opacity: 0.35,
+                blending: THREE.NormalBlending
+            });
+            cloudMesh = new THREE.Mesh(cloudGeom, cloudMat);
+            globeGroup.add(cloudMesh);
+            
+            // Glowing cybertech grid overlay
             const wireMat = new THREE.MeshBasicMaterial({
                 color: 0x00e5ff,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.25
+                opacity: 0.08
             });
             const earthWire = new THREE.Mesh(earthGeom, wireMat);
             globeGroup.add(earthWire);
@@ -3715,22 +3750,22 @@ def schedule_blackwell_workload(job_specs):
             strategicNodes.forEach(node => {
                 const pos = latLngToVector3(node.lat, node.lng, earthRadius + 0.02);
                 
-                const markerGeom = new THREE.SphereGeometry(0.05, 12, 12);
+                const markerGeom = new THREE.SphereGeometry(0.06, 12, 12);
                 const markerMat = new THREE.MeshBasicMaterial({
                     color: node.color,
                     transparent: true,
-                    opacity: 0.9
+                    opacity: 0.95
                 });
                 const marker = new THREE.Mesh(markerGeom, markerMat);
                 marker.position.copy(pos);
                 marker.userData = { locationName: node.name };
                 
-                const ringGeom = new THREE.RingGeometry(0.07, 0.09, 16);
+                const ringGeom = new THREE.RingGeometry(0.08, 0.10, 16);
                 const ringMat = new THREE.MeshBasicMaterial({
                     color: node.color,
                     side: THREE.DoubleSide,
                     transparent: true,
-                    opacity: 0.5
+                    opacity: 0.6
                 });
                 const ring = new THREE.Mesh(ringGeom, ringMat);
                 ring.position.copy(pos);
@@ -3821,7 +3856,10 @@ def schedule_blackwell_workload(job_specs):
             function animate() {
                 requestAnimationFrame(animate);
                 if (!isDragging) {
-                    globeGroup.rotation.y += 0.002;
+                    globeGroup.rotation.y += 0.0015;
+                }
+                if (cloudMesh) {
+                    cloudMesh.rotation.y += 0.0003;
                 }
                 renderer.render(scene, camera);
             }
