@@ -1048,11 +1048,11 @@
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
                             <div class="input-group" style="margin-bottom: 0;">
                                 <label for="saas-custom-lat">Latitud</label>
-                                <input type="number" id="saas-custom-lat" value="-33.4489" step="0.0001">
+                                <input type="number" id="saas-custom-lat" value="-33.4489" step="0.0001" oninput="updateGlobeFocus('custom_coords')">
                             </div>
                             <div class="input-group" style="margin-bottom: 0;">
                                 <label for="saas-custom-lng">Longitud</label>
-                                <input type="number" id="saas-custom-lng" value="-70.6693" step="0.0001">
+                                <input type="number" id="saas-custom-lng" value="-70.6693" step="0.0001" oninput="updateGlobeFocus('custom_coords')">
                             </div>
                         </div>
                         <button class="btn btn-outline" id="saas-custom-btn" onclick="consultCustomClimate()" style="width: 100%; justify-content: center; padding: 10px;">
@@ -3636,9 +3636,9 @@ def schedule_blackwell_workload(job_specs):
             
             if (globeGroup) {
                 const phi = (90 - lat) * (Math.PI / 180);
-                const theta = (lng + 180) * (Math.PI / 180);
+                const theta = lng * (Math.PI / 180);
                 
-                const x = -(Math.sin(phi) * Math.sin(theta));
+                const x = Math.sin(phi) * Math.sin(theta);
                 const y = Math.cos(phi);
                 const z = Math.sin(phi) * Math.cos(theta);
                 
@@ -3712,6 +3712,7 @@ def schedule_blackwell_workload(job_specs):
                 shininess: 25
             });
             const earthMesh = new THREE.Mesh(earthGeom, earthMat);
+            earthMesh.rotation.y = Math.PI; // Match coordinate system
             globeGroup.add(earthMesh);
             
             // Clouds Layer Mesh (slightly larger)
@@ -3726,6 +3727,7 @@ def schedule_blackwell_workload(job_specs):
                 blending: THREE.NormalBlending
             });
             cloudMesh = new THREE.Mesh(cloudGeom, cloudMat);
+            cloudMesh.rotation.y = Math.PI; // Match coordinate system
             globeGroup.add(cloudMesh);
             
             // Glowing cybertech grid overlay
@@ -3736,6 +3738,7 @@ def schedule_blackwell_workload(job_specs):
                 opacity: 0.08
             });
             const earthWire = new THREE.Mesh(earthGeom, wireMat);
+            earthWire.rotation.y = Math.PI; // Match coordinate system
             globeGroup.add(earthWire);
             
             const strategicNodes = [
@@ -3749,9 +3752,9 @@ def schedule_blackwell_workload(job_specs):
             
             function latLngToVector3(lat, lng, radius) {
                 const phi = (90 - lat) * (Math.PI / 180);
-                const theta = (lng + 180) * (Math.PI / 180);
+                const theta = lng * (Math.PI / 180);
                 
-                const x = -(radius * Math.sin(phi) * Math.sin(theta));
+                const x = radius * Math.sin(phi) * Math.sin(theta);
                 const y = radius * Math.cos(phi);
                 const z = radius * Math.sin(phi) * Math.cos(theta);
                 
