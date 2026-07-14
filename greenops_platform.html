@@ -3609,6 +3609,16 @@ def schedule_blackwell_workload(job_specs):
                 lng = NODE_COORDINATES[locName].lng;
                 climate = NODE_COORDINATES[locName].climate;
                 bullets = NODE_COORDINATES[locName].bullets;
+            } else if (GLOBAL_COOLING_DATA[locName] && GLOBAL_COOLING_DATA[locName].lat !== undefined) {
+                const dbLoc = GLOBAL_COOLING_DATA[locName];
+                lat = dbLoc.lat;
+                lng = dbLoc.lng;
+                climate = dbLoc.region || "Precalculado";
+                bullets = [
+                    `Coordenadas: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`,
+                    `Base de datos: Copernicus ERA5`,
+                    `Estabilidad y viabilidad termodinámica precalculada`
+                ];
             } else if (locName && locName.startsWith("Coordenadas [Lat:")) {
                 const match = locName.match(/Lat:\s*([-\d.]+),\s*Lng:\s*([-\d.]+)/);
                 if (match) {
