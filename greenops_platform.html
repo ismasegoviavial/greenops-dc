@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js for High-Performance Visuals -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Three.js for 3D Interactive WebGL Globe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --bg-color: #0b0c10;
@@ -943,7 +945,7 @@
                 </button>
                 <div class="status-badge" id="platform-status">
                     <div class="status-dot"></div>
-                    <span>Live Telemetry</span>
+                    <span>Telemetría en vivo</span>
                 </div>
             </div>
         </div>
@@ -1134,6 +1136,15 @@
 
                 <!-- Nodos Recomendados (Reemplazo del Globo 3D) -->
                 <div class="telemetry-container" style="display: flex; flex-direction: column; gap: 25px;">
+                    <!-- GLOBO 3D WEBGL INTERACTIVO -->
+                    <div class="glass-card globe-wrapper" style="position: relative; height: 320px; overflow: hidden; display: flex; justify-content: center; align-items: center; padding: 0; background: rgba(0,0,0,0.3); border-color: var(--panel-border);">
+                        <div id="globe-canvas-container" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; cursor: grab;"></div>
+                        <div class="globe-overlay-info" style="position: absolute; bottom: 15px; left: 15px; background: rgba(11,12,16,0.85); border: 1px solid var(--panel-border); border-radius: 6px; padding: 8px 12px; font-size: 11px; pointer-events: none; backdrop-filter: blur(5px); z-index: 10;">
+                            <i class="fa-solid fa-earth-americas" style="color: var(--accent-cyan); margin-right: 5px;"></i>
+                            <span>Globo 3D GreenOps - Haz clic en un marcador para simular</span>
+                        </div>
+                    </div>
+
                     <div class="glass-card" id="saas-nodes-card" style="padding: 20px;">
                         <h3 class="card-title" style="font-size: 16px; margin-bottom: 15px;"><i class="fa-solid fa-map-location-dot"></i> Nodos de enfriamiento estratégicos (tesis y SaaS)</h3>
                         <div class="nodes-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
@@ -1350,11 +1361,16 @@
                     </div>
 
                     <!-- Orquestación GreenOps activa -->
-                    <div style="margin-top: 10px; border-top: 1px solid var(--panel-border); padding-top: 15px;">
+                    <div style="margin-top: 15px; border-top: 1px solid var(--panel-border); padding-top: 15px;">
                         <h4 style="margin: 0 0 12px 0; font-family: 'Outfit'; font-size: 15px;">GreenOps Active Control (Orquestación Computacional)</h4>
-                        <button class="btn" id="btn-migrate" onclick="triggerWorkloadMigration()">
-                            <i class="fa-solid fa-share-nodes"></i> Migrar Cargas a Gordon Island (FC)
-                        </button>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <button class="btn btn-outline" id="btn-migrate-global" onclick="triggerGlobalMigration()" style="padding: 10px; font-size: 12px; justify-content: center; cursor: pointer;">
+                                <i class="fa-solid fa-earth-americas"></i> Migración Inter-DC
+                            </button>
+                            <button class="btn" id="btn-migrate-local" onclick="triggerIntraDCMigration()" style="padding: 10px; font-size: 12px; justify-content: center; cursor: pointer; background: rgba(0, 230, 118, 0.1); border-color: var(--accent-green); color: var(--accent-green);">
+                                <i class="fa-solid fa-circle-nodes"></i> Balanceo Intra-DC (Racks)
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -2994,33 +3010,40 @@ def schedule_blackwell_workload(job_specs):
             document.getElementById('saas-res-fch').innerText = fcp.toFixed(1) + "%";
 
             // Determine PUE limits dynamically using hardware params
-            let capex_per_rack = 25000;
+            let base_cost_per_rack = 5000;
+            let cost_per_kw = 200;
             let pue_fc = 1.05;
             let pue_base = 1.20;
 
             if (sysName.includes("Inmersion") || sysName.includes("Inmersión")) {
-                capex_per_rack = 40000;
+                base_cost_per_rack = 8000;
+                cost_per_kw = 320;
                 // Immersion uses less fan power
                 pue_fc = 1.01 + (pump_kw / (density * numRacks));
                 pue_base = pue_fc + (1 / chiller_cop);
             } else if (sysName.includes("RDHx")) {
-                capex_per_rack = 15000;
+                base_cost_per_rack = 3000;
+                cost_per_kw = 120;
                 pue_fc = 1.08 + ((fan_kw + pump_kw) / (density * numRacks));
                 pue_base = pue_fc + (1.2 / chiller_cop);
             } else if (sysName.includes("CRAC")) {
-                capex_per_rack = 5000;
+                base_cost_per_rack = 1000;
+                cost_per_kw = 40;
                 pue_fc = baseline_pue;
                 pue_base = baseline_pue;
             } else { // Termosifon / D2C
-                capex_per_rack = 25000;
+                base_cost_per_rack = 5000;
+                cost_per_kw = 200;
                 pue_fc = 1.02 + ((fan_kw * 0.5 + pump_kw) / (density * numRacks));
                 pue_base = pue_fc + (1.1 / chiller_cop);
             }
 
+            const calculated_capex = numRacks * (base_cost_per_rack + cost_per_kw * density);
+
             // Auto-update CAPEX input field if not focused to provide sensible default
             const capexInput = document.getElementById('saas-capex');
             if (capexInput && document.activeElement !== capexInput) {
-                capexInput.value = capex_per_rack * numRacks;
+                capexInput.value = calculated_capex;
             }
 
             const avg_pue = (fcp / 100) * pue_fc + (1 - fcp / 100) * ((pue_fc + pue_base) / 2);
@@ -3040,7 +3063,7 @@ def schedule_blackwell_workload(job_specs):
             // Net savings = energy bill reduction - annual maintenance cost
             const net_annual_savings = annual_opex_savings - opex_maint;
             
-            const total_capex = parseFloat(document.getElementById('saas-capex').value) || (capex_per_rack * numRacks);
+            const total_capex = parseFloat(document.getElementById('saas-capex').value) || calculated_capex;
 
             const payback = net_annual_savings > 0 ? (total_capex / net_annual_savings) : Infinity;
             document.getElementById('saas-res-payback').innerText = payback === Infinity ? "N/A" : payback.toFixed(1) + " Años";
@@ -3346,13 +3369,30 @@ def schedule_blackwell_workload(job_specs):
             container.scrollTop = container.scrollHeight;
         }
 
-        function triggerWorkloadMigration() {
-            pushLog("INICIANDO GREENOPS ACTIVE CONTROL: Migrando 35% de la carga IT de aceleradores a Gordon Island...", "warning");
+        function triggerGlobalMigration() {
+            const locName = document.getElementById('twin-location-select').value;
+            pushLog(`[GreenOps Inter-DC] Iniciando migración de carga: Desplazando 35% de cargas por lotes desde ${locName} hacia Nodo Patagonia (Gordon Island)...`, "warning");
             document.getElementById('twin-control-load').value = 65;
             updateTwinSimulation();
             setTimeout(() => {
-                pushLog("GREENOPS COMPLETA: Cargas reasignadas correctamente. Temperatura de los chips regulada a niveles óptimos.", "info");
-            }, 1500);
+                pushLog(`[GreenOps Inter-DC] Migración global completada con éxito. Carga IT del sitio reducida a 65 kW. PUE y temperaturas de junta regulados.`, "success");
+            }, 2000);
+        }
+
+        function triggerIntraDCMigration() {
+            pushLog("[GreenOps Intra-DC] Iniciando escaneo de telemetría de racks en la sala blanca...", "info");
+            
+            setTimeout(() => {
+                pushLog("[GreenOps Intra-DC] ¡Alerta! Punto caliente detectado en Rack 04 (Tj = 74.8°C debido a inercia térmica en fila central).", "warning");
+            }, 1000);
+
+            setTimeout(() => {
+                pushLog("[GreenOps Intra-DC] Migrando proactivamente 4 contenedores de GPU del Rack 04 al Rack 08 y Rack 09 (CDU secundaria libre)...", "info");
+            }, 2500);
+
+            setTimeout(() => {
+                pushLog("[GreenOps Intra-DC] Balanceo de carga térmica finalizado. Desviación de temperatura entre racks reducida a +/- 1.2°C. Tj promedio de racks estabilizada en 54.2°C.", "success");
+            }, 4000);
         }
 
 
@@ -3607,6 +3647,205 @@ def schedule_blackwell_workload(job_specs):
         }
 
 
+        let globeGroup = null;
+        let globeMarkers = [];
+        
+        function init3DGlobe() {
+            const container = document.getElementById('globe-canvas-container');
+            if (!container) return;
+            
+            const width = container.clientWidth || 300;
+            const height = container.clientHeight || 320;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.z = 4.2;
+            
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+            
+            const dirLight = new THREE.DirectionalLight(0x00e5ff, 0.8);
+            dirLight.position.set(5, 3, 5);
+            scene.add(dirLight);
+            
+            globeGroup = new THREE.Group();
+            scene.add(globeGroup);
+            
+            const earthRadius = 1.4;
+            const earthGeom = new THREE.SphereGeometry(earthRadius, 32, 32);
+            
+            const earthMat = new THREE.MeshBasicMaterial({
+                color: 0x050c1e,
+                transparent: true,
+                opacity: 0.85
+            });
+            const earthCore = new THREE.Mesh(earthGeom, earthMat);
+            globeGroup.add(earthCore);
+            
+            const wireMat = new THREE.MeshBasicMaterial({
+                color: 0x00e5ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.25
+            });
+            const earthWire = new THREE.Mesh(earthGeom, wireMat);
+            globeGroup.add(earthWire);
+            
+            const strategicNodes = [
+                { name: "Isla Gordon, Chile", lat: -54.85, lng: -69.49, color: 0x00e5ff },
+                { name: "Colchane, Chile", lat: -19.27, lng: -68.63, color: 0xff9100 },
+                { name: "Reykjavik, Islandia", lat: 64.14, lng: -21.94, color: 0x00e5ff },
+                { name: "Helsinki, Finlandia", lat: 60.17, lng: 24.93, color: 0x00e676 },
+                { name: "Lulea, Suecia", lat: 65.58, lng: 22.15, color: 0x00e676 },
+                { name: "Quebec, Canada", lat: 46.81, lng: -71.20, color: 0xff9100 }
+            ];
+            
+            function latLngToVector3(lat, lng, radius) {
+                const phi = (90 - lat) * (Math.PI / 180);
+                const theta = (lng + 180) * (Math.PI / 180);
+                
+                const x = -(radius * Math.sin(phi) * Math.sin(theta));
+                const y = radius * Math.cos(phi);
+                const z = radius * Math.sin(phi) * Math.cos(theta);
+                
+                return new THREE.Vector3(x, y, z);
+            }
+            
+            strategicNodes.forEach(node => {
+                const pos = latLngToVector3(node.lat, node.lng, earthRadius + 0.02);
+                
+                const markerGeom = new THREE.SphereGeometry(0.05, 12, 12);
+                const markerMat = new THREE.MeshBasicMaterial({
+                    color: node.color,
+                    transparent: true,
+                    opacity: 0.9
+                });
+                const marker = new THREE.Mesh(markerGeom, markerMat);
+                marker.position.copy(pos);
+                marker.userData = { locationName: node.name };
+                
+                const ringGeom = new THREE.RingGeometry(0.07, 0.09, 16);
+                const ringMat = new THREE.MeshBasicMaterial({
+                    color: node.color,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                const ring = new THREE.Mesh(ringGeom, ringMat);
+                ring.position.copy(pos);
+                ring.lookAt(new THREE.Vector3(0,0,0));
+                
+                globeGroup.add(marker);
+                globeGroup.add(ring);
+                globeMarkers.push(marker);
+            });
+            
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            
+            container.addEventListener('pointerdown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            
+            container.addEventListener('pointermove', (e) => {
+                const deltaMove = {
+                    x: e.clientX - previousMousePosition.x,
+                    y: e.clientY - previousMousePosition.y
+                };
+                
+                if (isDragging) {
+                    const deltaRotationQuaternion = new THREE.Quaternion()
+                        .setFromEuler(new THREE.Euler(
+                            (deltaMove.y * Math.PI / 180) * 0.3,
+                            (deltaMove.x * Math.PI / 180) * 0.3,
+                            0,
+                            'XYZ'
+                        ));
+                    globeGroup.quaternion.multiplyQuaternions(deltaRotationQuaternion, globeGroup.quaternion);
+                }
+                
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+                
+                const rect = renderer.domElement.getBoundingClientRect();
+                const mouse = new THREE.Vector2(
+                    ((e.clientX - rect.left) / rect.width) * 2 - 1,
+                    -((e.clientY - rect.top) / rect.height) * 2 + 1
+                );
+                
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(globeMarkers);
+                
+                if (intersects.length > 0) {
+                    container.style.cursor = 'pointer';
+                } else {
+                    container.style.cursor = isDragging ? 'grabbing' : 'grab';
+                }
+            });
+            
+            window.addEventListener('pointerup', () => {
+                isDragging = false;
+                if (container) container.style.cursor = 'grab';
+            });
+            
+            container.addEventListener('click', (e) => {
+                const rect = renderer.domElement.getBoundingClientRect();
+                const mouse = new THREE.Vector2(
+                    ((e.clientX - rect.left) / rect.width) * 2 - 1,
+                    -((e.clientY - rect.top) / rect.height) * 2 + 1
+                );
+                
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(globeMarkers);
+                
+                if (intersects.length > 0) {
+                    const selectedName = intersects[0].object.userData.locationName;
+                    selectStrategicNode(selectedName);
+                }
+            });
+            
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    const w = entry.contentRect.width || 300;
+                    const h = entry.contentRect.height || 320;
+                    renderer.setSize(w, h);
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                }
+            });
+            resizeObserver.observe(container);
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                if (!isDragging) {
+                    globeGroup.rotation.y += 0.002;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        
+        function selectStrategicNode(nodeName) {
+            const locSelect = document.getElementById('saas-location');
+            if (locSelect) {
+                for (let i = 0; i < locSelect.options.length; i++) {
+                    if (locSelect.options[i].value === nodeName) {
+                        locSelect.selectedIndex = i;
+                        onSaaSLocationChange();
+                        pushLog(`Nodo estratégico seleccionado en el globo 3D: ${nodeName}`, "info");
+                        break;
+                    }
+                }
+            }
+        }
+
         // On Window Load
         window.addEventListener('DOMContentLoaded', () => {
             if (typeof GLOBAL_COOLING_DATA === 'undefined') {
@@ -3617,6 +3856,9 @@ def schedule_blackwell_workload(job_specs):
             // Populate forms
             populateSaaSLocations();
             populateForecastLocations();
+
+            // Initialize 3D WebGL Globe
+            init3DGlobe();
 
             // Set PUE Avg in Overview
             calculateOverviewAverages();
