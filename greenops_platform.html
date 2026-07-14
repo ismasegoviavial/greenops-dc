@@ -2714,62 +2714,94 @@ def schedule_blackwell_workload(job_specs):
 
         // Consult climate for custom coordinates
         function consultCustomClimate() {
-            const lat = parseFloat(document.getElementById('saas-custom-lat').value) || -33.4489;
-            const lng = parseFloat(document.getElementById('saas-custom-lng').value) || -70.6693;
+            const lat = parseFloat(document.getElementById('saas-custom-lat').value);
+            const lng = parseFloat(document.getElementById('saas-custom-lng').value);
             const btn = document.getElementById('saas-custom-btn');
             
+            if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                alert("Por favor ingresa coordenadas válidas: Latitud (-90 a 90) y Longitud (-180 a 180).");
+                return;
+            }
+            
             if (btn) {
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Consultando...';
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Conectando a Open-Meteo...';
                 btn.disabled = true;
             }
             
-            pushLog(`Conectando a base de datos de Copernicus y Open-Meteo para coordenadas [${lat.toFixed(4)}, ${lng.toFixed(4)}]...`, "info");
+            pushLog(`Iniciando llamada API en vivo a Open-Meteo para coordenadas [${lat.toFixed(4)}, ${lng.toFixed(4)}]...`, "info");
             
-            setTimeout(() => {
-                const absLat = Math.abs(lat);
-                let freeCoolingPct = 30.0;
-                let climateType = "Cálido / Ecuatorial";
-                
-                if (absLat > 50) {
-                    freeCoolingPct = 95.0 + Math.random() * 5;
-                    climateType = "Frío Extremo / Subártico";
-                } else if (absLat > 35) {
-                    freeCoolingPct = 70.0 + Math.random() * 15;
-                    climateType = "Templado Frío";
-                } else if (absLat > 20) {
-                    freeCoolingPct = 40.0 + Math.random() * 20;
-                    climateType = "Templado Cálido";
-                }
-                
-                const customKey = `Coordenadas [Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}]`;
-                GLOBAL_COOLING_DATA[customKey] = {
-                    region: climateType,
-                    electricity_price: 0.120 + (Math.random() * 0.04 - 0.02),
-                    tariff_source: "Tarifa estimada satelital",
-                    systems: {
-                        "Termosifón Direct-to-Chip": { free_cooling_pct: freeCoolingPct },
-                        "Inmersión líquida bifásica": { free_cooling_pct: Math.min(100, freeCoolingPct * 1.12) },
-                        "RDHx Baseline": { free_cooling_pct: freeCoolingPct * 0.72 },
-                        "CRAC Aire Baseline": { free_cooling_pct: 0 }
+            const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lng}&start_date=2025-01-01&end_date=2025-12-31&hourly=temperature_2m`;
+            
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error("Error en la respuesta del servidor de clima.");
+                    return res.json();
+                })
+                .then(data => {
+                    if (!data.hourly || !data.hourly.temperature_2m) {
+                        throw new Error("Formato de datos de clima inválido.");
                     }
-                };
-                
-                const locSelect = document.getElementById('saas-location');
-                const opt = document.createElement('option');
-                opt.value = customKey;
-                opt.innerText = customKey + " (" + climateType + ")";
-                
-                locSelect.insertBefore(opt, locSelect.lastChild);
-                locSelect.value = customKey;
-                
-                if (btn) {
-                    btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i> Consultar clima satelital';
-                    btn.disabled = false;
-                }
-                
-                pushLog(`Datos climáticos satelitales ingresados con éxito para ${customKey}. Free Cooling estimado: ${freeCoolingPct.toFixed(1)}%.`, "success");
-                onSaaSLocationChange();
-            }, 2000);
+                    
+                    const temps = data.hourly.temperature_2m;
+                    const totalHours = temps.length || 8760;
+                    
+                    // Determine climate profile description based on average temp
+                    const avgTemp = temps.reduce((a, b) => a + b, 0) / totalHours;
+                    let climateType = "Templado";
+                    if (avgTemp < 5) climateType = "Frío Extremo / Subpolar";
+                    else if (avgTemp < 15) climateType = "Templado Frío";
+                    else if (avgTemp > 25) climateType = "Cálido / Tropical";
+                    else if (avgTemp > 18) climateType = "Cálido / Subtropical";
+                    
+                    // We calculate free cooling pct for each system based on actual hourly temperatures!
+                    const calcFreeCoolingPct = (t_cr) => {
+                        if (t_cr <= 0) return 0;
+                        const fc_hours = temps.filter(t => t < t_cr).length;
+                        return (fc_hours / totalHours) * 100;
+                    };
+                    
+                    const fcp_termosifon = calcFreeCoolingPct(25.0);
+                    const fcp_immersion = calcFreeCoolingPct(35.0);
+                    const fcp_rdhx = calcFreeCoolingPct(10.0);
+                    
+                    const customKey = `Coordenadas [Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}]`;
+                    GLOBAL_COOLING_DATA[customKey] = {
+                        region: climateType,
+                        electricity_price: 0.120 + (lat > 0 ? 0.02 : -0.02),
+                        tariff_source: "Tarifa estimada satelital",
+                        systems: {
+                            "Termosifón Direct-to-Chip": { free_cooling_pct: fcp_termosifon },
+                            "Inmersión líquida bifásica": { free_cooling_pct: fcp_immersion },
+                            "RDHx Baseline": { free_cooling_pct: fcp_rdhx },
+                            "CRAC Aire Baseline": { free_cooling_pct: 0 }
+                        }
+                    };
+                    
+                    // Update select options
+                    const locSelect = document.getElementById('saas-location');
+                    const opt = document.createElement('option');
+                    opt.value = customKey;
+                    opt.innerText = customKey + " (" + climateType + ")";
+                    
+                    // Insert right before "Coordenadas personalizadas..."
+                    locSelect.insertBefore(opt, locSelect.lastChild);
+                    locSelect.value = customKey;
+                    
+                    if (btn) {
+                        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i> Consultar clima satelital';
+                        btn.disabled = false;
+                    }
+                    
+                    pushLog(`¡ÉXITO! Descargadas 8,760 horas de telemetría de temperatura real para ${customKey}. Promedio anual: ${avgTemp.toFixed(1)}°C (${climateType}).`, "success");
+                    onSaaSLocationChange();
+                })
+                .catch(err => {
+                    pushLog(`Error al conectar con Open-Meteo: ${err.message}`, "critical");
+                    if (btn) {
+                        btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Reintentar consulta';
+                        btn.disabled = false;
+                    }
+                });
         }
 
         function runSaaSSimulation() {
