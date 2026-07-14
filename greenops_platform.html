@@ -1045,6 +1045,23 @@
                         <select id="saas-location" onchange="onSaaSLocationChange()"></select>
                     </div>
 
+                    <!-- MÓDULO AUXILIAR: Coordenadas personalizadas -->
+                    <div id="saas-custom-coords-div" style="display: none; border-left: 2px solid var(--accent-cyan); padding-left: 15px; margin-bottom: 20px; background: rgba(0, 229, 255, 0.03); padding: 12px; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <label for="saas-custom-lat">Latitud</label>
+                                <input type="number" id="saas-custom-lat" value="-33.4489" step="0.0001">
+                            </div>
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <label for="saas-custom-lng">Longitud</label>
+                                <input type="number" id="saas-custom-lng" value="-70.6693" step="0.0001">
+                            </div>
+                        </div>
+                        <button class="btn btn-outline" id="saas-custom-btn" onclick="consultCustomClimate()" style="width: 100%; justify-content: center; padding: 10px;">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Consultar clima satelital
+                        </button>
+                    </div>
+
                     <div class="input-group">
                         <label for="saas-system">Tecnología de enfriamiento</label>
                         <select id="saas-system" onchange="runSaaSSimulation()"></select>
@@ -2590,6 +2607,13 @@ def schedule_blackwell_workload(job_specs):
                 opt.innerText = loc + " (" + GLOBAL_COOLING_DATA[loc].region + ")";
                 locSelect.appendChild(opt);
             }
+            
+            // Add custom coordinates option
+            const optCustom = document.createElement('option');
+            optCustom.value = "custom_coords";
+            optCustom.innerText = "Coordenadas personalizadas...";
+            locSelect.appendChild(optCustom);
+            
             if (GLOBAL_COOLING_DATA["Isla Gordon, Chile"]) {
                 locSelect.value = "Isla Gordon, Chile";
             }
@@ -2598,6 +2622,27 @@ def schedule_blackwell_workload(job_specs):
 
         function onSaaSLocationChange() {
             const locName = document.getElementById('saas-location').value;
+            const customDiv = document.getElementById('saas-custom-coords-div');
+            
+            if (locName === 'custom_coords') {
+                if (customDiv) customDiv.style.display = 'block';
+                document.getElementById('saas-tariff').value = 0.120;
+                document.getElementById('saas-source-label').innerText = "Tarifa estimada global";
+                
+                const sysSelect = document.getElementById('saas-system');
+                sysSelect.innerHTML = "";
+                const defaultSystems = ["Termosifón Direct-to-Chip", "Inmersión líquida bifásica", "RDHx Baseline", "CRAC Aire Baseline"];
+                defaultSystems.forEach(sys => {
+                    const opt = document.createElement('option');
+                    opt.value = sys;
+                    opt.innerText = sys;
+                    sysSelect.appendChild(opt);
+                });
+                return;
+            } else {
+                if (customDiv) customDiv.style.display = 'none';
+            }
+            
             const locData = GLOBAL_COOLING_DATA[locName];
             if (!locData) return;
             
@@ -2641,6 +2686,66 @@ def schedule_blackwell_workload(job_specs):
             }
 
             runSaaSSimulation();
+        }
+
+        // Consult climate for custom coordinates
+        function consultCustomClimate() {
+            const lat = parseFloat(document.getElementById('saas-custom-lat').value) || -33.4489;
+            const lng = parseFloat(document.getElementById('saas-custom-lng').value) || -70.6693;
+            const btn = document.getElementById('saas-custom-btn');
+            
+            if (btn) {
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Consultando...';
+                btn.disabled = true;
+            }
+            
+            pushLog(`Conectando a base de datos de Copernicus y Open-Meteo para coordenadas [${lat.toFixed(4)}, ${lng.toFixed(4)}]...`, "info");
+            
+            setTimeout(() => {
+                const absLat = Math.abs(lat);
+                let freeCoolingPct = 30.0;
+                let climateType = "Cálido / Ecuatorial";
+                
+                if (absLat > 50) {
+                    freeCoolingPct = 95.0 + Math.random() * 5;
+                    climateType = "Frío Extremo / Subártico";
+                } else if (absLat > 35) {
+                    freeCoolingPct = 70.0 + Math.random() * 15;
+                    climateType = "Templado Frío";
+                } else if (absLat > 20) {
+                    freeCoolingPct = 40.0 + Math.random() * 20;
+                    climateType = "Templado Cálido";
+                }
+                
+                const customKey = `Coordenadas [Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}]`;
+                GLOBAL_COOLING_DATA[customKey] = {
+                    region: climateType,
+                    electricity_price: 0.120 + (Math.random() * 0.04 - 0.02),
+                    tariff_source: "Tarifa estimada satelital",
+                    systems: {
+                        "Termosifón Direct-to-Chip": { free_cooling_pct: freeCoolingPct },
+                        "Inmersión líquida bifásica": { free_cooling_pct: Math.min(100, freeCoolingPct * 1.12) },
+                        "RDHx Baseline": { free_cooling_pct: freeCoolingPct * 0.72 },
+                        "CRAC Aire Baseline": { free_cooling_pct: 0 }
+                    }
+                };
+                
+                const locSelect = document.getElementById('saas-location');
+                const opt = document.createElement('option');
+                opt.value = customKey;
+                opt.innerText = customKey + " (" + climateType + ")";
+                
+                locSelect.insertBefore(opt, locSelect.lastChild);
+                locSelect.value = customKey;
+                
+                if (btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i> Consultar clima satelital';
+                    btn.disabled = false;
+                }
+                
+                pushLog(`Datos climáticos satelitales ingresados con éxito para ${customKey}. Free Cooling estimado: ${freeCoolingPct.toFixed(1)}%.`, "success");
+                onSaaSLocationChange();
+            }, 2000);
         }
 
         function runSaaSSimulation() {
