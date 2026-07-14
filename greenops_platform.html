@@ -2595,7 +2595,10 @@ def schedule_blackwell_workload(job_specs):
         }
 
         function loadSwaggerDocs() {
-            const esgDoc = {
+            const esgResponseEl = document.getElementById('swagger-esg-response');
+            const iotResponseEl = document.getElementById('swagger-iot-response');
+            
+            const esgFallback = {
                 "metadata": {
                     "platform": "Fixus GreenOps DC",
                     "compliance_standard": "GHG Protocol Scope 2"
@@ -2607,9 +2610,8 @@ def schedule_blackwell_workload(job_specs):
                     "carbon_reduction_tco2e": 749.5
                 }
             };
-            document.getElementById('swagger-esg-response').innerText = JSON.stringify(esgDoc, null, 2);
-
-            const iotDoc = {
+            
+            const iotFallback = {
                 "location": "Isla Gordon, Chile",
                 "it_load_kw": 105.4,
                 "external_temp_c": 11.2,
@@ -2619,7 +2621,39 @@ def schedule_blackwell_workload(job_specs):
                 "pue_instantaneous": 1.031,
                 "status": "Estable - FC Pasivo"
             };
-            document.getElementById('swagger-iot-response').innerText = JSON.stringify(iotDoc, null, 2);
+
+            esgResponseEl.innerText = "// Consultando API en vivo /api/v1/esg-metrics...";
+            iotResponseEl.innerText = "// Consultando API en vivo /api/v1/iot-telemetry...";
+
+            // Real fetch to local FastAPI server for ESG Metrics
+            fetch("http://127.0.0.1:8000/api/v1/esg-metrics?location=Isla%20Gordon,%20Chile&racks=10&density=100", {
+                headers: {
+                    "X-API-Key": "FIXUS_SECURE_TOKEN_2026"
+                }
+            })
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                esgResponseEl.innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(err => {
+                esgResponseEl.innerText = `// [SERVIDOR DESCONECTADO o ERROR] No se pudo conectar a la API en vivo en el puerto 8000. \n// Inicia fastapi_server.py en tu terminal para habilitar la consulta en vivo.\n// Mostrando datos locales de referencia:\n\n${JSON.stringify(esgFallback, null, 2)}`;
+            });
+
+            // Real fetch to local FastAPI server for Telemetry
+            fetch("http://127.0.0.1:8000/api/v1/iot-telemetry")
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                iotResponseEl.innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(err => {
+                iotResponseEl.innerText = `// [SERVIDOR DESCONECTADO o ERROR] No se pudo conectar a la API en vivo en el puerto 8000. \n// Inicia fastapi_server.py en tu terminal para habilitar la consulta en vivo.\n// Mostrando datos locales de referencia:\n\n${JSON.stringify(iotFallback, null, 2)}`;
+            });
         }
 
         // --- SAAS SIMULATOR SECTION ---
