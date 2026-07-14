@@ -1137,86 +1137,10 @@
                         <div id="globe-canvas-container" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; cursor: grab;"></div>
                         <div class="globe-overlay-info" style="position: absolute; bottom: 15px; left: 15px; background: rgba(11,12,16,0.85); border: 1px solid var(--panel-border); border-radius: 6px; padding: 8px 12px; font-size: 11px; pointer-events: none; backdrop-filter: blur(5px); z-index: 10;">
                             <i class="fa-solid fa-earth-americas" style="color: var(--accent-cyan); margin-right: 5px;"></i>
-                            <span>Globo 3D GreenOps - Haz clic en un marcador para simular</span>
+                            <span>Globo 3D GreenOps - Haz clic en un marcador para centrar y simular</span>
                         </div>
-                    </div>
-
-                    <div class="glass-card" id="saas-nodes-card" style="padding: 20px;">
-                        <h3 class="card-title" style="font-size: 16px; margin-bottom: 15px;"><i class="fa-solid fa-map-location-dot"></i> Nodos de enfriamiento estratégicos (tesis y SaaS)</h3>
-                        <div class="nodes-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                            <div class="node-card" onclick="selectStrategicNode('Isla Gordon, Chile')" id="node-gordon" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold; font-size: 13px;">Isla Gordon</span>
-                                    <i class="fa-solid fa-snowflake" style="color: var(--accent-cyan); font-size: 12px;"></i>
-                                </div>
-                                <span style="font-size: 11px; color: var(--text-secondary);">Tundra (Chile)</span>
-                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">100% Free Cooling</div>
-                                <ul style="margin: 4px 0 0 0; padding-left: 12px; font-size: 10px; color: var(--text-secondary); line-height: 1.3; list-style-type: disc;">
-                                    <li>Cero evaporación de agua dulce</li>
-                                    <li>Bajo diferencial día/noche (estabilidad)</li>
-                                </ul>
-                            </div>
-                            <div class="node-card" onclick="selectStrategicNode('Colchane, Chile')" id="node-colchane" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold; font-size: 13px;">Colchane</span>
-                                    <i class="fa-solid fa-mountain" style="color: var(--accent-orange); font-size: 12px;"></i>
-                                </div>
-                                <span style="font-size: 11px; color: var(--text-secondary);">Altiplano (Chile)</span>
-                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">98.4% Free Cooling</div>
-                                <ul style="margin: 4px 0 0 0; padding-left: 12px; font-size: 10px; color: var(--text-secondary); line-height: 1.3; list-style-type: disc;">
-                                    <li>Baja temperatura de bulbo húmedo</li>
-                                    <li>Beneficio por baja densidad de aire</li>
-                                </ul>
-                            </div>
-                            <div class="node-card" onclick="selectStrategicNode('Reykjavik, Islandia')" id="node-reykjavik" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold; font-size: 13px;">Reykjavik</span>
-                                    <i class="fa-solid fa-icicles" style="color: var(--accent-cyan); font-size: 12px;"></i>
-                                </div>
-                                <span style="font-size: 11px; color: var(--text-secondary);">Subpolar (Islandia)</span>
-                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">100% Free Cooling</div>
-                                <ul style="margin: 4px 0 0 0; padding-left: 12px; font-size: 10px; color: var(--text-secondary); line-height: 1.3; list-style-type: disc;">
-                                    <li>Energía 100% geotérmica limpia</li>
-                                    <li>Costo de kWh ultra-bajo (~$0.05)</li>
-                                </ul>
-                            </div>
-                            <div class="node-card" onclick="selectStrategicNode('Helsinki, Finlandia')" id="node-helsinki" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold; font-size: 13px;">Helsinki</span>
-                                    <i class="fa-solid fa-cloud-showers-water" style="color: var(--text-secondary); font-size: 12px;"></i>
-                                </div>
-                                <span style="font-size: 11px; color: var(--text-secondary);">Boreal (Finlandia)</span>
-                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">88.2% Free Cooling</div>
-                                <ul style="margin: 4px 0 0 0; padding-left: 12px; font-size: 10px; color: var(--text-secondary); line-height: 1.3; list-style-type: disc;">
-                                    <li>Calefacción urbana (district heating)</li>
-                                    <li>Conectividad de red de alta velocidad</li>
-                                </ul>
-                            </div>
-                            <div class="node-card" onclick="selectStrategicNode('Lulea, Suecia')" id="node-lulea" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold; font-size: 13px;">Luleå</span>
-                                    <i class="fa-solid fa-temperature-low" style="color: var(--accent-cyan); font-size: 12px;"></i>
-                                </div>
-                                <span style="font-size: 11px; color: var(--text-secondary);">Subártico (Suecia)</span>
-                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">94.7% Free Cooling</div>
-                                <ul style="margin: 4px 0 0 0; padding-left: 12px; font-size: 10px; color: var(--text-secondary); line-height: 1.3; list-style-type: disc;">
-                                    <li>Sede de hiperescaladores (Meta)</li>
-                                    <li>Abundante hidroelectricidad estable</li>
-                                </ul>
-                            </div>
-                            <div class="node-card" onclick="selectStrategicNode('Quebec, Canada')" id="node-quebec" style="background: rgba(255,255,255,0.02); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; gap: 6px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold; font-size: 13px;">Quebec</span>
-                                    <i class="fa-solid fa-tree" style="color: var(--accent-orange); font-size: 12px;"></i>
-                                </div>
-                                <span style="font-size: 11px; color: var(--text-secondary);">Continental (Canadá)</span>
-                                <div style="font-size: 11px; font-weight: bold; color: var(--accent-green);">57.8% Free Cooling</div>
-                                <ul style="margin: 4px 0 0 0; padding-left: 12px; font-size: 10px; color: var(--text-secondary); line-height: 1.3; list-style-type: disc;">
-                                    <li>Tarifa de Hydro-Québec muy baja</li>
-                                    <li>Latencia con costa este EE.UU. &lt; 10ms</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <!-- Tarjeta emergente flotante del nodo -->
+                        <div id="globe-info-card" style="display: none; position: absolute; top: 15px; right: 15px; width: 280px; background: rgba(11, 12, 16, 0.9); border: 1px solid var(--accent-cyan); border-radius: 12px; padding: 15px; box-shadow: 0 0 25px rgba(0, 229, 255, 0.15); z-index: 20; backdrop-filter: blur(8px); pointer-events: auto; text-align: left;"></div>
                     </div>
 
                     <div class="grid-3">
@@ -2736,27 +2660,8 @@ def schedule_blackwell_workload(job_specs):
                 sysSelect.value = d2c_key;
             }
 
-            // Sync active node cards
-            document.querySelectorAll('.node-card').forEach(card => {
-                card.style.background = 'rgba(255,255,255,0.02)';
-                card.style.borderColor = 'var(--panel-border)';
-            });
-            const cardMap = {
-                'Isla Gordon, Chile': 'node-gordon',
-                'Colchane, Chile': 'node-colchane',
-                'Reykjavik, Islandia': 'node-reykjavik',
-                'Helsinki, Finlandia': 'node-helsinki',
-                'Lulea, Suecia': 'node-lulea',
-                'Quebec, Canada': 'node-quebec'
-            };
-            const activeId = cardMap[locName];
-            if (activeId) {
-                const activeCard = document.getElementById(activeId);
-                if (activeCard) {
-                    activeCard.style.background = 'rgba(0, 230, 118, 0.08)';
-                    activeCard.style.borderColor = 'var(--accent-green)';
-                }
-            }
+            // Sync dynamic globe focus
+            updateGlobeFocus(locName);
 
             runSaaSSimulation();
         }
@@ -3646,7 +3551,113 @@ def schedule_blackwell_workload(job_specs):
         let globeGroup = null;
         let globeMarkers = [];
         let cloudMesh = null;
-        
+        let targetQuaternion = null;
+        let isTransitioning = false;
+
+        const NODE_COORDINATES = {
+            "Isla Gordon, Chile": { lat: -54.85, lng: -69.49, climate: "Tundra (Chile)", bullets: ["Cero evaporación de agua dulce", "Bajo diferencial día/noche (estabilidad)", "Latitud polar ideal para flujo cerrado"] },
+            "Colchane, Chile": { lat: -19.27, lng: -68.63, climate: "Desértico Frío (Chile)", bullets: ["Alta radiación para solar bifacial", "Aire seco óptimo para termosifón", "Cercanía a centros mineros del norte"] },
+            "Reykjavik, Islandia": { lat: 64.14, lng: -21.94, climate: "Subpolar Oceánico (Islandia)", bullets: ["Energía geotérmica a bajo costo", "Red de fibra de baja latencia", "Humedad relativa estable todo el año"] },
+            "Helsinki, Finlandia": { lat: 60.17, lng: 24.93, climate: "Continental Húmedo (Finlandia)", bullets: ["Conexión directa a calefacción distrital", "Tarifas eléctricas nórdicas preferenciales", "Hub digital europeo de alta velocidad"] },
+            "Lulea, Suecia": { lat: 65.58, lng: 22.15, climate: "Subártico (Suecia)", bullets: ["Hidroelectricidad barata y abundante", "Presencia de grandes hyperscalers", "Aire frío subpolar constante"] },
+            "Quebec, Canada": { lat: 46.81, lng: -71.20, climate: "Templado Frío (Canadá)", bullets: ["Energía 100% hidroeléctrica limpia", "Acceso directo al mercado de EE. UU.", "Baja latencia de tránsito de datos"] }
+        };
+
+        function showGlobePopup(nodeName, lat, lng, freeCoolingPct, climateRegion, customBullets = null) {
+            const popup = document.getElementById('globe-info-card');
+            if (!popup) return;
+            
+            let details = NODE_COORDINATES[nodeName];
+            if (!details) {
+                details = {
+                    climate: climateRegion || "Personalizado",
+                    bullets: customBullets || [
+                        `Coordenadas: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`,
+                        `Estabilidad térmica: Open-Meteo API`,
+                        `PUE óptimo calculado dinámicamente`
+                    ]
+                };
+            }
+            
+            let bulletsHtml = "";
+            details.bullets.forEach(b => {
+                bulletsHtml += `<li style="margin-bottom: 5px;">${b}</li>`;
+            });
+            
+            popup.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                    <h4 style="margin: 0; font-family: 'Outfit'; font-size: 13px; color: var(--accent-cyan); font-weight: 600;"><i class="fa-solid fa-location-dot"></i> ${nodeName}</h4>
+                    <span style="font-size: 10px; font-weight: bold; color: var(--accent-green); background: rgba(0, 230, 118, 0.15); padding: 2px 6px; border-radius: 4px; white-space: nowrap;">${freeCoolingPct.toFixed(1)}% FC</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Clima: <strong>${details.climate}</strong></div>
+                <ul style="margin: 0; padding-left: 15px; font-size: 11px; color: var(--text-primary); line-height: 1.4; list-style-type: disc;">
+                    ${bulletsHtml}
+                </ul>
+            `;
+            popup.style.display = 'block';
+        }
+
+        function updateGlobeFocus(locName) {
+            let lat = 0;
+            let lng = 0;
+            let isCustom = false;
+            let climate = "Personalizado";
+            let bullets = [];
+            
+            if (NODE_COORDINATES[locName]) {
+                lat = NODE_COORDINATES[locName].lat;
+                lng = NODE_COORDINATES[locName].lng;
+                climate = NODE_COORDINATES[locName].climate;
+                bullets = NODE_COORDINATES[locName].bullets;
+            } else if (locName && locName.startsWith("Coordenadas [Lat:")) {
+                const match = locName.match(/Lat:\s*([-\d.]+),\s*Lng:\s*([-\d.]+)/);
+                if (match) {
+                    lat = parseFloat(match[1]);
+                    lng = parseFloat(match[2]);
+                    isCustom = true;
+                    const locData = GLOBAL_COOLING_DATA[locName];
+                    climate = locData ? locData.region : "Personalizado";
+                    bullets = [
+                        `Coordenadas: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`,
+                        `Estabilidad térmica: Open-Meteo API`,
+                        `PUE óptimo calculado dinámicamente`
+                    ];
+                }
+            } else {
+                lat = parseFloat(document.getElementById('saas-custom-lat').value) || -33.4489;
+                lng = parseFloat(document.getElementById('saas-custom-lng').value) || -70.6693;
+                isCustom = true;
+                bullets = [
+                    `Coordenadas: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`,
+                    `Configurando parámetros personalizados`,
+                    `Presiona 'Consultar clima satelital' para simular`
+                ];
+            }
+            
+            if (globeGroup) {
+                const phi = (90 - lat) * (Math.PI / 180);
+                const theta = (lng + 180) * (Math.PI / 180);
+                
+                const x = -(Math.sin(phi) * Math.sin(theta));
+                const y = Math.cos(phi);
+                const z = Math.sin(phi) * Math.cos(theta);
+                
+                const pos = new THREE.Vector3(x, y, z).normalize();
+                targetQuaternion = new THREE.Quaternion().setFromUnitVectors(pos, new THREE.Vector3(0, 0, 1));
+                isTransitioning = true;
+            }
+            
+            let freeCoolingPct = 0;
+            const locData = GLOBAL_COOLING_DATA[locName];
+            if (locData) {
+                const sysName = document.getElementById('saas-system').value || "Termosifón Direct-to-Chip";
+                const sys = locData.systems[sysName] || Object.values(locData.systems)[0];
+                if (sys) freeCoolingPct = sys.free_cooling_pct;
+            }
+            
+            showGlobePopup(locName === 'custom_coords' ? "Coordenadas personalizadas" : locName, lat, lng, freeCoolingPct, climate, bullets);
+        }
+
         function init3DGlobe() {
             const container = document.getElementById('globe-canvas-container');
             if (!container) return;
@@ -3855,7 +3866,12 @@ def schedule_blackwell_workload(job_specs):
             
             function animate() {
                 requestAnimationFrame(animate);
-                if (!isDragging) {
+                if (isTransitioning && targetQuaternion) {
+                    globeGroup.quaternion.slerp(targetQuaternion, 0.08);
+                    if (globeGroup.quaternion.angleTo(targetQuaternion) < 0.005) {
+                        isTransitioning = false;
+                    }
+                } else if (!isDragging) {
                     globeGroup.rotation.y += 0.0015;
                 }
                 if (cloudMesh) {
@@ -3893,6 +3909,12 @@ def schedule_blackwell_workload(job_specs):
 
             // Initialize 3D WebGL Globe
             init3DGlobe();
+
+            // Auto-focus default location on Globe
+            setTimeout(() => {
+                const defaultLoc = document.getElementById('saas-location').value;
+                updateGlobeFocus(defaultLoc);
+            }, 500);
 
             // Set PUE Avg in Overview
             calculateOverviewAverages();
