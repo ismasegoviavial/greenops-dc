@@ -7,36 +7,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://global-climatescope.org/markets/cl/",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 833310.72
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 25415.0,
+        "free_cooling_hours": 25415,
         "free_cooling_pct": 96.6,
-        "energy_kwh": 3056075.0,
+        "energy_kwh": 3056075,
         "opex_3yr": 537869.2
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 26250.0,
+        "free_cooling_hours": 26250,
         "free_cooling_pct": 99.8,
-        "energy_kwh": 2895600.0,
+        "energy_kwh": 2895600,
         "opex_3yr": 509625.6
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761920.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761920,
         "opex_3yr": 486097.92
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 472209.41
       }
-    }
+    },
+    "lat": -54.95,
+    "lng": -69.65
   },
   "Colchane, Chile": {
     "name": "Colchane, Chile",
@@ -46,36 +48,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://global-climatescope.org/markets/cl/",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 833310.72
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 14879.0,
+        "free_cooling_hours": 14879,
         "free_cooling_pct": 56.6,
-        "energy_kwh": 3424835.0,
+        "energy_kwh": 3424835,
         "opex_3yr": 602770.96
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 21232.0,
+        "free_cooling_hours": 21232,
         "free_cooling_pct": 80.7,
-        "energy_kwh": 3096320.0,
+        "energy_kwh": 3096320,
         "opex_3yr": 544952.32
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26302.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761950.0,
+        "free_cooling_hours": 26302,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761950,
         "opex_3yr": 486103.2
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 472209.41
       }
-    }
+    },
+    "lat": -19.26,
+    "lng": -68.63
   },
   "Punta Arenas, Chile": {
     "name": "Punta Arenas, Chile",
@@ -85,36 +89,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://global-climatescope.org/markets/cl/",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 833310.72
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 21484.0,
+        "free_cooling_hours": 21484,
         "free_cooling_pct": 81.7,
-        "energy_kwh": 3193660.0,
+        "energy_kwh": 3193660,
         "opex_3yr": 562084.16
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 25886.0,
+        "free_cooling_hours": 25886,
         "free_cooling_pct": 98.4,
-        "energy_kwh": 2910160.0,
+        "energy_kwh": 2910160,
         "opex_3yr": 512188.16
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761920.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761920,
         "opex_3yr": 486097.92
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 472209.41
       }
-    }
+    },
+    "lat": -53.15,
+    "lng": -70.92
   },
   "Puerto Natales, Chile": {
     "name": "Puerto Natales, Chile",
@@ -124,36 +130,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://global-climatescope.org/markets/cl/",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 833310.72
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 20770.0,
-        "free_cooling_pct": 79.0,
-        "energy_kwh": 3218650.0,
+        "free_cooling_hours": 20770,
+        "free_cooling_pct": 79,
+        "energy_kwh": 3218650,
         "opex_3yr": 566482.4
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 25450.0,
+        "free_cooling_hours": 25450,
         "free_cooling_pct": 96.8,
-        "energy_kwh": 2927600.0,
+        "energy_kwh": 2927600,
         "opex_3yr": 515257.6
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761920.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761920,
         "opex_3yr": 486097.92
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 472209.41
       }
-    }
+    },
+    "lat": -51.73,
+    "lng": -72.49
   },
   "Coyhaique, Chile": {
     "name": "Coyhaique, Chile",
@@ -163,36 +171,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://global-climatescope.org/markets/cl/",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 833310.72
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 18226.0,
+        "free_cooling_hours": 18226,
         "free_cooling_pct": 69.3,
-        "energy_kwh": 3307690.0,
+        "energy_kwh": 3307690,
         "opex_3yr": 582153.44
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 23666.0,
-        "free_cooling_pct": 90.0,
-        "energy_kwh": 2998960.0,
+        "free_cooling_hours": 23666,
+        "free_cooling_pct": 90,
+        "energy_kwh": 2998960,
         "opex_3yr": 527816.96
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26210.0,
+        "free_cooling_hours": 26210,
         "free_cooling_pct": 99.6,
-        "energy_kwh": 2763330.0,
+        "energy_kwh": 2763330,
         "opex_3yr": 486346.08
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 472209.41
       }
-    }
+    },
+    "lat": -45.57,
+    "lng": -72.07
   },
   "Mendoza, Argentina": {
     "name": "Mendoza, Argentina",
@@ -202,36 +212,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 402451.2
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 5220.0,
+        "free_cooling_hours": 5220,
         "free_cooling_pct": 19.8,
-        "energy_kwh": 3762900.0,
+        "energy_kwh": 3762900,
         "opex_3yr": 319846.5
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 10496.0,
+        "free_cooling_hours": 10496,
         "free_cooling_pct": 39.9,
-        "energy_kwh": 3525760.0,
+        "energy_kwh": 3525760,
         "opex_3yr": 299689.6
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 20786.0,
-        "free_cooling_pct": 79.0,
-        "energy_kwh": 2844690.0,
+        "free_cooling_hours": 20786,
+        "free_cooling_pct": 79,
+        "energy_kwh": 2844690,
         "opex_3yr": 241798.65
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26094.0,
+        "free_cooling_hours": 26094,
         "free_cooling_pct": 99.2,
-        "energy_kwh": 2684688.0,
+        "energy_kwh": 2684688,
         "opex_3yr": 228198.48
       }
-    }
+    },
+    "lat": -32.89,
+    "lng": -68.85
   },
   "Montevideo, Uruguay": {
     "name": "Montevideo, Uruguay",
@@ -241,36 +253,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 615513.6
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 2349.0,
+        "free_cooling_hours": 2349,
         "free_cooling_pct": 8.9,
-        "energy_kwh": 3863385.0,
+        "energy_kwh": 3863385,
         "opex_3yr": 502240.05
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 9876.0,
+        "free_cooling_hours": 9876,
         "free_cooling_pct": 37.5,
-        "energy_kwh": 3550560.0,
+        "energy_kwh": 3550560,
         "opex_3yr": 461572.8
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 24566.0,
+        "free_cooling_hours": 24566,
         "free_cooling_pct": 93.4,
-        "energy_kwh": 2787990.0,
+        "energy_kwh": 2787990,
         "opex_3yr": 362438.7
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26294.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683088.0,
+        "free_cooling_hours": 26294,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683088,
         "opex_3yr": 348801.44
       }
-    }
+    },
+    "lat": -34.9,
+    "lng": -56.19
   },
   "Ushuaia, Argentina": {
     "name": "Ushuaia, Argentina",
@@ -280,75 +294,79 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 402451.2
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 23047.0,
+        "free_cooling_hours": 23047,
         "free_cooling_pct": 87.6,
-        "energy_kwh": 3138955.0,
+        "energy_kwh": 3138955,
         "opex_3yr": 266811.18
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 25960.0,
+        "free_cooling_hours": 25960,
         "free_cooling_pct": 98.7,
-        "energy_kwh": 2907200.0,
-        "opex_3yr": 247112.0
+        "energy_kwh": 2907200,
+        "opex_3yr": 247112
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761920.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761920,
         "opex_3yr": 234763.2
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 228055.68
       }
-    }
+    },
+    "lat": -54.8,
+    "lng": -68.3
   },
   "Bogota, Colombia": {
     "name": "Bogota, Colombia",
     "region": "",
-    "electricity_price": 0.0,
+    "electricity_price": 0,
     "tariff_source": "",
     "tariff_url": "",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       }
-    }
+    },
+    "lat": 4.71,
+    "lng": -74.07
   },
   "Quito, Ecuador": {
     "name": "Quito, Ecuador",
@@ -358,36 +376,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
-        "opex_3yr": 473472.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
+        "opex_3yr": 473472
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 9148.0,
+        "free_cooling_hours": 9148,
         "free_cooling_pct": 34.8,
-        "energy_kwh": 3625420.0,
-        "opex_3yr": 362542.0
+        "energy_kwh": 3625420,
+        "opex_3yr": 362542
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 20550.0,
+        "free_cooling_hours": 20550,
         "free_cooling_pct": 78.1,
-        "energy_kwh": 3123600.0,
-        "opex_3yr": 312360.0
+        "energy_kwh": 3123600,
+        "opex_3yr": 312360
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761920.0,
-        "opex_3yr": 276192.0
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761920,
+        "opex_3yr": 276192
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 268300.8
       }
-    }
+    },
+    "lat": -0.23,
+    "lng": -78.52
   },
   "Reykjavik, Islandia": {
     "name": "Reykjavik, Islandia",
@@ -397,36 +417,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 487202.69
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 21444.0,
+        "free_cooling_hours": 21444,
         "free_cooling_pct": 81.5,
-        "energy_kwh": 3195060.0,
+        "energy_kwh": 3195060,
         "opex_3yr": 328771.67
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 26064.0,
+        "free_cooling_hours": 26064,
         "free_cooling_pct": 99.1,
-        "energy_kwh": 2903040.0,
+        "energy_kwh": 2903040,
         "opex_3yr": 298722.82
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761920.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761920,
         "opex_3yr": 284201.57
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 276081.52
       }
-    }
+    },
+    "lat": 64.14,
+    "lng": -21.94
   },
   "Helsinki, Finlandia": {
     "name": "Helsinki, Finlandia",
@@ -436,36 +458,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 402451.2
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 15841.0,
+        "free_cooling_hours": 15841,
         "free_cooling_pct": 60.2,
-        "energy_kwh": 3391165.0,
+        "energy_kwh": 3391165,
         "opex_3yr": 288249.03
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 19835.0,
+        "free_cooling_hours": 19835,
         "free_cooling_pct": 75.4,
-        "energy_kwh": 3152200.0,
-        "opex_3yr": 267937.0
+        "energy_kwh": 3152200,
+        "opex_3yr": 267937
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26221.0,
+        "free_cooling_hours": 26221,
         "free_cooling_pct": 99.7,
-        "energy_kwh": 2763165.0,
+        "energy_kwh": 2763165,
         "opex_3yr": 234869.03
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 228055.68
       }
-    }
+    },
+    "lat": 60.16,
+    "lng": 24.93
   },
   "Lulea, Suecia": {
     "name": "Lulea, Suecia",
@@ -475,36 +499,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 437488.13
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 17526.0,
+        "free_cooling_hours": 17526,
         "free_cooling_pct": 66.6,
-        "energy_kwh": 3332190.0,
+        "energy_kwh": 3332190,
         "opex_3yr": 307894.36
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 21625.0,
+        "free_cooling_hours": 21625,
         "free_cooling_pct": 82.2,
-        "energy_kwh": 3080600.0,
+        "energy_kwh": 3080600,
         "opex_3yr": 284647.44
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26182.0,
+        "free_cooling_hours": 26182,
         "free_cooling_pct": 99.5,
-        "energy_kwh": 2763750.0,
+        "energy_kwh": 2763750,
         "opex_3yr": 255370.5
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 247909.94
       }
-    }
+    },
+    "lat": 65.58,
+    "lng": 22.15
   },
   "Trondheim, Noruega": {
     "name": "Trondheim, Noruega",
@@ -514,36 +540,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 310124.16
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 17178.0,
+        "free_cooling_hours": 17178,
         "free_cooling_pct": 65.3,
-        "energy_kwh": 3344370.0,
+        "energy_kwh": 3344370,
         "opex_3yr": 219056.24
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 22677.0,
+        "free_cooling_hours": 22677,
         "free_cooling_pct": 86.2,
-        "energy_kwh": 3038520.0,
+        "energy_kwh": 3038520,
         "opex_3yr": 199023.06
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26126.0,
+        "free_cooling_hours": 26126,
         "free_cooling_pct": 99.3,
-        "energy_kwh": 2764590.0,
+        "energy_kwh": 2764590,
         "opex_3yr": 181080.65
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 175737.02
       }
-    }
+    },
+    "lat": 63.43,
+    "lng": 10.39
   },
   "Stavanger, Noruega": {
     "name": "Stavanger, Noruega",
@@ -553,36 +581,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 310124.16
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 14632.0,
+        "free_cooling_hours": 14632,
         "free_cooling_pct": 55.6,
-        "energy_kwh": 3433480.0,
+        "energy_kwh": 3433480,
         "opex_3yr": 224892.94
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 22283.0,
+        "free_cooling_hours": 22283,
         "free_cooling_pct": 84.7,
-        "energy_kwh": 3054280.0,
+        "energy_kwh": 3054280,
         "opex_3yr": 200055.34
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26288.0,
+        "free_cooling_hours": 26288,
         "free_cooling_pct": 99.9,
-        "energy_kwh": 2762160.0,
+        "energy_kwh": 2762160,
         "opex_3yr": 180921.48
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 175737.02
       }
-    }
+    },
+    "lat": 58.97,
+    "lng": 5.73
   },
   "Oulu, Finlandia": {
     "name": "Oulu, Finlandia",
@@ -592,36 +622,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 402451.2
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 17543.0,
+        "free_cooling_hours": 17543,
         "free_cooling_pct": 66.7,
-        "energy_kwh": 3331595.0,
+        "energy_kwh": 3331595,
         "opex_3yr": 283185.58
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 21432.0,
+        "free_cooling_hours": 21432,
         "free_cooling_pct": 81.5,
-        "energy_kwh": 3088320.0,
+        "energy_kwh": 3088320,
         "opex_3yr": 262507.2
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26105.0,
+        "free_cooling_hours": 26105,
         "free_cooling_pct": 99.2,
-        "energy_kwh": 2764905.0,
+        "energy_kwh": 2764905,
         "opex_3yr": 235016.93
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 228055.68
       }
-    }
+    },
+    "lat": 65.01,
+    "lng": 25.47
   },
   "Tallin, Estonia": {
     "name": "Tallin, Estonia",
@@ -631,36 +663,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 704526.34
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 15721.0,
+        "free_cooling_hours": 15721,
         "free_cooling_pct": 59.8,
-        "energy_kwh": 3395365.0,
+        "energy_kwh": 3395365,
         "opex_3yr": 505230.31
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 20027.0,
+        "free_cooling_hours": 20027,
         "free_cooling_pct": 76.1,
-        "energy_kwh": 3144520.0,
+        "energy_kwh": 3144520,
         "opex_3yr": 467904.58
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26119.0,
+        "free_cooling_hours": 26119,
         "free_cooling_pct": 99.3,
-        "energy_kwh": 2764695.0,
+        "energy_kwh": 2764695,
         "opex_3yr": 411386.62
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 399231.59
       }
-    }
+    },
+    "lat": 59.44,
+    "lng": 24.75
   },
   "Estocolmo, Suecia": {
     "name": "Estocolmo, Suecia",
@@ -670,36 +704,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 437488.13
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 15459.0,
+        "free_cooling_hours": 15459,
         "free_cooling_pct": 58.8,
-        "energy_kwh": 3404535.0,
+        "energy_kwh": 3404535,
         "opex_3yr": 314579.03
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 20030.0,
+        "free_cooling_hours": 20030,
         "free_cooling_pct": 76.1,
-        "energy_kwh": 3144400.0,
+        "energy_kwh": 3144400,
         "opex_3yr": 290542.56
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26120.0,
+        "free_cooling_hours": 26120,
         "free_cooling_pct": 99.3,
-        "energy_kwh": 2764680.0,
+        "energy_kwh": 2764680,
         "opex_3yr": 255456.43
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 247909.94
       }
-    }
+    },
+    "lat": 59.33,
+    "lng": 18.06
   },
   "Oslo, Noruega": {
     "name": "Oslo, Noruega",
@@ -709,36 +745,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 310124.16
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 14970.0,
+        "free_cooling_hours": 14970,
         "free_cooling_pct": 56.9,
-        "energy_kwh": 3421650.0,
+        "energy_kwh": 3421650,
         "opex_3yr": 224118.08
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 19952.0,
+        "free_cooling_hours": 19952,
         "free_cooling_pct": 75.9,
-        "energy_kwh": 3147520.0,
+        "energy_kwh": 3147520,
         "opex_3yr": 206162.56
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26061.0,
+        "free_cooling_hours": 26061,
         "free_cooling_pct": 99.1,
-        "energy_kwh": 2765565.0,
+        "energy_kwh": 2765565,
         "opex_3yr": 181144.51
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 175737.02
       }
-    }
+    },
+    "lat": 59.91,
+    "lng": 10.75
   },
   "Copenhague, Dinamarca": {
     "name": "Copenhague, Dinamarca",
@@ -748,36 +786,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 652917.89
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 13405.0,
-        "free_cooling_pct": 51.0,
-        "energy_kwh": 3476425.0,
+        "free_cooling_hours": 13405,
+        "free_cooling_pct": 51,
+        "energy_kwh": 3476425,
         "opex_3yr": 479399.01
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 19043.0,
+        "free_cooling_hours": 19043,
         "free_cooling_pct": 72.4,
-        "energy_kwh": 3183880.0,
+        "energy_kwh": 3183880,
         "opex_3yr": 439057.05
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26281.0,
+        "free_cooling_hours": 26281,
         "free_cooling_pct": 99.9,
-        "energy_kwh": 2762265.0,
+        "energy_kwh": 2762265,
         "opex_3yr": 380916.34
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 369986.8
       }
-    }
+    },
+    "lat": 55.68,
+    "lng": 12.57
   },
   "Frankfurt, Alemania": {
     "name": "Frankfurt, Alemania",
@@ -787,36 +827,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 1037377.15
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 11511.0,
+        "free_cooling_hours": 11511,
         "free_cooling_pct": 43.8,
-        "energy_kwh": 3542715.0,
+        "energy_kwh": 3542715,
         "opex_3yr": 776208.86
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 17105.0,
-        "free_cooling_pct": 65.0,
-        "energy_kwh": 3261400.0,
+        "free_cooling_hours": 17105,
+        "free_cooling_pct": 65,
+        "energy_kwh": 3261400,
         "opex_3yr": 714572.74
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 24904.0,
+        "free_cooling_hours": 24904,
         "free_cooling_pct": 94.7,
-        "energy_kwh": 2782920.0,
+        "energy_kwh": 2782920,
         "opex_3yr": 609737.77
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26285.0,
+        "free_cooling_hours": 26285,
         "free_cooling_pct": 99.9,
-        "energy_kwh": 2683160.0,
+        "energy_kwh": 2683160,
         "opex_3yr": 587880.36
       }
-    }
+    },
+    "lat": 50.11,
+    "lng": 8.68
   },
   "Amsterdam, Holanda": {
     "name": "Amsterdam, Holanda",
@@ -826,36 +868,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 883025.28
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 11157.0,
+        "free_cooling_hours": 11157,
         "free_cooling_pct": 42.4,
-        "energy_kwh": 3555105.0,
+        "energy_kwh": 3555105,
         "opex_3yr": 663027.08
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 18371.0,
+        "free_cooling_hours": 18371,
         "free_cooling_pct": 69.8,
-        "energy_kwh": 3210760.0,
+        "energy_kwh": 3210760,
         "opex_3yr": 598806.74
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 25967.0,
+        "free_cooling_hours": 25967,
         "free_cooling_pct": 98.7,
-        "energy_kwh": 2766975.0,
+        "energy_kwh": 2766975,
         "opex_3yr": 516040.84
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 500380.99
       }
-    }
+    },
+    "lat": 52.37,
+    "lng": 4.89
   },
   "Dublin, Irlanda": {
     "name": "Dublin, Irlanda",
@@ -865,75 +909,79 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 1292578.56
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 11635.0,
+        "free_cooling_hours": 11635,
         "free_cooling_pct": 44.2,
-        "energy_kwh": 3538375.0,
+        "energy_kwh": 3538375,
         "opex_3yr": 965976.38
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 21112.0,
+        "free_cooling_hours": 21112,
         "free_cooling_pct": 80.3,
-        "energy_kwh": 3101120.0,
+        "energy_kwh": 3101120,
         "opex_3yr": 846605.76
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26256.0,
+        "free_cooling_hours": 26256,
         "free_cooling_pct": 99.8,
-        "energy_kwh": 2762640.0,
+        "energy_kwh": 2762640,
         "opex_3yr": 754200.72
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 732461.18
       }
-    }
+    },
+    "lat": 53.33,
+    "lng": -6.25
   },
   "Zurich, Suiza": {
     "name": "Zurich, Suiza",
     "region": "",
-    "electricity_price": 0.0,
+    "electricity_price": 0,
     "tariff_source": "",
     "tariff_url": "",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       }
-    }
+    },
+    "lat": 47.37,
+    "lng": 8.54
   },
   "Londres, UK": {
     "name": "Londres, UK",
@@ -943,36 +991,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://ec.europa.eu/eurostat/databrowser/view/NRG_PC_205",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 757555.2
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 10082.0,
+        "free_cooling_hours": 10082,
         "free_cooling_pct": 38.3,
-        "energy_kwh": 3592730.0,
+        "energy_kwh": 3592730,
         "opex_3yr": 574836.8
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 18164.0,
+        "free_cooling_hours": 18164,
         "free_cooling_pct": 69.1,
-        "energy_kwh": 3219040.0,
+        "energy_kwh": 3219040,
         "opex_3yr": 515046.4
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 25777.0,
-        "free_cooling_pct": 98.0,
-        "energy_kwh": 2769825.0,
-        "opex_3yr": 443172.0
+        "free_cooling_hours": 25777,
+        "free_cooling_pct": 98,
+        "energy_kwh": 2769825,
+        "opex_3yr": 443172
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 429281.28
       }
-    }
+    },
+    "lat": 51.51,
+    "lng": -0.13
   },
   "Quebec, Canada": {
     "name": "Quebec, Canada",
@@ -982,36 +1032,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparison-electricity-prices.pdf",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 426124.8
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 15213.0,
+        "free_cooling_hours": 15213,
         "free_cooling_pct": 57.8,
-        "energy_kwh": 3413145.0,
+        "energy_kwh": 3413145,
         "opex_3yr": 307183.05
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 18986.0,
+        "free_cooling_hours": 18986,
         "free_cooling_pct": 72.2,
-        "energy_kwh": 3186160.0,
+        "energy_kwh": 3186160,
         "opex_3yr": 286754.4
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 25495.0,
+        "free_cooling_hours": 25495,
         "free_cooling_pct": 96.9,
-        "energy_kwh": 2774055.0,
+        "energy_kwh": 2774055,
         "opex_3yr": 249664.95
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 241470.72
       }
-    }
+    },
+    "lat": 46.81,
+    "lng": -71.2
   },
   "Vancouver, Canada": {
     "name": "Vancouver, Canada",
@@ -1021,36 +1073,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 449798.4
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 13455.0,
+        "free_cooling_hours": 13455,
         "free_cooling_pct": 51.2,
-        "energy_kwh": 3474675.0,
+        "energy_kwh": 3474675,
         "opex_3yr": 330094.12
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 19293.0,
+        "free_cooling_hours": 19293,
         "free_cooling_pct": 73.3,
-        "energy_kwh": 3173880.0,
+        "energy_kwh": 3173880,
         "opex_3yr": 301518.6
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26044.0,
-        "free_cooling_pct": 99.0,
-        "energy_kwh": 2765820.0,
+        "free_cooling_hours": 26044,
+        "free_cooling_pct": 99,
+        "energy_kwh": 2765820,
         "opex_3yr": 262752.9
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 254885.76
       }
-    }
+    },
+    "lat": 49.25,
+    "lng": -123.12
   },
   "Anchorage, Alaska USA": {
     "name": "Anchorage, Alaska USA",
@@ -1060,36 +1114,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 804902.4
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 18580.0,
+        "free_cooling_hours": 18580,
         "free_cooling_pct": 70.6,
-        "energy_kwh": 3295300.0,
-        "opex_3yr": 560201.0
+        "energy_kwh": 3295300,
+        "opex_3yr": 560201
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 23794.0,
+        "free_cooling_hours": 23794,
         "free_cooling_pct": 90.5,
-        "energy_kwh": 2993840.0,
+        "energy_kwh": 2993840,
         "opex_3yr": 508952.8
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 26299.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2761995.0,
+        "free_cooling_hours": 26299,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2761995,
         "opex_3yr": 469539.15
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 456111.36
       }
-    }
+    },
+    "lat": 61.22,
+    "lng": -149.9
   },
   "Des Moines, Iowa USA": {
     "name": "Des Moines, Iowa USA",
@@ -1099,36 +1155,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 331430.4
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 11208.0,
+        "free_cooling_hours": 11208,
         "free_cooling_pct": 42.6,
-        "energy_kwh": 3553320.0,
+        "energy_kwh": 3553320,
         "opex_3yr": 248732.4
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 14430.0,
+        "free_cooling_hours": 14430,
         "free_cooling_pct": 54.9,
-        "energy_kwh": 3368400.0,
-        "opex_3yr": 235788.0
+        "energy_kwh": 3368400,
+        "opex_3yr": 235788
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 22983.0,
+        "free_cooling_hours": 22983,
         "free_cooling_pct": 87.4,
-        "energy_kwh": 2811735.0,
+        "energy_kwh": 2811735,
         "opex_3yr": 196821.45
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26275.0,
+        "free_cooling_hours": 26275,
         "free_cooling_pct": 99.9,
-        "energy_kwh": 2683240.0,
+        "energy_kwh": 2683240,
         "opex_3yr": 187826.8
       }
-    }
+    },
+    "lat": 41.6,
+    "lng": -93.61
   },
   "Portland, Oregon USA": {
     "name": "Portland, Oregon USA",
@@ -1138,75 +1196,79 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 378777.6
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 11687.0,
+        "free_cooling_hours": 11687,
         "free_cooling_pct": 44.4,
-        "energy_kwh": 3536555.0,
+        "energy_kwh": 3536555,
         "opex_3yr": 282924.4
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 17641.0,
+        "free_cooling_hours": 17641,
         "free_cooling_pct": 67.1,
-        "energy_kwh": 3239960.0,
+        "energy_kwh": 3239960,
         "opex_3yr": 259196.8
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 24474.0,
-        "free_cooling_pct": 93.0,
-        "energy_kwh": 2789370.0,
+        "free_cooling_hours": 24474,
+        "free_cooling_pct": 93,
+        "energy_kwh": 2789370,
         "opex_3yr": 223149.6
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26208.0,
+        "free_cooling_hours": 26208,
         "free_cooling_pct": 99.6,
-        "energy_kwh": 2683776.0,
+        "energy_kwh": 2683776,
         "opex_3yr": 214702.08
       }
-    }
+    },
+    "lat": 45.52,
+    "lng": -122.68
   },
   "Hokkaido (Sapporo), Japon": {
     "name": "Hokkaido (Sapporo), Japon",
     "region": "",
-    "electricity_price": 0.0,
+    "electricity_price": 0,
     "tariff_source": "",
     "tariff_url": "",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       }
-    }
+    },
+    "lat": 43.06,
+    "lng": 141.35
   },
   "Ulaanbaatar, Mongolia": {
     "name": "Ulaanbaatar, Mongolia",
@@ -1216,36 +1278,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 307756.8
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 17550.0,
+        "free_cooling_hours": 17550,
         "free_cooling_pct": 66.7,
-        "energy_kwh": 3331350.0,
+        "energy_kwh": 3331350,
         "opex_3yr": 216537.75
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 20835.0,
+        "free_cooling_hours": 20835,
         "free_cooling_pct": 79.2,
-        "energy_kwh": 3112200.0,
-        "opex_3yr": 202293.0
+        "energy_kwh": 3112200,
+        "opex_3yr": 202293
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 25631.0,
+        "free_cooling_hours": 25631,
         "free_cooling_pct": 97.4,
-        "energy_kwh": 2772015.0,
+        "energy_kwh": 2772015,
         "opex_3yr": 180180.98
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 174395.52
       }
-    }
+    },
+    "lat": 47.9,
+    "lng": 106.9
   },
   "Christchurch, Nueva Zelanda": {
     "name": "Christchurch, Nueva Zelanda",
@@ -1255,75 +1319,79 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 568166.4
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 9159.0,
+        "free_cooling_hours": 9159,
         "free_cooling_pct": 34.8,
-        "energy_kwh": 3625035.0,
+        "energy_kwh": 3625035,
         "opex_3yr": 435004.2
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 18566.0,
+        "free_cooling_hours": 18566,
         "free_cooling_pct": 70.6,
-        "energy_kwh": 3202960.0,
+        "energy_kwh": 3202960,
         "opex_3yr": 384355.2
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 25900.0,
+        "free_cooling_hours": 25900,
         "free_cooling_pct": 98.5,
-        "energy_kwh": 2767980.0,
+        "energy_kwh": 2767980,
         "opex_3yr": 332157.6
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 321960.96
       }
-    }
+    },
+    "lat": -43.53,
+    "lng": 172.62
   },
   "Seoul, Corea del Sur": {
     "name": "Seoul, Corea del Sur",
     "region": "",
-    "electricity_price": 0.0,
+    "electricity_price": 0,
     "tariff_source": "",
     "tariff_url": "",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 0.0,
-        "opex_3yr": 0.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 0,
+        "opex_3yr": 0
       }
-    }
+    },
+    "lat": 37.56,
+    "lng": 126.97
   },
   "Singapur": {
     "name": "Singapur",
@@ -1333,36 +1401,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.ema.gov.sg/consumer-information/electricity/buying-electricity/electricity-tariffs-and-price-trends",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 804902.4
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 3945600.0,
-        "opex_3yr": 670752.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 3945600,
+        "opex_3yr": 670752
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 3945600.0,
-        "opex_3yr": 670752.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 3945600,
+        "opex_3yr": 670752
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 7930.0,
+        "free_cooling_hours": 7930,
         "free_cooling_pct": 30.1,
-        "energy_kwh": 3037530.0,
+        "energy_kwh": 3037530,
         "opex_3yr": 516380.1
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 456111.36
       }
-    }
+    },
+    "lat": 1.35,
+    "lng": 103.82
   },
   "Dubai, EAU": {
     "name": "Dubai, EAU",
@@ -1372,36 +1442,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.dewa.gov.ae/en/consumer/electricity/tariffs",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 378777.6
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 3945600.0,
-        "opex_3yr": 315648.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 3945600,
+        "opex_3yr": 315648
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 238.0,
+        "free_cooling_hours": 238,
         "free_cooling_pct": 0.9,
-        "energy_kwh": 3936080.0,
+        "energy_kwh": 3936080,
         "opex_3yr": 314886.4
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 8990.0,
+        "free_cooling_hours": 8990,
         "free_cooling_pct": 34.2,
-        "energy_kwh": 3021630.0,
+        "energy_kwh": 3021630,
         "opex_3yr": 241730.4
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 21739.0,
+        "free_cooling_hours": 21739,
         "free_cooling_pct": 82.6,
-        "energy_kwh": 2719528.0,
+        "energy_kwh": 2719528,
         "opex_3yr": 217562.24
       }
-    }
+    },
+    "lat": 25.2,
+    "lng": 55.27
   },
   "Nairobi, Kenia": {
     "name": "Nairobi, Kenia",
@@ -1411,36 +1483,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.kplc.co.ke/category/view/50/tariffs",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
         "opex_3yr": 852249.6
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 6.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 3945390.0,
+        "free_cooling_hours": 6,
+        "free_cooling_pct": 0,
+        "energy_kwh": 3945390,
         "opex_3yr": 710170.2
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 2873.0,
+        "free_cooling_hours": 2873,
         "free_cooling_pct": 10.9,
-        "energy_kwh": 3830680.0,
+        "energy_kwh": 3830680,
         "opex_3yr": 689522.4
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 23095.0,
+        "free_cooling_hours": 23095,
         "free_cooling_pct": 87.8,
-        "energy_kwh": 2810055.0,
+        "energy_kwh": 2810055,
         "opex_3yr": 505809.9
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 482941.44
       }
-    }
+    },
+    "lat": -1.29,
+    "lng": 36.82
   },
   "Yakutsk, Rusia": {
     "name": "Yakutsk, Rusia",
@@ -1450,36 +1524,38 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 145.0,
+        "free_cooling_hours": 145,
         "free_cooling_pct": 0.6,
-        "energy_kwh": 4734720.0,
-        "opex_3yr": 236736.0
+        "energy_kwh": 4734720,
+        "opex_3yr": 236736
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 18887.0,
+        "free_cooling_hours": 18887,
         "free_cooling_pct": 71.8,
-        "energy_kwh": 3284555.0,
+        "energy_kwh": 3284555,
         "opex_3yr": 164227.75
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 21370.0,
+        "free_cooling_hours": 21370,
         "free_cooling_pct": 81.2,
-        "energy_kwh": 3090800.0,
-        "opex_3yr": 154540.0
+        "energy_kwh": 3090800,
+        "opex_3yr": 154540
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 25620.0,
+        "free_cooling_hours": 25620,
         "free_cooling_pct": 97.4,
-        "energy_kwh": 2772180.0,
-        "opex_3yr": 138609.0
+        "energy_kwh": 2772180,
+        "opex_3yr": 138609
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 26304.0,
-        "free_cooling_pct": 100.0,
-        "energy_kwh": 2683008.0,
+        "free_cooling_hours": 26304,
+        "free_cooling_pct": 100,
+        "energy_kwh": 2683008,
         "opex_3yr": 134150.4
       }
-    }
+    },
+    "lat": 62.03,
+    "lng": 129.73
   },
   "Phoenix, Arizona USA": {
     "name": "Phoenix, Arizona USA",
@@ -1489,914 +1565,37 @@ const GLOBAL_COOLING_DATA = {
     "tariff_url": "https://www.iea.org/data-and-statistics/data-product/energy-prices",
     "systems": {
       "CRAC (Aire Acond. Tradicional)": {
-        "free_cooling_hours": 0.0,
-        "free_cooling_pct": 0.0,
-        "energy_kwh": 4734720.0,
-        "opex_3yr": 355104.0
+        "free_cooling_hours": 0,
+        "free_cooling_pct": 0,
+        "energy_kwh": 4734720,
+        "opex_3yr": 355104
       },
       "RDHx (Puerta Trasera)": {
-        "free_cooling_hours": 2587.0,
+        "free_cooling_hours": 2587,
         "free_cooling_pct": 9.8,
-        "energy_kwh": 3855055.0,
+        "energy_kwh": 3855055,
         "opex_3yr": 289129.12
       },
       "Termosifon Bifasico Original": {
-        "free_cooling_hours": 6344.0,
+        "free_cooling_hours": 6344,
         "free_cooling_pct": 24.1,
-        "energy_kwh": 3691840.0,
-        "opex_3yr": 276888.0
+        "energy_kwh": 3691840,
+        "opex_3yr": 276888
       },
       "D2C Bifasico (Direct-to-Chip)": {
-        "free_cooling_hours": 13952.0,
-        "free_cooling_pct": 53.0,
-        "energy_kwh": 2947200.0,
-        "opex_3yr": 221040.0
+        "free_cooling_hours": 13952,
+        "free_cooling_pct": 53,
+        "energy_kwh": 2947200,
+        "opex_3yr": 221040
       },
       "Inmersion Liquida Bifasica": {
-        "free_cooling_hours": 21511.0,
+        "free_cooling_hours": 21511,
         "free_cooling_pct": 81.8,
-        "energy_kwh": 2721352.0,
+        "energy_kwh": 2721352,
         "opex_3yr": 204101.4
       }
-    }
+    },
+    "lat": 33.45,
+    "lng": -112.07
   }
-};
-
-const FORECAST_DATA = {
-  "Colchane, Chile": [
-    {
-      "timestamp": "2026-06-21 00:00:00+00:00",
-      "time": "00:00",
-      "temp_c": 7.81,
-      "std_error": 0.37
-    },
-    {
-      "timestamp": "2026-06-21 01:00:00+00:00",
-      "time": "01:00",
-      "temp_c": 7.4,
-      "std_error": 0.53
-    },
-    {
-      "timestamp": "2026-06-21 02:00:00+00:00",
-      "time": "02:00",
-      "temp_c": 7.05,
-      "std_error": 0.65
-    },
-    {
-      "timestamp": "2026-06-21 03:00:00+00:00",
-      "time": "03:00",
-      "temp_c": 6.77,
-      "std_error": 0.75
-    },
-    {
-      "timestamp": "2026-06-21 04:00:00+00:00",
-      "time": "04:00",
-      "temp_c": 6.56,
-      "std_error": 0.84
-    },
-    {
-      "timestamp": "2026-06-21 05:00:00+00:00",
-      "time": "05:00",
-      "temp_c": 6.42,
-      "std_error": 0.93
-    },
-    {
-      "timestamp": "2026-06-21 06:00:00+00:00",
-      "time": "06:00",
-      "temp_c": 6.4,
-      "std_error": 1.0
-    },
-    {
-      "timestamp": "2026-06-21 07:00:00+00:00",
-      "time": "07:00",
-      "temp_c": 6.24,
-      "std_error": 1.07
-    },
-    {
-      "timestamp": "2026-06-21 08:00:00+00:00",
-      "time": "08:00",
-      "temp_c": 6.1,
-      "std_error": 1.14
-    },
-    {
-      "timestamp": "2026-06-21 09:00:00+00:00",
-      "time": "09:00",
-      "temp_c": 6.01,
-      "std_error": 1.2
-    },
-    {
-      "timestamp": "2026-06-21 10:00:00+00:00",
-      "time": "10:00",
-      "temp_c": 6.03,
-      "std_error": 1.26
-    },
-    {
-      "timestamp": "2026-06-21 11:00:00+00:00",
-      "time": "11:00",
-      "temp_c": 6.07,
-      "std_error": 1.31
-    },
-    {
-      "timestamp": "2026-06-21 12:00:00+00:00",
-      "time": "12:00",
-      "temp_c": 6.49,
-      "std_error": 1.37
-    },
-    {
-      "timestamp": "2026-06-21 13:00:00+00:00",
-      "time": "13:00",
-      "temp_c": 6.94,
-      "std_error": 1.42
-    },
-    {
-      "timestamp": "2026-06-21 14:00:00+00:00",
-      "time": "14:00",
-      "temp_c": 7.27,
-      "std_error": 1.47
-    },
-    {
-      "timestamp": "2026-06-21 15:00:00+00:00",
-      "time": "15:00",
-      "temp_c": 7.75,
-      "std_error": 1.52
-    },
-    {
-      "timestamp": "2026-06-21 16:00:00+00:00",
-      "time": "16:00",
-      "temp_c": 8.28,
-      "std_error": 1.57
-    },
-    {
-      "timestamp": "2026-06-21 17:00:00+00:00",
-      "time": "17:00",
-      "temp_c": 8.74,
-      "std_error": 1.61
-    },
-    {
-      "timestamp": "2026-06-21 18:00:00+00:00",
-      "time": "18:00",
-      "temp_c": 9.08,
-      "std_error": 1.66
-    },
-    {
-      "timestamp": "2026-06-21 19:00:00+00:00",
-      "time": "19:00",
-      "temp_c": 9.27,
-      "std_error": 1.7
-    },
-    {
-      "timestamp": "2026-06-21 20:00:00+00:00",
-      "time": "20:00",
-      "temp_c": 9.3,
-      "std_error": 1.74
-    },
-    {
-      "timestamp": "2026-06-21 21:00:00+00:00",
-      "time": "21:00",
-      "temp_c": 9.11,
-      "std_error": 1.78
-    },
-    {
-      "timestamp": "2026-06-21 22:00:00+00:00",
-      "time": "22:00",
-      "temp_c": 8.46,
-      "std_error": 1.82
-    },
-    {
-      "timestamp": "2026-06-21 23:00:00+00:00",
-      "time": "23:00",
-      "temp_c": 8.02,
-      "std_error": 1.86
-    }
-  ],
-  "Helsinki, Finlandia": [
-    {
-      "timestamp": "2026-06-21 00:00:00+00:00",
-      "time": "00:00",
-      "temp_c": 18.77,
-      "std_error": 0.29
-    },
-    {
-      "timestamp": "2026-06-21 01:00:00+00:00",
-      "time": "01:00",
-      "temp_c": 18.71,
-      "std_error": 0.48
-    },
-    {
-      "timestamp": "2026-06-21 02:00:00+00:00",
-      "time": "02:00",
-      "temp_c": 18.63,
-      "std_error": 0.64
-    },
-    {
-      "timestamp": "2026-06-21 03:00:00+00:00",
-      "time": "03:00",
-      "temp_c": 18.45,
-      "std_error": 0.77
-    },
-    {
-      "timestamp": "2026-06-21 04:00:00+00:00",
-      "time": "04:00",
-      "temp_c": 18.47,
-      "std_error": 0.89
-    },
-    {
-      "timestamp": "2026-06-21 05:00:00+00:00",
-      "time": "05:00",
-      "temp_c": 18.69,
-      "std_error": 0.99
-    },
-    {
-      "timestamp": "2026-06-21 06:00:00+00:00",
-      "time": "06:00",
-      "temp_c": 18.86,
-      "std_error": 1.09
-    },
-    {
-      "timestamp": "2026-06-21 07:00:00+00:00",
-      "time": "07:00",
-      "temp_c": 19.0,
-      "std_error": 1.17
-    },
-    {
-      "timestamp": "2026-06-21 08:00:00+00:00",
-      "time": "08:00",
-      "temp_c": 19.3,
-      "std_error": 1.25
-    },
-    {
-      "timestamp": "2026-06-21 09:00:00+00:00",
-      "time": "09:00",
-      "temp_c": 19.44,
-      "std_error": 1.33
-    },
-    {
-      "timestamp": "2026-06-21 10:00:00+00:00",
-      "time": "10:00",
-      "temp_c": 19.65,
-      "std_error": 1.4
-    },
-    {
-      "timestamp": "2026-06-21 11:00:00+00:00",
-      "time": "11:00",
-      "temp_c": 19.93,
-      "std_error": 1.47
-    },
-    {
-      "timestamp": "2026-06-21 12:00:00+00:00",
-      "time": "12:00",
-      "temp_c": 19.9,
-      "std_error": 1.53
-    },
-    {
-      "timestamp": "2026-06-21 13:00:00+00:00",
-      "time": "13:00",
-      "temp_c": 19.74,
-      "std_error": 1.6
-    },
-    {
-      "timestamp": "2026-06-21 14:00:00+00:00",
-      "time": "14:00",
-      "temp_c": 19.59,
-      "std_error": 1.66
-    },
-    {
-      "timestamp": "2026-06-21 15:00:00+00:00",
-      "time": "15:00",
-      "temp_c": 19.54,
-      "std_error": 1.71
-    },
-    {
-      "timestamp": "2026-06-21 16:00:00+00:00",
-      "time": "16:00",
-      "temp_c": 19.42,
-      "std_error": 1.77
-    },
-    {
-      "timestamp": "2026-06-21 17:00:00+00:00",
-      "time": "17:00",
-      "temp_c": 19.48,
-      "std_error": 1.82
-    },
-    {
-      "timestamp": "2026-06-21 18:00:00+00:00",
-      "time": "18:00",
-      "temp_c": 19.17,
-      "std_error": 1.88
-    },
-    {
-      "timestamp": "2026-06-21 19:00:00+00:00",
-      "time": "19:00",
-      "temp_c": 18.85,
-      "std_error": 1.93
-    },
-    {
-      "timestamp": "2026-06-21 20:00:00+00:00",
-      "time": "20:00",
-      "temp_c": 18.52,
-      "std_error": 1.98
-    },
-    {
-      "timestamp": "2026-06-21 21:00:00+00:00",
-      "time": "21:00",
-      "temp_c": 18.21,
-      "std_error": 2.03
-    },
-    {
-      "timestamp": "2026-06-21 22:00:00+00:00",
-      "time": "22:00",
-      "temp_c": 18.03,
-      "std_error": 2.07
-    },
-    {
-      "timestamp": "2026-06-21 23:00:00+00:00",
-      "time": "23:00",
-      "temp_c": 17.94,
-      "std_error": 2.12
-    }
-  ],
-  "Isla Gordon, Chile": [
-    {
-      "timestamp": "2026-06-21 00:00:00+00:00",
-      "time": "00:00",
-      "temp_c": 2.51,
-      "std_error": 0.35
-    },
-    {
-      "timestamp": "2026-06-21 01:00:00+00:00",
-      "time": "01:00",
-      "temp_c": 2.47,
-      "std_error": 0.54
-    },
-    {
-      "timestamp": "2026-06-21 02:00:00+00:00",
-      "time": "02:00",
-      "temp_c": 2.31,
-      "std_error": 0.69
-    },
-    {
-      "timestamp": "2026-06-21 03:00:00+00:00",
-      "time": "03:00",
-      "temp_c": 2.24,
-      "std_error": 0.82
-    },
-    {
-      "timestamp": "2026-06-21 04:00:00+00:00",
-      "time": "04:00",
-      "temp_c": 2.27,
-      "std_error": 0.92
-    },
-    {
-      "timestamp": "2026-06-21 05:00:00+00:00",
-      "time": "05:00",
-      "temp_c": 2.23,
-      "std_error": 1.02
-    },
-    {
-      "timestamp": "2026-06-21 06:00:00+00:00",
-      "time": "06:00",
-      "temp_c": 2.28,
-      "std_error": 1.11
-    },
-    {
-      "timestamp": "2026-06-21 07:00:00+00:00",
-      "time": "07:00",
-      "temp_c": 2.32,
-      "std_error": 1.19
-    },
-    {
-      "timestamp": "2026-06-21 08:00:00+00:00",
-      "time": "08:00",
-      "temp_c": 2.21,
-      "std_error": 1.27
-    },
-    {
-      "timestamp": "2026-06-21 09:00:00+00:00",
-      "time": "09:00",
-      "temp_c": 2.18,
-      "std_error": 1.34
-    },
-    {
-      "timestamp": "2026-06-21 10:00:00+00:00",
-      "time": "10:00",
-      "temp_c": 2.26,
-      "std_error": 1.41
-    },
-    {
-      "timestamp": "2026-06-21 11:00:00+00:00",
-      "time": "11:00",
-      "temp_c": 2.33,
-      "std_error": 1.47
-    },
-    {
-      "timestamp": "2026-06-21 12:00:00+00:00",
-      "time": "12:00",
-      "temp_c": 2.5,
-      "std_error": 1.53
-    },
-    {
-      "timestamp": "2026-06-21 13:00:00+00:00",
-      "time": "13:00",
-      "temp_c": 2.51,
-      "std_error": 1.59
-    },
-    {
-      "timestamp": "2026-06-21 14:00:00+00:00",
-      "time": "14:00",
-      "temp_c": 2.56,
-      "std_error": 1.65
-    },
-    {
-      "timestamp": "2026-06-21 15:00:00+00:00",
-      "time": "15:00",
-      "temp_c": 2.63,
-      "std_error": 1.71
-    },
-    {
-      "timestamp": "2026-06-21 16:00:00+00:00",
-      "time": "16:00",
-      "temp_c": 2.64,
-      "std_error": 1.76
-    },
-    {
-      "timestamp": "2026-06-21 17:00:00+00:00",
-      "time": "17:00",
-      "temp_c": 2.59,
-      "std_error": 1.81
-    },
-    {
-      "timestamp": "2026-06-21 18:00:00+00:00",
-      "time": "18:00",
-      "temp_c": 2.7,
-      "std_error": 1.86
-    },
-    {
-      "timestamp": "2026-06-21 19:00:00+00:00",
-      "time": "19:00",
-      "temp_c": 2.68,
-      "std_error": 1.91
-    },
-    {
-      "timestamp": "2026-06-21 20:00:00+00:00",
-      "time": "20:00",
-      "temp_c": 2.63,
-      "std_error": 1.96
-    },
-    {
-      "timestamp": "2026-06-21 21:00:00+00:00",
-      "time": "21:00",
-      "temp_c": 2.62,
-      "std_error": 2.01
-    },
-    {
-      "timestamp": "2026-06-21 22:00:00+00:00",
-      "time": "22:00",
-      "temp_c": 2.59,
-      "std_error": 2.06
-    },
-    {
-      "timestamp": "2026-06-21 23:00:00+00:00",
-      "time": "23:00",
-      "temp_c": 2.54,
-      "std_error": 2.1
-    }
-  ],
-  "Lulea, Suecia": [
-    {
-      "timestamp": "2026-06-21 00:00:00+00:00",
-      "time": "00:00",
-      "temp_c": 16.25,
-      "std_error": 0.34
-    },
-    {
-      "timestamp": "2026-06-21 01:00:00+00:00",
-      "time": "01:00",
-      "temp_c": 16.25,
-      "std_error": 0.56
-    },
-    {
-      "timestamp": "2026-06-21 02:00:00+00:00",
-      "time": "02:00",
-      "temp_c": 16.3,
-      "std_error": 0.73
-    },
-    {
-      "timestamp": "2026-06-21 03:00:00+00:00",
-      "time": "03:00",
-      "temp_c": 16.5,
-      "std_error": 0.88
-    },
-    {
-      "timestamp": "2026-06-21 04:00:00+00:00",
-      "time": "04:00",
-      "temp_c": 16.58,
-      "std_error": 1.02
-    },
-    {
-      "timestamp": "2026-06-21 05:00:00+00:00",
-      "time": "05:00",
-      "temp_c": 16.75,
-      "std_error": 1.13
-    },
-    {
-      "timestamp": "2026-06-21 06:00:00+00:00",
-      "time": "06:00",
-      "temp_c": 16.62,
-      "std_error": 1.24
-    },
-    {
-      "timestamp": "2026-06-21 07:00:00+00:00",
-      "time": "07:00",
-      "temp_c": 16.56,
-      "std_error": 1.34
-    },
-    {
-      "timestamp": "2026-06-21 08:00:00+00:00",
-      "time": "08:00",
-      "temp_c": 16.63,
-      "std_error": 1.43
-    },
-    {
-      "timestamp": "2026-06-21 09:00:00+00:00",
-      "time": "09:00",
-      "temp_c": 16.74,
-      "std_error": 1.52
-    },
-    {
-      "timestamp": "2026-06-21 10:00:00+00:00",
-      "time": "10:00",
-      "temp_c": 16.78,
-      "std_error": 1.6
-    },
-    {
-      "timestamp": "2026-06-21 11:00:00+00:00",
-      "time": "11:00",
-      "temp_c": 16.92,
-      "std_error": 1.68
-    },
-    {
-      "timestamp": "2026-06-21 12:00:00+00:00",
-      "time": "12:00",
-      "temp_c": 17.32,
-      "std_error": 1.75
-    },
-    {
-      "timestamp": "2026-06-21 13:00:00+00:00",
-      "time": "13:00",
-      "temp_c": 17.28,
-      "std_error": 1.82
-    },
-    {
-      "timestamp": "2026-06-21 14:00:00+00:00",
-      "time": "14:00",
-      "temp_c": 17.26,
-      "std_error": 1.89
-    },
-    {
-      "timestamp": "2026-06-21 15:00:00+00:00",
-      "time": "15:00",
-      "temp_c": 17.11,
-      "std_error": 1.96
-    },
-    {
-      "timestamp": "2026-06-21 16:00:00+00:00",
-      "time": "16:00",
-      "temp_c": 16.92,
-      "std_error": 2.02
-    },
-    {
-      "timestamp": "2026-06-21 17:00:00+00:00",
-      "time": "17:00",
-      "temp_c": 16.77,
-      "std_error": 2.08
-    },
-    {
-      "timestamp": "2026-06-21 18:00:00+00:00",
-      "time": "18:00",
-      "temp_c": 16.74,
-      "std_error": 2.14
-    },
-    {
-      "timestamp": "2026-06-21 19:00:00+00:00",
-      "time": "19:00",
-      "temp_c": 16.51,
-      "std_error": 2.2
-    },
-    {
-      "timestamp": "2026-06-21 20:00:00+00:00",
-      "time": "20:00",
-      "temp_c": 16.31,
-      "std_error": 2.26
-    },
-    {
-      "timestamp": "2026-06-21 21:00:00+00:00",
-      "time": "21:00",
-      "temp_c": 16.09,
-      "std_error": 2.31
-    },
-    {
-      "timestamp": "2026-06-21 22:00:00+00:00",
-      "time": "22:00",
-      "temp_c": 15.85,
-      "std_error": 2.37
-    },
-    {
-      "timestamp": "2026-06-21 23:00:00+00:00",
-      "time": "23:00",
-      "temp_c": 16.04,
-      "std_error": 2.42
-    }
-  ],
-  "Quebec, Canada": [
-    {
-      "timestamp": "2026-06-21 00:00:00+00:00",
-      "time": "00:00",
-      "temp_c": 20.0,
-      "std_error": 0.41
-    },
-    {
-      "timestamp": "2026-06-21 01:00:00+00:00",
-      "time": "01:00",
-      "temp_c": 19.57,
-      "std_error": 0.68
-    },
-    {
-      "timestamp": "2026-06-21 02:00:00+00:00",
-      "time": "02:00",
-      "temp_c": 19.41,
-      "std_error": 0.9
-    },
-    {
-      "timestamp": "2026-06-21 03:00:00+00:00",
-      "time": "03:00",
-      "temp_c": 19.29,
-      "std_error": 1.1
-    },
-    {
-      "timestamp": "2026-06-21 04:00:00+00:00",
-      "time": "04:00",
-      "temp_c": 19.25,
-      "std_error": 1.27
-    },
-    {
-      "timestamp": "2026-06-21 05:00:00+00:00",
-      "time": "05:00",
-      "temp_c": 19.17,
-      "std_error": 1.43
-    },
-    {
-      "timestamp": "2026-06-21 06:00:00+00:00",
-      "time": "06:00",
-      "temp_c": 19.16,
-      "std_error": 1.57
-    },
-    {
-      "timestamp": "2026-06-21 07:00:00+00:00",
-      "time": "07:00",
-      "temp_c": 19.06,
-      "std_error": 1.7
-    },
-    {
-      "timestamp": "2026-06-21 08:00:00+00:00",
-      "time": "08:00",
-      "temp_c": 18.84,
-      "std_error": 1.82
-    },
-    {
-      "timestamp": "2026-06-21 09:00:00+00:00",
-      "time": "09:00",
-      "temp_c": 18.73,
-      "std_error": 1.94
-    },
-    {
-      "timestamp": "2026-06-21 10:00:00+00:00",
-      "time": "10:00",
-      "temp_c": 18.72,
-      "std_error": 2.04
-    },
-    {
-      "timestamp": "2026-06-21 11:00:00+00:00",
-      "time": "11:00",
-      "temp_c": 18.77,
-      "std_error": 2.15
-    },
-    {
-      "timestamp": "2026-06-21 12:00:00+00:00",
-      "time": "12:00",
-      "temp_c": 19.02,
-      "std_error": 2.25
-    },
-    {
-      "timestamp": "2026-06-21 13:00:00+00:00",
-      "time": "13:00",
-      "temp_c": 19.2,
-      "std_error": 2.34
-    },
-    {
-      "timestamp": "2026-06-21 14:00:00+00:00",
-      "time": "14:00",
-      "temp_c": 19.39,
-      "std_error": 2.43
-    },
-    {
-      "timestamp": "2026-06-21 15:00:00+00:00",
-      "time": "15:00",
-      "temp_c": 19.72,
-      "std_error": 2.52
-    },
-    {
-      "timestamp": "2026-06-21 16:00:00+00:00",
-      "time": "16:00",
-      "temp_c": 19.93,
-      "std_error": 2.6
-    },
-    {
-      "timestamp": "2026-06-21 17:00:00+00:00",
-      "time": "17:00",
-      "temp_c": 19.96,
-      "std_error": 2.68
-    },
-    {
-      "timestamp": "2026-06-21 18:00:00+00:00",
-      "time": "18:00",
-      "temp_c": 20.18,
-      "std_error": 2.76
-    },
-    {
-      "timestamp": "2026-06-21 19:00:00+00:00",
-      "time": "19:00",
-      "temp_c": 20.47,
-      "std_error": 2.84
-    },
-    {
-      "timestamp": "2026-06-21 20:00:00+00:00",
-      "time": "20:00",
-      "temp_c": 20.5,
-      "std_error": 2.91
-    },
-    {
-      "timestamp": "2026-06-21 21:00:00+00:00",
-      "time": "21:00",
-      "temp_c": 20.5,
-      "std_error": 2.99
-    },
-    {
-      "timestamp": "2026-06-21 22:00:00+00:00",
-      "time": "22:00",
-      "temp_c": 20.51,
-      "std_error": 3.06
-    },
-    {
-      "timestamp": "2026-06-21 23:00:00+00:00",
-      "time": "23:00",
-      "temp_c": 20.28,
-      "std_error": 3.13
-    }
-  ],
-  "Reykjavik, Islandia": [
-    {
-      "timestamp": "2026-06-21 00:00:00+00:00",
-      "time": "00:00",
-      "temp_c": 11.11,
-      "std_error": 0.31
-    },
-    {
-      "timestamp": "2026-06-21 01:00:00+00:00",
-      "time": "01:00",
-      "temp_c": 10.95,
-      "std_error": 0.49
-    },
-    {
-      "timestamp": "2026-06-21 02:00:00+00:00",
-      "time": "02:00",
-      "temp_c": 10.86,
-      "std_error": 0.63
-    },
-    {
-      "timestamp": "2026-06-21 03:00:00+00:00",
-      "time": "03:00",
-      "temp_c": 10.74,
-      "std_error": 0.75
-    },
-    {
-      "timestamp": "2026-06-21 04:00:00+00:00",
-      "time": "04:00",
-      "temp_c": 10.68,
-      "std_error": 0.86
-    },
-    {
-      "timestamp": "2026-06-21 05:00:00+00:00",
-      "time": "05:00",
-      "temp_c": 10.66,
-      "std_error": 0.95
-    },
-    {
-      "timestamp": "2026-06-21 06:00:00+00:00",
-      "time": "06:00",
-      "temp_c": 10.7,
-      "std_error": 1.04
-    },
-    {
-      "timestamp": "2026-06-21 07:00:00+00:00",
-      "time": "07:00",
-      "temp_c": 10.77,
-      "std_error": 1.12
-    },
-    {
-      "timestamp": "2026-06-21 08:00:00+00:00",
-      "time": "08:00",
-      "temp_c": 10.9,
-      "std_error": 1.19
-    },
-    {
-      "timestamp": "2026-06-21 09:00:00+00:00",
-      "time": "09:00",
-      "temp_c": 10.84,
-      "std_error": 1.26
-    },
-    {
-      "timestamp": "2026-06-21 10:00:00+00:00",
-      "time": "10:00",
-      "temp_c": 11.01,
-      "std_error": 1.33
-    },
-    {
-      "timestamp": "2026-06-21 11:00:00+00:00",
-      "time": "11:00",
-      "temp_c": 11.2,
-      "std_error": 1.39
-    },
-    {
-      "timestamp": "2026-06-21 12:00:00+00:00",
-      "time": "12:00",
-      "temp_c": 11.3,
-      "std_error": 1.45
-    },
-    {
-      "timestamp": "2026-06-21 13:00:00+00:00",
-      "time": "13:00",
-      "temp_c": 11.51,
-      "std_error": 1.51
-    },
-    {
-      "timestamp": "2026-06-21 14:00:00+00:00",
-      "time": "14:00",
-      "temp_c": 11.69,
-      "std_error": 1.56
-    },
-    {
-      "timestamp": "2026-06-21 15:00:00+00:00",
-      "time": "15:00",
-      "temp_c": 11.7,
-      "std_error": 1.62
-    },
-    {
-      "timestamp": "2026-06-21 16:00:00+00:00",
-      "time": "16:00",
-      "temp_c": 11.64,
-      "std_error": 1.67
-    },
-    {
-      "timestamp": "2026-06-21 17:00:00+00:00",
-      "time": "17:00",
-      "temp_c": 11.62,
-      "std_error": 1.72
-    },
-    {
-      "timestamp": "2026-06-21 18:00:00+00:00",
-      "time": "18:00",
-      "temp_c": 11.43,
-      "std_error": 1.77
-    },
-    {
-      "timestamp": "2026-06-21 19:00:00+00:00",
-      "time": "19:00",
-      "temp_c": 11.21,
-      "std_error": 1.82
-    },
-    {
-      "timestamp": "2026-06-21 20:00:00+00:00",
-      "time": "20:00",
-      "temp_c": 11.05,
-      "std_error": 1.86
-    },
-    {
-      "timestamp": "2026-06-21 21:00:00+00:00",
-      "time": "21:00",
-      "temp_c": 10.84,
-      "std_error": 1.91
-    },
-    {
-      "timestamp": "2026-06-21 22:00:00+00:00",
-      "time": "22:00",
-      "temp_c": 10.63,
-      "std_error": 1.95
-    },
-    {
-      "timestamp": "2026-06-21 23:00:00+00:00",
-      "time": "23:00",
-      "temp_c": 10.46,
-      "std_error": 1.99
-    }
-  ]
 };
