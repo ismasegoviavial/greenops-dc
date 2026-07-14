@@ -10,7 +10,7 @@ Es crucial aclarar al inversionista la diferencia entre los controles manuales d
 
 * **En la Demostración (SaaS Sandbox):** Los deslizadores (*sliders*) de temperatura exterior, carga de TI y caudal son interactivos para permitir simulaciones hipotéticas (*what-if scenarios*). Permite responder a preguntas como: *"¿Qué pasa con la presión del termosifón si la temperatura exterior sube a 42°C?"*.
 * **En Producción Real:** Estos deslizadores **no existen** para el operador, ya que representan la realidad física medida por sensores en tiempo real (RTDs de temperatura, caudalímetros, transductores de presión). 
-  * Lo único modificable por el operador humano son los **Setpoints de Consigna** (ej: *"Temperatura máxima de chip permitida: 70°C"*) o el **Modo de Operación** (Manual, Semiautónomo o Autónomo).
+  * Lo único modificable por el operador humano son los **Setpoints de Consigna** (ej: *"Temperatura máxima de chip permitida: 70°C"*) o el **Modo de Operación** (Manual o Semiautónomo).
 
 ---
 
@@ -33,15 +33,13 @@ Cuando una empresa opera múltiples nodos geográficos, el sistema implementa un
 ```
 
 ### ¿Manual o Automático? (Niveles de Autonomía)
-Para mitigar el riesgo, la plataforma debe ofrecer **tres políticas de automatización configurables** por el cliente:
+Para mitigar el riesgo de seguridad y mantener la supervisión humana, la plataforma ofrece **dos políticas de automatización configurables** por el cliente:
 
 1. **Modo Recomendación (Lazo Abierto - Humano en el Bucle):**
    * El sistema detecta una alerta de calor en Santiago que obligará a encender el chiller mecánico. Calcula que migrar el entrenamiento de la red neuronal a la Patagonia ahorrará $5,000 USD.
    * El sistema **no toma la decisión solo**; envía una notificación al Director de TI: *"GreenOps recomienda migrar Carga-04 a Nodo Patagonia. Ahorro estimado: $5,000 USD. ¿Aprobar?"* $\rightarrow$ Requiere clic manual.
 2. **Modo Semiautónomo (Reglas Predefinidas):**
-   * El operador pre-aprueba ciertas cargas. Por ejemplo, tareas de entrenamiento de IA no críticas (ej: procesamiento de lenguaje en lote para desarrollo) se migran automáticamente sin preguntar, pero las cargas críticas (ej: inferencia en vivo de clientes) se mantienen fijas en su nodo de origen.
-3. **Modo Autónomo (Lazo Cerrado):**
-   * El optimizador toma el control total de la orquestación mediante algoritmos basados en Kubernetes (K8s). Distribuye las cargas globalmente buscando el menor costo y menor PUE consolidado de la empresa segundo a segundo.
+   * El operador pre-aprueba ciertas cargas. Por ejemplo, tareas de entrenamiento de IA no críticas (ej: procesamiento de lenguaje en lote para desarrollo) se migran automáticamente sin preguntar, pero las cargas críticas (ej: inferencia en vivo de clientes) se mantienen fijas en su nodo de origen y requieren autorización explícita para ser movilizadas.
 
 ---
 
